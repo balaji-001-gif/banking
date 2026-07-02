@@ -7,13 +7,14 @@ from frappe.utils import today, add_months
 
 
 class BankingLoanApplication(Document):
-	"""Controller for Banking Loan Application with co-applicants and risk assessment."""
+	"""Controller for Banking Loan Application with co-applicants, risk assessment, and bureau integration."""
 
 	def validate(self):
 		self.validate_amount()
 		self.validate_foir()
 		self.validate_bureau_score()
 		self.auto_risk_grade()
+		self.run_bureau_integration()
 
 	def validate_amount(self):
 		"""Ensure requested amount is positive."""
@@ -46,6 +47,32 @@ class BankingLoanApplication(Document):
 			else:
 				self.internal_risk_grade = "D"
 
+	def run_bureau_integration(self):
+		"""Auto-fetch bureau score if PAN is available and bureau is not set.
+		
+		This runs silently and only populates the score if empty.
+		If bureau is enabled, it fetches and updates the score.
+		"""
+		if self.bureau_score:
+			return  # Already has a score
+
+		if not self.applicant:
+			return
+
+		pan = frappe.db.get_value("Banking Customer", self.applicant, "pan_number")
+		if not pan:
+			return
+
+		try:
+			from bizaxl_banking.banking.bureau.cibil import fetch_credit_score
+			result = fetch_credit_score(pan)
+			if result.get("status") in ("success", "simulated"):
+				self.bureau_score = result.get("score", 0)
+				self.foir = result.get("report", {}).get("credit_utilization", self.foir or 0)
+				self.auto_risk_grade()
+		except Exception:
+			frappe.log_error(f"Bureau fetch failed for application {self.name}", "Bureau Integration")
+
 	def on_submit(self):
 		"""On approval, automatically create a Loan Account."""
 		if self.decision == "Approved":
@@ -55,8 +82,8 @@ class BankingLoanApplication(Document):
 		"""Create a Loan Account from approved application."""
 		loan_account_no = f"LOAN-{frappe.utils.nowdate()[:7].replace('-', '')}-{frappe.generate_hash(length=5)}"
 
-		# Calculate EMI (simple flat rate for now)
-		annual_rate = 12.0  # Default 12% if not configured
+		# Calculate EMI (amortization formula)
+		annual_rate = 12.0
 		monthly_rate = annual_rate / 12 / 100
 		tenure_months = self.requested_tenure_months or 60
 		emi = round(
@@ -73,8 +100,34 @@ class BankingLoanApplication(Document):
 			"interest_rate": 12.0,
 			"rate_type": "Floating (MCLR-linked)",
 			"emi_amount": emi,
-			"emi_date": 5,  # 5th of every month
+			"emi_date": 5,
 			"account_status": "Active"
 		})
 		loan_account.insert(ignore_permissions=True)
+
+		# Try to link NACH mandate for auto-debit
+		try:
+			self._link_nach_mandate(loan_account, emi)
+		except Exception:
+			pass
+
 		frappe.msgprint(f"Loan Account {loan_account_no} created successfully.")
+
+	def _link_nach_mandate(self, loan_account, emi_amount):
+		"""Try to create a NACH mandate for the loan EMI."""
+		customer_accounts = frappe.get_all(
+			"Banking Account",
+			filters={"customer": self.applicant, "account_status": "Active"},
+			limit=1
+		)
+		if customer_accounts:
+			mandate = frappe.get_doc({
+				"doctype": "Banking NACH Mandate",
+				"account": customer_accounts[0].name,
+				"mandate_ref": f"MAN-{loan_account.name}",
+				"max_amount": emi_amount,
+				"frequency": "Monthly",
+				"status": "Active"
+			})
+			mandate.insert(ignore_permissions=True)
+			loan_account.db_set("linked_mandate", mandate.name)

@@ -14,7 +14,8 @@ required_apps = ["frappe", "erpnext"]
 fixtures = [
 	{"doctype": "Role", "filters": [["role_name", "like", "Banking %"]]},
 	{"doctype": "Banking Interest Rate Schedule", "filters": [["product_type", "like", "%"]]},
-	{"doctype": "Banking State", "filters": [["state_name", "like", "%"]]}
+	{"doctype": "Banking State", "filters": [["state_name", "like", "%"]]},
+	{"doctype": "Banking Integration Settings"}
 ]
 
 # Scheduled Tasks ------------------------------------------------------

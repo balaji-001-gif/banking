@@ -7,12 +7,18 @@ from frappe.utils import today, nowdate
 
 
 class BankingCustomer(Document):
-	"""Controller for Banking Customer with auto-numbering, validation, AML screening, and risk scoring."""
+	"""Controller for Banking Customer with auto-numbering, validation, AML screening, and risk scoring.
+	
+	Integration hooks:
+	- PAN verification (real-time via NSDL API if configured)
+	- Sanctions screening (against OFAC/UN/MHA lists if configured)
+	- Transaction alerts (via SMS/Email if configured)
+	"""
 
 	def autoname(self):
 		"""Auto-generate customer ID: CUST-YYYY-MM-XXXXX"""
 		from frappe.model.naming import make_autoname
-		prefix = f"CUST-{frappe.utils.nowdate()[:7]}-"
+		prefix = f"CUST-{frappe.utils.nowdate()[:7]}-\"
 		self.name = make_autoname(prefix + "#####")
 
 	def validate(self):
@@ -61,22 +67,60 @@ class BankingCustomer(Document):
 			self.risk_category = "Medium"
 
 	def on_update(self):
-		"""Create AML screening log on customer update if KYC changes."""
+		"""Run post-save hooks: AML screening, sanctions check, PAN verification."""
 		if self.has_value_changed("kyc_status") and self.kyc_status == "Verified":
 			self.create_aml_screening_log()
+			self.run_integration_hooks()
 
-	def create_aml_screening_log(self):
+	def run_integration_hooks(self):
+		"""Run third-party integration checks (silent — never blocks save)."""
+		# PAN verification via NSDL
+		if self.pan_number:
+			try:
+				from bizaxl_banking.banking.kyc.pan import verify_pan
+				result = verify_pan(self.pan_number, self.full_name, self.date_of_birth)
+				if result.get("status") == "verified":
+					pan_data = result.get("data", {})
+					if pan_data.get("name_match") is False:
+						frappe.msgprint(
+							f"Warning: PAN name mismatch. Customer provided '{self.full_name}', "
+							f"PAN database shows '{pan_data.get('full_name')}'.",
+							indicator="orange"
+						)
+			except Exception:
+				frappe.log_error(f"PAN verification failed for {self.name}", "PAN Integration")
+				frappe.msgprint("PAN verification service unavailable. Manual verification required.", indicator="yellow")
+
+		# Sanctions screening
+		try:
+			from bizaxl_banking.banking.compliance.sanctions import screen_customer
+			result = screen_customer(
+				self.name, self.pan_number, self.full_name, self.date_of_birth
+			)
+			if result.get("match_found"):
+				frappe.msgprint(
+					f"⚠ Sanctions match found for {self.full_name}! "
+					f"Compliance team notified. Disposition: {result.get('disposition')}",
+					indicator="red"
+				)
+				self.create_aml_screening_log(match_found=1, disposition=result.get("disposition"))
+		except Exception:
+			frappe.log_error(f"Sanctions screening failed for {self.name}", "Sanctions Integration")
+
+	def create_aml_screening_log(self, match_found=0, disposition="Clear"):
 		"""Create an AML screening log entry."""
 		screening = frappe.get_doc({
 			"doctype": "Banking AML Screening Log",
 			"screening_type": "Onboarding",
 			"customer": self.name,
 			"lists_checked": "UNSC, OFAC, EU Sanctions, Internal Watchlist",
-			"match_found": 0,
-			"disposition": "Clear",
+			"match_found": match_found,
+			"disposition": disposition,
 			"screened_at": frappe.utils.now()
 		})
 		screening.insert(ignore_permissions=True)
+		if match_found:
+			frappe.msgprint(f"AML Screening Log created: {disposition}", indicator="orange")
 
 
 def recalculate_customer_risk_scores():

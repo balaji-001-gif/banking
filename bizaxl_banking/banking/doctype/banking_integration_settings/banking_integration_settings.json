@@ -1,0 +1,713 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Integration Settings",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 1,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "section_npci",
+  "npci_enabled",
+  "npci_mode",
+  "npci_api_key",
+  "npci_api_secret",
+  "npci_live_endpoint",
+  "npci_sandbox_endpoint",
+  "column_break_npci",
+  "npci_merchant_code",
+  "npci_terminal_id",
+  "npci_encryption_key",
+  "test_npci_connection",
+  "section_aadhaar",
+  "aadhaar_enabled",
+  "aadhaar_api_key",
+  "aadhaar_api_secret",
+  "aadhaar_live_endpoint",
+  "aadhaar_sandbox_endpoint",
+  "column_break_aadhaar",
+  "aadhaar_license_key",
+  "aadhaar_org_id",
+  "test_aadhaar_connection",
+  "section_pan",
+  "pan_enabled",
+  "pan_api_key",
+  "pan_api_secret",
+  "pan_live_endpoint",
+  "pan_sandbox_endpoint",
+  "column_break_pan",
+  "pan_merchant_code",
+  "test_pan_connection",
+  "section_bureau",
+  "bureau_enabled",
+  "bureau_mode",
+  "bureau_api_key",
+  "bureau_api_secret",
+  "bureau_live_endpoint",
+  "bureau_sandbox_endpoint",
+  "column_break_bureau",
+  "bureau_provider",
+  "bureau_member_id",
+  "bureau_password",
+  "test_bureau_connection",
+  "section_nach",
+  "nach_enabled",
+  "nach_mode",
+  "nach_api_key",
+  "nach_api_secret",
+  "nach_live_endpoint",
+  "nach_sandbox_endpoint",
+  "column_break_nach",
+  "nach_sponsor_bank",
+  "nach_member_id",
+  "test_nach_connection",
+  "section_sanctions",
+  "sanctions_enabled",
+  "sanctions_api_key",
+  "sanctions_live_endpoint",
+  "sanctions_sandbox_endpoint",
+  "column_break_sanctions",
+  "sanctions_provider",
+  "sanctions_check_frequency",
+  "test_sanctions_connection",
+  "section_sms",
+  "sms_enabled",
+  "sms_provider",
+  "sms_api_key",
+  "sms_sender_id",
+  "sms_live_endpoint",
+  "column_break_sms",
+  "email_enabled",
+  "email_api_key",
+  "email_from_address",
+  "whatsapp_enabled",
+  "whatsapp_api_key",
+  "whatsapp_business_phone",
+  "test_sms_connection",
+  "section_esign",
+  "esign_enabled",
+  "esign_mode",
+  "esign_api_key",
+  "esign_api_secret",
+  "esign_live_endpoint",
+  "esign_sandbox_endpoint",
+  "column_break_esign",
+  "esign_provider",
+  "esign_certificate_id",
+  "test_esign_connection"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_npci",
+   "label": "NPCI / UPI Rails",
+   "fieldtype": "Section Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "npci_enabled",
+   "label": "Enable NPCI Integration",
+   "fieldtype": "Check",
+   "reqd": 0,
+   "default": 0
+  },
+  {
+   "fieldname": "npci_mode",
+   "label": "Mode",
+   "fieldtype": "Select",
+   "reqd": 0,
+   "options": "Sandbox\nLive"
+  },
+  {
+   "fieldname": "npci_api_key",
+   "label": "NPCI API Key",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "npci_api_secret",
+   "label": "NPCI API Secret",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "npci_live_endpoint",
+   "label": "Live Endpoint URL",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "https://api.npci.org.in/v1"
+  },
+  {
+   "fieldname": "npci_sandbox_endpoint",
+   "label": "Sandbox Endpoint URL",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "https://sandbox.npci.org.in/v1"
+  },
+  {
+   "fieldname": "column_break_npci",
+   "label": "",
+   "fieldtype": "Column Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "npci_merchant_code",
+   "label": "Merchant Code",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "npci_terminal_id",
+   "label": "Terminal ID",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "npci_encryption_key",
+   "label": "Encryption Key",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "test_npci_connection",
+   "label": "Test NPCI Connection",
+   "fieldtype": "Button",
+   "reqd": 0,
+   "options": "test_npci_connection"
+  },
+  {
+   "fieldname": "section_aadhaar",
+   "label": "UIDAI / Aadhaar eKYC",
+   "fieldtype": "Section Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "aadhaar_enabled",
+   "label": "Enable Aadhaar eKYC",
+   "fieldtype": "Check",
+   "reqd": 0,
+   "default": 0
+  },
+  {
+   "fieldname": "aadhaar_api_key",
+   "label": "Aadhaar API Key",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "aadhaar_api_secret",
+   "label": "Aadhaar API Secret",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "aadhaar_live_endpoint",
+   "label": "Live Endpoint URL",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "https://api.uidai.gov.in/ekyc/v2"
+  },
+  {
+   "fieldname": "aadhaar_sandbox_endpoint",
+   "label": "Sandbox Endpoint URL",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "https://sandbox.uidai.gov.in/ekyc/v2"
+  },
+  {
+   "fieldname": "column_break_aadhaar",
+   "label": "",
+   "fieldtype": "Column Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "aadhaar_license_key",
+   "label": "License Key (AUA/KUA)",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "aadhaar_org_id",
+   "label": "Org ID (ASA)",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "test_aadhaar_connection",
+   "label": "Test Aadhaar Connection",
+   "fieldtype": "Button",
+   "reqd": 0,
+   "options": "test_aadhaar_connection"
+  },
+  {
+   "fieldname": "section_pan",
+   "label": "NSDL / PAN Verification",
+   "fieldtype": "Section Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "pan_enabled",
+   "label": "Enable PAN Verification",
+   "fieldtype": "Check",
+   "reqd": 0,
+   "default": 0
+  },
+  {
+   "fieldname": "pan_api_key",
+   "label": "PAN API Key",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "pan_api_secret",
+   "label": "PAN API Secret",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "pan_live_endpoint",
+   "label": "Live Endpoint URL",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "https://pan.NSDL.co.in/api/v1"
+  },
+  {
+   "fieldname": "pan_sandbox_endpoint",
+   "label": "Sandbox Endpoint URL",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "https://sandbox.pan.NSDL.co.in/api/v1"
+  },
+  {
+   "fieldname": "column_break_pan",
+   "label": "",
+   "fieldtype": "Column Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "pan_merchant_code",
+   "label": "Merchant Code",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "test_pan_connection",
+   "label": "Test PAN Connection",
+   "fieldtype": "Button",
+   "reqd": 0,
+   "options": "test_pan_connection"
+  },
+  {
+   "fieldname": "section_bureau",
+   "label": "CIBIL / Experian / CRIF",
+   "fieldtype": "Section Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "bureau_enabled",
+   "label": "Enable Bureau Integration",
+   "fieldtype": "Check",
+   "reqd": 0,
+   "default": 0
+  },
+  {
+   "fieldname": "bureau_mode",
+   "label": "Mode",
+   "fieldtype": "Select",
+   "reqd": 0,
+   "options": "Sandbox\nLive"
+  },
+  {
+   "fieldname": "bureau_api_key",
+   "label": "Bureau API Key",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "bureau_api_secret",
+   "label": "Bureau API Secret",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "bureau_live_endpoint",
+   "label": "Live Endpoint URL",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "https://api.cibil.com/v2"
+  },
+  {
+   "fieldname": "bureau_sandbox_endpoint",
+   "label": "Sandbox Endpoint URL",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "https://sandbox.cibil.com/v2"
+  },
+  {
+   "fieldname": "column_break_bureau",
+   "label": "",
+   "fieldtype": "Column Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "bureau_provider",
+   "label": "Provider",
+   "fieldtype": "Select",
+   "reqd": 0,
+   "options": "CIBIL\nExperian\nCRIF Highmark"
+  },
+  {
+   "fieldname": "bureau_member_id",
+   "label": "Member ID",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "bureau_password",
+   "label": "Password",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "test_bureau_connection",
+   "label": "Test Bureau Connection",
+   "fieldtype": "Button",
+   "reqd": 0,
+   "options": "test_bureau_connection"
+  },
+  {
+   "fieldname": "section_nach",
+   "label": "NACH Mandate (NPCI)",
+   "fieldtype": "Section Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "nach_enabled",
+   "label": "Enable NACH Integration",
+   "fieldtype": "Check",
+   "reqd": 0,
+   "default": 0
+  },
+  {
+   "fieldname": "nach_mode",
+   "label": "Mode",
+   "fieldtype": "Select",
+   "reqd": 0,
+   "options": "Sandbox\nLive"
+  },
+  {
+   "fieldname": "nach_api_key",
+   "label": "NACH API Key",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "nach_api_secret",
+   "label": "NACH API Secret",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "nach_live_endpoint",
+   "label": "Live Endpoint URL",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "https://api.npci.org.in/nach/v1"
+  },
+  {
+   "fieldname": "nach_sandbox_endpoint",
+   "label": "Sandbox Endpoint URL",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "https://sandbox.npci.org.in/nach/v1"
+  },
+  {
+   "fieldname": "column_break_nach",
+   "label": "",
+   "fieldtype": "Column Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "nach_sponsor_bank",
+   "label": "Sponsor Bank Code",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "nach_member_id",
+   "label": "Member ID",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "test_nach_connection",
+   "label": "Test NACH Connection",
+   "fieldtype": "Button",
+   "reqd": 0,
+   "options": "test_nach_connection"
+  },
+  {
+   "fieldname": "section_sanctions",
+   "label": "FIU-IND / Sanction Lists",
+   "fieldtype": "Section Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "sanctions_enabled",
+   "label": "Enable Sanctions Screening",
+   "fieldtype": "Check",
+   "reqd": 0,
+   "default": 0
+  },
+  {
+   "fieldname": "sanctions_api_key",
+   "label": "Sanctions API Key",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "sanctions_live_endpoint",
+   "label": "Live Endpoint URL",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "https://api.fiu-india.gov.in/v1"
+  },
+  {
+   "fieldname": "sanctions_sandbox_endpoint",
+   "label": "Sandbox Endpoint URL",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "https://sandbox.fiu-india.gov.in/v1"
+  },
+  {
+   "fieldname": "column_break_sanctions",
+   "label": "",
+   "fieldtype": "Column Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "sanctions_provider",
+   "label": "Provider",
+   "fieldtype": "Select",
+   "reqd": 0,
+   "options": "FIU-IND\nUN Sanctions List\nOFAC SDN\nWorld-Check\nLexisNexis"
+  },
+  {
+   "fieldname": "sanctions_check_frequency",
+   "label": "Check Frequency",
+   "fieldtype": "Select",
+   "reqd": 0,
+   "options": "Onboarding Only\nPeriodic (Monthly)\nPeriodic (Quarterly)\nPer Transaction"
+  },
+  {
+   "fieldname": "test_sanctions_connection",
+   "label": "Test Sanctions Connection",
+   "fieldtype": "Button",
+   "reqd": 0,
+   "options": "test_sanctions_connection"
+  },
+  {
+   "fieldname": "section_sms",
+   "label": "SMS / Email / WhatsApp",
+   "fieldtype": "Section Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "sms_enabled",
+   "label": "Enable SMS",
+   "fieldtype": "Check",
+   "reqd": 0,
+   "default": 0
+  },
+  {
+   "fieldname": "sms_provider",
+   "label": "SMS Provider",
+   "fieldtype": "Select",
+   "reqd": 0,
+   "options": "MSG91\nTwilio\nAWS SNS\nExotel\nKAPSYSTEM"
+  },
+  {
+   "fieldname": "sms_api_key",
+   "label": "SMS API Key",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "sms_sender_id",
+   "label": "SMS Sender ID",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "sms_live_endpoint",
+   "label": "SMS API Endpoint",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "column_break_sms",
+   "label": "",
+   "fieldtype": "Column Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "email_enabled",
+   "label": "Enable Email",
+   "fieldtype": "Check",
+   "reqd": 0,
+   "default": 0
+  },
+  {
+   "fieldname": "email_api_key",
+   "label": "Email API Key",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "email_from_address",
+   "label": "From Address",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "noreply@bizaxl.com"
+  },
+  {
+   "fieldname": "whatsapp_enabled",
+   "label": "Enable WhatsApp",
+   "fieldtype": "Check",
+   "reqd": 0,
+   "default": 0
+  },
+  {
+   "fieldname": "whatsapp_api_key",
+   "label": "WhatsApp API Key",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "whatsapp_business_phone",
+   "label": "WhatsApp Business Phone",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "test_sms_connection",
+   "label": "Test Messaging Connection",
+   "fieldtype": "Button",
+   "reqd": 0,
+   "options": "test_sms_connection"
+  },
+  {
+   "fieldname": "section_esign",
+   "label": "e-Sign / DigiLocker",
+   "fieldtype": "Section Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "esign_enabled",
+   "label": "Enable e-Sign",
+   "fieldtype": "Check",
+   "reqd": 0,
+   "default": 0
+  },
+  {
+   "fieldname": "esign_mode",
+   "label": "Mode",
+   "fieldtype": "Select",
+   "reqd": 0,
+   "options": "Sandbox\nLive"
+  },
+  {
+   "fieldname": "esign_api_key",
+   "label": "e-Sign API Key",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "esign_api_secret",
+   "label": "e-Sign API Secret",
+   "fieldtype": "Password",
+   "reqd": 0
+  },
+  {
+   "fieldname": "esign_live_endpoint",
+   "label": "Live Endpoint URL",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "https://api.esign.gov.in/v1"
+  },
+  {
+   "fieldname": "esign_sandbox_endpoint",
+   "label": "Sandbox Endpoint URL",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "default": "https://sandbox.esign.gov.in/v1"
+  },
+  {
+   "fieldname": "column_break_esign",
+   "label": "",
+   "fieldtype": "Column Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "esign_provider",
+   "label": "Provider",
+   "fieldtype": "Select",
+   "reqd": 0,
+   "options": "eSign (CDAC)\nDigiLocker\nSignDesk\nAadhaar eSign"
+  },
+  {
+   "fieldname": "esign_certificate_id",
+   "label": "Certificate ID",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "test_esign_connection",
+   "label": "Test e-Sign Connection",
+   "fieldtype": "Button",
+   "reqd": 0,
+   "options": "test_esign_connection"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "print": 0,
+   "email": 0,
+   "export": 0,
+   "share": 0,
+   "report": 0
+  },
+  {
+   "role": "Banking System Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "print": 0,
+   "email": 0,
+   "export": 0,
+   "share": 0,
+   "report": 0
+  },
+  {
+   "role": "Banking Auditor",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "print": 0,
+   "email": 0,
+   "export": 0,
+   "share": 0,
+   "report": 0
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

@@ -7,12 +7,12 @@ from frappe.utils import today, now_datetime
 
 
 class BankingPaymentOrder(Document):
-	"""Controller for Banking Payment Order with Maker-Checker workflow."""
+	"""Controller for Banking Payment Order with Maker-Checker workflow and NPCI integration."""
 
 	def autoname(self):
 		"""Auto-generate payment reference: PAY-YYYYMM-XXXXX."""
 		from frappe.model.naming import make_autoname
-		prefix = f"PAY-{frappe.utils.nowdate()[:7].replace('-', '')}-"
+		prefix = f"PAY-{frappe.utils.nowdate()[:7].replace('-', '')}-\"
 		self.name = make_autoname(prefix + "#####")
 
 	def validate(self):
@@ -49,30 +49,47 @@ class BankingPaymentOrder(Document):
 		self.process_payment()
 
 	def process_payment(self):
-		"""Process the payment: debit from account, create transaction record."""
+		"""Process the payment: debit account + NPCI execution + notification."""
 		if self.status not in ("Submitted", "Settled"):
 			return
 
-		# Debit from account
+		# Step 1: Execute via NPCI if configured
+		from bizaxl_banking.banking.payment_gateways.npci import execute_payment
+		npci_result = execute_payment(self)
+
+		if npci_result.get("status") == "failed":
+			self.status = "Failed"
+			self.db_set("status", "Failed")
+			frappe.throw(f"Payment failed: {npci_result.get('error_message', 'NPCI error')}")
+
+		# Step 2: Debit from account
 		account = frappe.get_doc("Banking Account", self.from_account)
-		ledger = account.update_balance(
+		account.update_balance(
 			debit=self.amount,
 			transaction_type="Debit",
 			reference_doctype="Banking Payment Order",
 			reference_docname=self.name
 		)
 
-		# Generate UTR number
-		self.utr_number = f"UTR{now_datetime().strftime('%Y%m%d%H%M%S')}{frappe.generate_hash(length=6)}"
+		# Step 3: Use NPCI UTR or generate local one
+		self.utr_number = npci_result.get("utr_number") or f"UTR{now_datetime().strftime('%Y%m%d%H%M%S')}{frappe.generate_hash(length=6)}"
 		self.status = "Settled"
-		self.settled_at = now_datetime()
+		self.settled_at = npci_result.get("settled_at") or now_datetime()
 		self.db_set("utr_number", self.utr_number)
 		self.db_set("status", "Settled")
 		self.db_set("settled_at", self.settled_at)
 
-		# Log transaction
+		# Step 4: Send transaction alert
+		try:
+			from bizaxl_banking.banking.notifications.messaging import send_transaction_alert
+			send_transaction_alert(account.customer, account.name, self)
+		except Exception:
+			pass  # Non-critical — don't fail payment if notification fails
+
 		frappe.db.commit()
-		frappe.msgprint(f"Payment processed successfully. UTR: {self.utr_number}")
+
+		status_msg = npci_result.get("message", "")
+		frappe.msgprint(f"Payment processed successfully. UTR: {self.utr_number}. {status_msg}")
 
 	def on_cancel(self):
 		"""Reverse payment on cancel."""
