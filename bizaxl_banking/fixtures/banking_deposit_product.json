@@ -1,0 +1,90 @@
+[
+ {
+  "doctype": "Banking Deposit Product",
+  "product_name": "Regular Savings",
+  "product_type": "Savings",
+  "interest_rate": 3.5,
+  "min_balance": 1000,
+  "min_tenure_days": 0,
+  "max_tenure_days": 0,
+  "premature_penalty_pct": 0,
+  "tds_applicable": 0
+ },
+ {
+  "doctype": "Banking Deposit Product",
+  "product_name": "Premium Savings",
+  "product_type": "Savings",
+  "interest_rate": 4.0,
+  "min_balance": 100000,
+  "min_tenure_days": 0,
+  "max_tenure_days": 0,
+  "premature_penalty_pct": 0,
+  "tds_applicable": 0
+ },
+ {
+  "doctype": "Banking Deposit Product",
+  "product_name": "Salary Savings",
+  "product_type": "Savings",
+  "interest_rate": 3.5,
+  "min_balance": 0,
+  "min_tenure_days": 0,
+  "max_tenure_days": 0,
+  "premature_penalty_pct": 0,
+  "tds_applicable": 0
+ },
+ {
+  "doctype": "Banking Deposit Product",
+  "product_name": "Standard FD (1 Yr)",
+  "product_type": "Fixed Deposit",
+  "interest_rate": 6.5,
+  "min_balance": 5000,
+  "min_tenure_days": 180,
+  "max_tenure_days": 365,
+  "premature_penalty_pct": 0.5,
+  "tds_applicable": 1
+ },
+ {
+  "doctype": "Banking Deposit Product",
+  "product_name": "Senior Citizen FD (1 Yr)",
+  "product_type": "Fixed Deposit",
+  "interest_rate": 7.0,
+  "min_balance": 5000,
+  "min_tenure_days": 180,
+  "max_tenure_days": 365,
+  "premature_penalty_pct": 0.5,
+  "tds_applicable": 1
+ },
+ {
+  "doctype": "Banking Deposit Product",
+  "product_name": "Recurring Deposit (12M)",
+  "product_type": "Recurring Deposit",
+  "interest_rate": 6.0,
+  "min_balance": 500,
+  "min_tenure_days": 180,
+  "max_tenure_days": 365,
+  "premature_penalty_pct": 0.5,
+  "tds_applicable": 1
+ },
+ {
+  "doctype": "Banking Deposit Product",
+  "product_name": "PPF",
+  "product_type": "PPF",
+  "interest_rate": 7.1,
+  "min_balance": 500,
+  "min_tenure_days": 0,
+  "max_tenure_days": 0,
+  "premature_penalty_pct": 0,
+  "tds_applicable": 0
+ },
+ {
+  "doctype": "Banking Deposit Product",
+  "product_name": "Sukanya Samriddhi Yojana (SSY)",
+  "product_type": "SSY",
+  "interest_rate": 8.2,
+  "min_balance": 250,
+  "min_tenure_days": 0,
+  "max_tenure_days": 0,
+  "premature_penalty_pct": 0,
+  "tds_applicable": 0
+ }
+]
