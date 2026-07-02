@@ -1,0 +1,14 @@
+{
+ "doctype": "Report",
+ "report_name": "Portfolio Summary",
+ "name": "Portfolio Summary",
+ "report_type": "Script Report",
+ "ref_doctype": "Banking Account",
+ "is_standard": "Yes",
+ "module": "Banking",
+ "roles": [
+  {"role": "Banking System Admin"},
+  {"role": "Banking Branch Manager"},
+  {"role": "Banking Auditor"}
+ ]
+}

@@ -1,0 +1,14 @@
+{
+ "doctype": "Report",
+ "report_name": "KYC Pending Tracker",
+ "name": "KYC Pending Tracker",
+ "report_type": "Script Report",
+ "ref_doctype": "Banking Customer",
+ "is_standard": "Yes",
+ "module": "Banking",
+ "roles": [
+  {"role": "Banking System Admin"},
+  {"role": "Banking Branch Manager"},
+  {"role": "Banking Relationship Manager"}
+ ]
+}

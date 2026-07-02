@@ -1,0 +1,132 @@
+[
+ {
+  "doctype": "Notification",
+  "name": "Transaction Alert",
+  "subject": "Transaction Alert - {{ doc.payment_ref }}",
+  "document_type": "Banking Payment Order",
+  "event": "Value Change",
+  "value_changed": "status",
+  "condition": "doc.status == 'Settled'",
+  "message": "<h3>Transaction Alert</h3>\n<p><b>Payment Reference:</b> {{ doc.payment_ref }}</p>\n<p><b>Amount:</b> ₹{{ frappe.utils.fmt_money(doc.amount) }}</p>\n<p><b>From Account:</b> {{ doc.from_account }}</p>\n<p><b>UTR Number:</b> {{ doc.utr_number }}</p>\n<p><b>Status:</b> {{ doc.status }}</p>\n<p><b>Settled At:</b> {{ doc.settled_at }}</p>",
+  "channel": "System Notification",
+  "is_standard": 1,
+  "module": "Banking",
+  "send_system_notification": 1,
+  "recipients": [
+   {
+    "condition": "doc.from_account",
+    "receiver_by_document_field": "owner"
+   }
+  ]
+ },
+ {
+  "doctype": "Notification",
+  "name": "EMI Due Reminder",
+  "subject": "EMI Due Reminder - {{ doc.name }}",
+  "document_type": "Banking Loan Account",
+  "event": "Days Before",
+  "date_changed": "next_emi_date",
+  "days_before": 3,
+  "message": "<h3>EMI Payment Reminder</h3>\n<p><b>Loan Account:</b> {{ doc.name }}</p>\n<p><b>EMI Amount:</b> ₹{{ frappe.utils.fmt_money(doc.monthly_emi) }}</p>\n<p><b>Due Date:</b> {{ doc.next_emi_date }}</p>\n<p><b>Outstanding Principal:</b> ₹{{ frappe.utils.fmt_money(doc.outstanding_principal) }}</p>\n<p>Please ensure sufficient balance in your linked account.</p>",
+  "channel": "System Notification",
+  "is_standard": 1,
+  "module": "Banking",
+  "send_system_notification": 1,
+  "recipients": [
+   {
+    "receiver_by_document_field": "owner"
+   }
+  ]
+ },
+ {
+  "doctype": "Notification",
+  "name": "NPA Classification Alert",
+  "subject": "NPA Alert - {{ doc.loan_account }} classified as {{ doc.npa_classification }}",
+  "document_type": "Banking NPA Tracker",
+  "event": "New",
+  "message": "<h3>NPA Classification Alert</h3>\n<p><b>Loan Account:</b> {{ doc.loan_account }}</p>\n<p><b>Classification:</b> {{ doc.npa_classification }}</p>\n<p><b>Days Past Due:</b> {{ doc.dpd }} days</p>\n<p><b>Outstanding Amount:</b> ₹{{ frappe.utils.fmt_money(doc.outstanding_amount) }}</p>\n<p><b>Provision Required:</b> ₹{{ frappe.utils.fmt_money(doc.provision_required) }}</p>",
+  "channel": "System Notification",
+  "is_standard": 1,
+  "module": "Banking",
+  "send_system_notification": 1,
+  "recipients": [
+   {
+    "receiver_by_document_field": "owner"
+   }
+  ]
+ },
+ {
+  "doctype": "Notification",
+  "name": "Fraud Alert Notification",
+  "subject": "Fraud Alert - {{ doc.alert_type }} ({{ doc.severity }})",
+  "document_type": "Banking Fraud Alert",
+  "event": "New",
+  "message": "<h3>Fraud Alert</h3>\n<p><b>Alert Type:</b> {{ doc.alert_type }}</p>\n<p><b>Severity:</b> {{ doc.severity }}</p>\n<p><b>Account:</b> {{ doc.account }}</p>\n<p><b>Amount:</b> ₹{{ frappe.utils.fmt_money(doc.transaction_amount) }}</p>\n<p><b>Status:</b> {{ doc.status }}</p>\n<p><b>Description:</b> {{ doc.description }}</p>",
+  "channel": "System Notification",
+  "is_standard": 1,
+  "module": "Banking",
+  "send_system_notification": 1,
+  "recipients": [
+   {
+    "receiver_by_document_field": "owner"
+   }
+  ]
+ },
+ {
+  "doctype": "Notification",
+  "name": "KYC Reverification Due",
+  "subject": "KYC Re-verification Due - {{ doc.full_name }}",
+  "document_type": "Banking Customer",
+  "event": "Value Change",
+  "value_changed": "kyc_status",
+  "condition": "doc.kyc_status == 'Expired' or doc.kyc_status == 'Pending'",
+  "message": "<h3>KYC Re-verification Required</h3>\n<p><b>Customer:</b> {{ doc.full_name }}</p>\n<p><b>Customer ID:</b> {{ doc.name }}</p>\n<p><b>KYC Status:</b> {{ doc.kyc_status }}</p>\n<p><b>Risk Category:</b> {{ doc.risk_category }}</p>\n<p>Please submit updated KYC documents to avoid account restrictions.</p>",
+  "channel": "System Notification",
+  "is_standard": 1,
+  "module": "Banking",
+  "send_system_notification": 1,
+  "recipients": [
+   {
+    "receiver_by_document_field": "owner"
+   }
+  ]
+ },
+ {
+  "doctype": "Notification",
+  "name": "Dispute Case Escalated",
+  "subject": "Dispute Escalated - {{ doc.subject }}",
+  "document_type": "Banking Dispute Case",
+  "event": "Value Change",
+  "value_changed": "status",
+  "condition": "doc.status == 'Escalated'",
+  "message": "<h3>Dispute Case Escalated</h3>\n<p><b>Subject:</b> {{ doc.subject }}</p>\n<p><b>Account:</b> {{ doc.account }}</p>\n<p><b>Transaction Amount:</b> ₹{{ frappe.utils.fmt_money(doc.transaction_amount) }}</p>\n<p><b>SLA Deadline:</b> {{ doc.sla_deadline }}</p>\n<p><b>Assigned To:</b> {{ doc.assigned_to }}</p>",
+  "channel": "System Notification",
+  "is_standard": 1,
+  "module": "Banking",
+  "send_system_notification": 1,
+  "recipients": [
+   {
+    "receiver_by_document_field": "owner"
+   }
+  ]
+ },
+ {
+  "doctype": "Notification",
+  "name": "Loan Application Status Update",
+  "subject": "Loan Application {{ doc.name }} - {{ doc.decision }}",
+  "document_type": "Banking Loan Application",
+  "event": "Value Change",
+  "value_changed": "decision",
+  "condition": "doc.decision in ('Approved', 'Rejected')",
+  "message": "<h3>Loan Application Decision</h3>\n<p><b>Application:</b> {{ doc.name }}</p>\n<p><b>Applicant:</b> {{ doc.applicant_name }}</p>\n<p><b>Loan Type:</b> {{ doc.loan_type }}</p>\n<p><b>Amount:</b> ₹{{ frappe.utils.fmt_money(doc.loan_amount_requested) }}</p>\n<p><b>Decision:</b> {{ doc.decision }}</p>",
+  "channel": "System Notification",
+  "is_standard": 1,
+  "module": "Banking",
+  "send_system_notification": 1,
+  "recipients": [
+   {
+    "receiver_by_document_field": "owner"
+   }
+  ]
+ }
+]

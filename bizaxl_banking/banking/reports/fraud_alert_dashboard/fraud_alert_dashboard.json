@@ -1,0 +1,13 @@
+{
+ "doctype": "Report",
+ "report_name": "Fraud Alert Dashboard",
+ "name": "Fraud Alert Dashboard",
+ "report_type": "Script Report",
+ "ref_doctype": "Banking Fraud Alert",
+ "is_standard": "Yes",
+ "module": "Banking",
+ "roles": [
+  {"role": "Banking System Admin"},
+  {"role": "Banking Compliance Officer"}
+ ]
+}

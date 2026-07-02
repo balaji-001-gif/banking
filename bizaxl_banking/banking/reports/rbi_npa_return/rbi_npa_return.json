@@ -1,0 +1,13 @@
+{
+ "doctype": "Report",
+ "report_name": "RBI NPA Return",
+ "name": "RBI NPA Return",
+ "report_type": "Script Report",
+ "ref_doctype": "Banking NPA Tracker",
+ "is_standard": "Yes",
+ "module": "Banking",
+ "roles": [
+  {"role": "Banking System Admin"},
+  {"role": "Banking Compliance Officer"}
+ ]
+}

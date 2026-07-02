@@ -1,0 +1,13 @@
+{
+ "doctype": "Report",
+ "report_name": "CTR/STR Export",
+ "name": "CTR/STR Export",
+ "report_type": "Script Report",
+ "ref_doctype": "Banking Transaction Ledger",
+ "is_standard": "Yes",
+ "module": "Banking",
+ "roles": [
+  {"role": "Banking System Admin"},
+  {"role": "Banking Compliance Officer"}
+ ]
+}

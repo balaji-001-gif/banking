@@ -16,7 +16,9 @@ fixtures = [
 	{"doctype": "Banking Deposit Product", "filters": [["product_name", "like", "%"]]},
 	{"doctype": "Banking Interest Rate Schedule", "filters": [["product_type", "like", "%"]]},
 	{"doctype": "Banking State", "filters": [["state_name", "like", "%"]]},
-	{"doctype": "Banking Integration Settings"}
+	{"doctype": "Banking Integration Settings"},
+	{"doctype": "Workspace", "filters": [["module", "=", "Banking"]]},
+	{"doctype": "Notification", "filters": [["module", "=", "Banking"]]}
 ]
 
 # Scheduled Tasks ------------------------------------------------------

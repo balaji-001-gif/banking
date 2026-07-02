@@ -1,0 +1,13 @@
+{
+ "doctype": "Report",
+ "report_name": "Payment Reconciliation",
+ "name": "Payment Reconciliation",
+ "report_type": "Script Report",
+ "ref_doctype": "Banking Payment Order",
+ "is_standard": "Yes",
+ "module": "Banking",
+ "roles": [
+  {"role": "Banking System Admin"},
+  {"role": "Banking Auditor"}
+ ]
+}
