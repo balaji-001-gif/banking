@@ -1,359 +1,517 @@
-[
- {
+{
   "doctype": "Workspace",
   "name": "Banking",
   "label": "Banking",
-  "module": "Banking",
+  "title": "Banking",
   "icon": "bank",
+  "module": "Banking",
+  "public": 1,
   "is_standard": 1,
+  "is_hidden": 0,
+  "is_default": 0,
+  "developer_mode_only": 0,
+  "disable_user_customization": 0,
+  "hide_custom": 0,
+  "restrict_to_domain": "",
+  "for_user": "",
+  "sequence_id": 24,
+  "creation": "2024-01-01 00:00:00.000000",
+  "modified": "2024-01-01 00:00:00.000000",
+  "modified_by": "Administrator",
+  "owner": "Administrator",
+  "docstatus": 0,
+  "idx": 0,
   "indicator": "blue",
   "link_type": "DocType",
+  "charts": [],
+  "shortcuts": [
+    {
+      "type": "DocType",
+      "link_to": "Banking Customer",
+      "label": "Banking Customer"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Banking Account",
+      "label": "Banking Account"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Banking Payment Order",
+      "label": "Banking Payment Order"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Banking Loan Application",
+      "label": "Banking Loan Application"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Banking Fraud Alert",
+      "label": "Banking Fraud Alert"
+    },
+    {
+      "type": "DocType",
+      "link_to": "Banking Dispute Case",
+      "label": "Banking Dispute Case"
+    },
+    {
+      "type": "Report",
+      "link_to": "Portfolio Summary",
+      "label": "Portfolio Summary"
+    },
+    {
+      "type": "Report",
+      "link_to": "Transaction Log",
+      "label": "Transaction Log"
+    }
+  ],
+  "content": "[{\"id\":\"cb-onboarding\",\"type\":\"card\",\"data\":{\"card_name\":\"Customer Onboarding\",\"col\":12}},{\"id\":\"cb-accounts\",\"type\":\"card\",\"data\":{\"card_name\":\"Accounts & Deposits\",\"col\":12}},{\"id\":\"cb-payments\",\"type\":\"card\",\"data\":{\"card_name\":\"Payments & Transfers\",\"col\":12}},{\"id\":\"cb-lending\",\"type\":\"card\",\"data\":{\"card_name\":\"Lending & Credit\",\"col\":12}},{\"id\":\"cb-compliance\",\"type\":\"card\",\"data\":{\"card_name\":\"Compliance & Risk\",\"col\":12}},{\"id\":\"cb-operations\",\"type\":\"card\",\"data\":{\"card_name\":\"Operations & Settings\",\"col\":12}},{\"id\":\"cb-reports\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":12}}]",
   "links": [
-   {
-    "type": "Card Break",
-    "label": "Customer Onboarding",
-    "hidden": 0,
-    "is_standard": 1,
-    "link_count": 0
-   },
-   {
-    "label": "Banking Customer Lead",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Customer Lead",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking Customer",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Customer",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking KYC Document",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking KYC Document",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking AML Screening Log",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking AML Screening Log",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "type": "Card Break",
-    "label": "Accounts & Deposits",
-    "hidden": 0,
-    "is_standard": 1,
-    "link_count": 0
-   },
-   {
-    "label": "Banking Account",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Account",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking Deposit Product",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Deposit Product",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking Interest Rate Schedule",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Interest Rate Schedule",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking Account Entitlement",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Account Entitlement",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "type": "Card Break",
-    "label": "Payments & Transfers",
-    "hidden": 0,
-    "is_standard": 1,
-    "link_count": 0
-   },
-   {
-    "label": "Banking Payment Order",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Payment Order",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking Standing Instruction",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Standing Instruction",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking NACH Mandate",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking NACH Mandate",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking Bulk Payment",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Bulk Payment",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "type": "Card Break",
-    "label": "Lending & Credit",
-    "hidden": 0,
-    "is_standard": 1,
-    "link_count": 0
-   },
-   {
-    "label": "Banking Loan Application",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Loan Application",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking Loan Account",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Loan Account",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking Collateral",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Collateral",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking NPA Tracker",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking NPA Tracker",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "type": "Card Break",
-    "label": "Compliance & Risk",
-    "hidden": 0,
-    "is_standard": 1,
-    "link_count": 0
-   },
-   {
-    "label": "Banking Fraud Alert",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Fraud Alert",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking Dispute Case",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Dispute Case",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking Positive Pay",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Positive Pay",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking Regulatory Report",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Regulatory Report",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "type": "Card Break",
-    "label": "Operations & Settings",
-    "hidden": 0,
-    "is_standard": 1,
-    "link_count": 0
-   },
-   {
-    "label": "Banking Branch",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Branch",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking State",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking State",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking Service Charge Rule",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Service Charge Rule",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking Configuration",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Configuration",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Banking Integration Settings",
-    "type": "Link",
-    "link_type": "DocType",
-    "link_to": "Banking Integration Settings",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "type": "Card Break",
-    "label": "Reports",
-    "hidden": 0,
-    "is_standard": 1,
-    "link_count": 0
-   },
-   {
-    "label": "Portfolio Summary",
-    "type": "Link",
-    "link_type": "Report",
-    "link_to": "Portfolio Summary",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Transaction Log",
-    "type": "Link",
-    "link_type": "Report",
-    "link_to": "Transaction Log",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "KYC Pending Tracker",
-    "type": "Link",
-    "link_type": "Report",
-    "link_to": "KYC Pending Tracker",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Fraud Alert Dashboard",
-    "type": "Link",
-    "link_type": "Report",
-    "link_to": "Fraud Alert Dashboard",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "NPA Register",
-    "type": "Link",
-    "link_type": "Report",
-    "link_to": "NPA Register",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "EMI Dues & Collections",
-    "type": "Link",
-    "link_type": "Report",
-    "link_to": "EMI Dues & Collections",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Payment Reconciliation",
-    "type": "Link",
-    "link_type": "Report",
-    "link_to": "Payment Reconciliation",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "AML Screening Summary",
-    "type": "Link",
-    "link_type": "Report",
-    "link_to": "AML Screening Summary",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Interest Income Accrual",
-    "type": "Link",
-    "link_type": "Report",
-    "link_to": "Interest Income Accrual",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "RBI NPA Return",
-    "type": "Link",
-    "link_type": "Report",
-    "link_to": "RBI NPA Return",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "Priority Sector Lending",
-    "type": "Link",
-    "link_type": "Report",
-    "link_to": "Priority Sector Lending",
-    "is_standard": 1,
-    "hidden": 0
-   },
-   {
-    "label": "CTR/STR Export",
-    "type": "Link",
-    "link_type": "Report",
-    "link_to": "CTR/STR Export",
-    "is_standard": 1,
-    "hidden": 0
-   }
+    {
+      "type": "Card Break",
+      "label": "Customer Onboarding",
+      "hidden": 0,
+      "is_standard": 1,
+      "idx": 1,
+      "onboard": 1,
+      "link_count": 0
+    },
+    {
+      "label": "Banking Customer Lead",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Customer Lead",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 2,
+      "onboard": 1
+    },
+    {
+      "label": "Banking Customer",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Customer",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 3,
+      "onboard": 1
+    },
+    {
+      "label": "Banking KYC Document",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking KYC Document",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 4,
+      "onboard": 0
+    },
+    {
+      "label": "Banking AML Screening Log",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking AML Screening Log",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 5,
+      "onboard": 0
+    },
+    {
+      "type": "Card Break",
+      "label": "Accounts & Deposits",
+      "hidden": 0,
+      "is_standard": 1,
+      "idx": 6,
+      "onboard": 1,
+      "link_count": 0
+    },
+    {
+      "label": "Banking Account",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Account",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 7,
+      "onboard": 1
+    },
+    {
+      "label": "Banking Deposit Product",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Deposit Product",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 8,
+      "onboard": 0
+    },
+    {
+      "label": "Banking Interest Rate Schedule",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Interest Rate Schedule",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 9,
+      "onboard": 0
+    },
+    {
+      "label": "Banking Account Entitlement",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Account Entitlement",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 10,
+      "onboard": 0
+    },
+    {
+      "type": "Card Break",
+      "label": "Payments & Transfers",
+      "hidden": 0,
+      "is_standard": 1,
+      "idx": 11,
+      "onboard": 0,
+      "link_count": 0
+    },
+    {
+      "label": "Banking Payment Order",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Payment Order",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 12,
+      "onboard": 1
+    },
+    {
+      "label": "Banking Standing Instruction",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Standing Instruction",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 13,
+      "onboard": 0
+    },
+    {
+      "label": "Banking NACH Mandate",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking NACH Mandate",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 14,
+      "onboard": 0
+    },
+    {
+      "label": "Banking Bulk Payment",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Bulk Payment",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 15,
+      "onboard": 0
+    },
+    {
+      "type": "Card Break",
+      "label": "Lending & Credit",
+      "hidden": 0,
+      "is_standard": 1,
+      "idx": 16,
+      "onboard": 0,
+      "link_count": 0
+    },
+    {
+      "label": "Banking Loan Application",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Loan Application",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 17,
+      "onboard": 1
+    },
+    {
+      "label": "Banking Loan Account",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Loan Account",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 18,
+      "onboard": 0
+    },
+    {
+      "label": "Banking Collateral",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Collateral",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 19,
+      "onboard": 0
+    },
+    {
+      "label": "Banking NPA Tracker",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking NPA Tracker",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 20,
+      "onboard": 0
+    },
+    {
+      "type": "Card Break",
+      "label": "Compliance & Risk",
+      "hidden": 0,
+      "is_standard": 1,
+      "idx": 21,
+      "onboard": 0,
+      "link_count": 0
+    },
+    {
+      "label": "Banking Fraud Alert",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Fraud Alert",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 22,
+      "onboard": 0
+    },
+    {
+      "label": "Banking Dispute Case",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Dispute Case",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 23,
+      "onboard": 0
+    },
+    {
+      "label": "Banking Positive Pay",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Positive Pay",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 24,
+      "onboard": 0
+    },
+    {
+      "label": "Banking Regulatory Report",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Regulatory Report",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 25,
+      "onboard": 0
+    },
+    {
+      "type": "Card Break",
+      "label": "Operations & Settings",
+      "hidden": 0,
+      "is_standard": 1,
+      "idx": 26,
+      "onboard": 0,
+      "link_count": 0
+    },
+    {
+      "label": "Banking Branch",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Branch",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 27,
+      "onboard": 0
+    },
+    {
+      "label": "Banking State",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking State",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 28,
+      "onboard": 0
+    },
+    {
+      "label": "Banking Service Charge Rule",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Service Charge Rule",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 29,
+      "onboard": 0
+    },
+    {
+      "label": "Banking Configuration",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Configuration",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 30,
+      "onboard": 0
+    },
+    {
+      "label": "Banking Integration Settings",
+      "type": "Link",
+      "link_type": "DocType",
+      "link_to": "Banking Integration Settings",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 31,
+      "onboard": 0
+    },
+    {
+      "type": "Card Break",
+      "label": "Reports",
+      "hidden": 0,
+      "is_standard": 1,
+      "idx": 32,
+      "onboard": 0,
+      "link_count": 0
+    },
+    {
+      "label": "Portfolio Summary",
+      "type": "Link",
+      "link_type": "Report",
+      "link_to": "Portfolio Summary",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 33,
+      "onboard": 0,
+      "is_query_report": 1
+    },
+    {
+      "label": "Transaction Log",
+      "type": "Link",
+      "link_type": "Report",
+      "link_to": "Transaction Log",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 34,
+      "onboard": 0,
+      "is_query_report": 1
+    },
+    {
+      "label": "KYC Pending Tracker",
+      "type": "Link",
+      "link_type": "Report",
+      "link_to": "KYC Pending Tracker",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 35,
+      "onboard": 0,
+      "is_query_report": 1
+    },
+    {
+      "label": "Fraud Alert Dashboard",
+      "type": "Link",
+      "link_type": "Report",
+      "link_to": "Fraud Alert Dashboard",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 36,
+      "onboard": 0,
+      "is_query_report": 1
+    },
+    {
+      "label": "NPA Register",
+      "type": "Link",
+      "link_type": "Report",
+      "link_to": "NPA Register",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 37,
+      "onboard": 0,
+      "is_query_report": 1
+    },
+    {
+      "label": "EMI Dues & Collections",
+      "type": "Link",
+      "link_type": "Report",
+      "link_to": "EMI Dues & Collections",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 38,
+      "onboard": 0,
+      "is_query_report": 1
+    },
+    {
+      "label": "Payment Reconciliation",
+      "type": "Link",
+      "link_type": "Report",
+      "link_to": "Payment Reconciliation",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 39,
+      "onboard": 0,
+      "is_query_report": 1
+    },
+    {
+      "label": "AML Screening Summary",
+      "type": "Link",
+      "link_type": "Report",
+      "link_to": "AML Screening Summary",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 40,
+      "onboard": 0,
+      "is_query_report": 1
+    },
+    {
+      "label": "Interest Income Accrual",
+      "type": "Link",
+      "link_type": "Report",
+      "link_to": "Interest Income Accrual",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 41,
+      "onboard": 0,
+      "is_query_report": 1
+    },
+    {
+      "label": "RBI NPA Return",
+      "type": "Link",
+      "link_type": "Report",
+      "link_to": "RBI NPA Return",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 42,
+      "onboard": 0,
+      "is_query_report": 1
+    },
+    {
+      "label": "Priority Sector Lending",
+      "type": "Link",
+      "link_type": "Report",
+      "link_to": "Priority Sector Lending",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 43,
+      "onboard": 0,
+      "is_query_report": 1
+    },
+    {
+      "label": "CTR/STR Export",
+      "type": "Link",
+      "link_type": "Report",
+      "link_to": "CTR/STR Export",
+      "is_standard": 1,
+      "hidden": 0,
+      "idx": 44,
+      "onboard": 0,
+      "is_query_report": 1
+    }
   ]
- }
-]
+}
