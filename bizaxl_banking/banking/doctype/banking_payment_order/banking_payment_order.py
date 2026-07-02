@@ -12,7 +12,7 @@ class BankingPaymentOrder(Document):
 	def autoname(self):
 		"""Auto-generate payment reference: PAY-YYYYMM-XXXXX."""
 		from frappe.model.naming import make_autoname
-		prefix = f"PAY-{frappe.utils.nowdate()[:7].replace('-', '')}-\"
+		prefix = f"PAY-{frappe.utils.nowdate()[:7].replace('-', '')}-"
 		self.name = make_autoname(prefix + "#####")
 
 	def validate(self):

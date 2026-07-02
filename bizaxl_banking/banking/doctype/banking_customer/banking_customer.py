@@ -18,7 +18,7 @@ class BankingCustomer(Document):
 	def autoname(self):
 		"""Auto-generate customer ID: CUST-YYYY-MM-XXXXX"""
 		from frappe.model.naming import make_autoname
-		prefix = f"CUST-{frappe.utils.nowdate()[:7]}-\"
+		prefix = f"CUST-{frappe.utils.nowdate()[:7]}-"
 		self.name = make_autoname(prefix + "#####")
 
 	def validate(self):
