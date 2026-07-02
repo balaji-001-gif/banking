@@ -1,0 +1,221 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Customer Lead",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "title_field": "full_name",
+ "field_order": [
+  "full_name",
+  "customer_type",
+  "mobile",
+  "pan_number",
+  "aadhaar_masked",
+  "email",
+  "lead_source",
+  "lead_status",
+  "lead_date",
+  "branch",
+  "assigned_rm",
+  "product_interest",
+  "notes",
+  "converted_to_customer",
+  "column_break_extra",
+  "date_of_birth",
+  "address"
+ ],
+ "fields": [
+  {
+   "fieldname": "full_name",
+   "label": "Full Name",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_type",
+   "label": "Customer Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Individual\nProprietary\nPartnership\nCompany\nTrust\nCo-op Society"
+  },
+  {
+   "fieldname": "mobile",
+   "label": "Mobile",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "pan_number",
+   "label": "PAN Number",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "aadhaar_masked",
+   "label": "Aadhaar (Masked)",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "email",
+   "label": "Email",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "lead_source",
+   "label": "Lead Source",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Walk-in\nReferral\nWebsite\nCampaign\nAgent\nBranch\nPartner\nOther"
+  },
+  {
+   "fieldname": "lead_status",
+   "label": "Lead Status",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "New\nContacted\nQualified\nProposal\nConverted\nLost"
+  },
+  {
+   "fieldname": "lead_date",
+   "label": "Lead Date",
+   "fieldtype": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "branch",
+   "label": "Branch",
+   "fieldtype": "Link",
+   "reqd": 0,
+   "options": "Banking Branch"
+  },
+  {
+   "fieldname": "assigned_rm",
+   "label": "Assigned RM",
+   "fieldtype": "Link",
+   "reqd": 0,
+   "options": "User"
+  },
+  {
+   "fieldname": "product_interest",
+   "label": "Product Interest",
+   "fieldtype": "Select",
+   "reqd": 0,
+   "options": "Savings Account\nCurrent Account\nFixed Deposit\nRecurring Deposit\nPersonal Loan\nHome Loan\nMSME Loan\nCredit Card\nDemat Account"
+  },
+  {
+   "fieldname": "notes",
+   "label": "Notes",
+   "fieldtype": "Small Text",
+   "reqd": 0
+  },
+  {
+   "fieldname": "converted_to_customer",
+   "label": "Converted To Customer",
+   "fieldtype": "Link",
+   "reqd": 0,
+   "options": "Banking Customer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_extra",
+   "label": "",
+   "fieldtype": "Column Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "date_of_birth",
+   "label": "Date of Birth",
+   "fieldtype": "Date",
+   "reqd": 0
+  },
+  {
+   "fieldname": "address",
+   "label": "Address",
+   "fieldtype": "Small Text",
+   "reqd": 0
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "role": "Banking System Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "role": "Banking Branch Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "role": "Banking Relationship Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "if_owner": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "role": "Banking Teller",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "if_owner": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "role": "Banking Auditor",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

@@ -1,0 +1,131 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Interest Rate Schedule",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "format:{product_type}-{min_amount}-{max_amount}",
+ "field_order": [
+  "product_type",
+  "deposit_product",
+  "min_amount",
+  "max_amount",
+  "interest_rate",
+  "min_tenure_days",
+  "max_tenure_days",
+  "is_active",
+  "effective_from",
+  "effective_to"
+ ],
+ "fields": [
+  {
+   "fieldname": "product_type",
+   "label": "Product Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Savings\nCurrent\nFixed Deposit\nRecurring Deposit\nPPF\nSSY"
+  },
+  {
+   "fieldname": "deposit_product",
+   "label": "Deposit Product",
+   "fieldtype": "Link",
+   "reqd": 0,
+   "options": "Banking Deposit Product"
+  },
+  {
+   "fieldname": "min_amount",
+   "label": "Minimum Amount (₹)",
+   "fieldtype": "Currency",
+   "reqd": 1,
+   "description": "Lower bound of the slab (inclusive)"
+  },
+  {
+   "fieldname": "max_amount",
+   "label": "Maximum Amount (₹)",
+   "fieldtype": "Currency",
+   "reqd": 1,
+   "description": "Upper bound of the slab (inclusive). Use 999999999 for unlimited."
+  },
+  {
+   "fieldname": "interest_rate",
+   "label": "Interest Rate (%)",
+   "fieldtype": "Percent",
+   "reqd": 1,
+   "description": "Annual interest rate for this slab"
+  },
+  {
+   "fieldname": "min_tenure_days",
+   "label": "Minimum Tenure (Days)",
+   "fieldtype": "Int",
+   "reqd": 0
+  },
+  {
+   "fieldname": "max_tenure_days",
+   "label": "Maximum Tenure (Days)",
+   "fieldtype": "Int",
+   "reqd": 0
+  },
+  {
+   "fieldname": "is_active",
+   "label": "Is Active",
+   "fieldtype": "Check",
+   "reqd": 1,
+   "default": 1
+  },
+  {
+   "fieldname": "effective_from",
+   "label": "Effective From",
+   "fieldtype": "Date",
+   "reqd": 0
+  },
+  {
+   "fieldname": "effective_to",
+   "label": "Effective To",
+   "fieldtype": "Date",
+   "reqd": 0
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "role": "Banking System Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "role": "Banking Auditor",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

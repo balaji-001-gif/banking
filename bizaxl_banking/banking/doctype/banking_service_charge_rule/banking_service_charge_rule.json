@@ -1,0 +1,132 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Service Charge Rule",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "format:{charge_type}-{account_type}",
+ "field_order": [
+  "charge_type",
+  "account_type",
+  "charge_amount",
+  "charge_percentage",
+  "min_charge",
+  "max_charge",
+  "frequency",
+  "is_active",
+  "applicable_if_balance_below",
+  "waived_for_min_balance"
+ ],
+ "fields": [
+  {
+   "fieldname": "charge_type",
+   "label": "Charge Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Account Maintenance\nATM Fee\nCheque Return\nSMS Alert\nDD/Pay Order\nStatement\nRTGS/NEFT\nDebit Card\nOverdraft Interest\nLate Payment Penalty"
+  },
+  {
+   "fieldname": "account_type",
+   "label": "Account Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "All\nSavings\nCurrent\nSalary\nNRE\nNRO\nCash Credit\nOverdraft"
+  },
+  {
+   "fieldname": "charge_amount",
+   "label": "Charge Amount (₹)",
+   "fieldtype": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "charge_percentage",
+   "label": "Charge Percentage (%)",
+   "fieldtype": "Percent",
+   "reqd": 0,
+   "description": "If set, charge is calculated as % of transaction value"
+  },
+  {
+   "fieldname": "min_charge",
+   "label": "Minimum Charge (₹)",
+   "fieldtype": "Currency",
+   "reqd": 0,
+   "description": "Applies only when charge_percentage is set"
+  },
+  {
+   "fieldname": "max_charge",
+   "label": "Maximum Charge (₹)",
+   "fieldtype": "Currency",
+   "reqd": 0,
+   "description": "Applies only when charge_percentage is set"
+  },
+  {
+   "fieldname": "frequency",
+   "label": "Frequency",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "One-time\nMonthly\nQuarterly\nAnnual\nPer Transaction"
+  },
+  {
+   "fieldname": "is_active",
+   "label": "Is Active",
+   "fieldtype": "Check",
+   "reqd": 1,
+   "default": 1
+  },
+  {
+   "fieldname": "applicable_if_balance_below",
+   "label": "Applicable If Balance Below (₹)",
+   "fieldtype": "Currency",
+   "reqd": 0
+  },
+  {
+   "fieldname": "waived_for_min_balance",
+   "label": "Waived if Min Balance Maintained",
+   "fieldtype": "Check",
+   "reqd": 0
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "role": "Banking System Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "role": "Banking Auditor",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

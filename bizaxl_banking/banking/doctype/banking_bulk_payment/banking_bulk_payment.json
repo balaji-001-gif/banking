@@ -1,0 +1,166 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Bulk Payment",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "title_field": "batch_reference",
+ "field_order": [
+  "batch_reference",
+  "from_account",
+  "total_amount",
+  "total_entries",
+  "status",
+  "payment_date",
+  "uploaded_csv",
+  "maker",
+  "checker",
+  "entries_section",
+  "entries"
+ ],
+ "fields": [
+  {
+   "fieldname": "batch_reference",
+   "label": "Batch Reference",
+   "fieldtype": "Data",
+   "reqd": 0
+  },
+  {
+   "fieldname": "from_account",
+   "label": "From Account",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Account"
+  },
+  {
+   "fieldname": "total_amount",
+   "label": "Total Amount (₹)",
+   "fieldtype": "Currency",
+   "reqd": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_entries",
+   "label": "Total Entries",
+   "fieldtype": "Int",
+   "reqd": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Draft\nPending Approval\nApproved\nProcessing\nCompleted\nPartially Completed\nFailed"
+  },
+  {
+   "fieldname": "payment_date",
+   "label": "Payment Date",
+   "fieldtype": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "uploaded_csv",
+   "label": "Uploaded CSV",
+   "fieldtype": "Attach",
+   "reqd": 0,
+   "description": "Upload CSV with columns: beneficiary_name, to_account_no, to_ifsc, payment_rail, amount, narration"
+  },
+  {
+   "fieldname": "maker",
+   "label": "Maker",
+   "fieldtype": "Link",
+   "reqd": 0,
+   "options": "User"
+  },
+  {
+   "fieldname": "checker",
+   "label": "Checker",
+   "fieldtype": "Link",
+   "reqd": 0,
+   "options": "User"
+  },
+  {
+   "fieldname": "entries_section",
+   "label": "Payment Entries",
+   "fieldtype": "Section Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "entries",
+   "label": "Payment Entries",
+   "fieldtype": "Table",
+   "reqd": 0,
+   "options": "Banking Bulk Payment Entry"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "role": "Banking System Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "role": "Banking Branch Manager",
+   "read": 1,
+   "write": 1,
+   "create": 0,
+   "delete": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "role": "Banking Teller",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "if_owner": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "role": "Banking Auditor",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

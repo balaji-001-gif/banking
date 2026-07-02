@@ -7,7 +7,7 @@ from frappe.utils import today, add_months, getdate, date_diff
 
 
 class BankingLoanAccount(Document):
-	"""Controller for Banking Loan Account with EMI, interest, and floating rate management."""
+	"""Controller for Banking Loan Account with EMI, interest, floating rate, and prepayment management."""
 
 	def validate(self):
 		self.validate_amounts()
@@ -129,12 +129,86 @@ class BankingLoanAccount(Document):
 		})
 		tracker.insert(ignore_permissions=True)
 
-	def update_interest_rate(self, new_rate):
-		"""Update interest rate for floating-rate loans.
+	@frappe.whitelist()
+	def process_prepayment(self, prepayment_amount):
+		"""Process loan prepayment — reduce outstanding, recalculate EMI, log transaction.
 		
-		This is called when MCLR changes. Only affects loans with 
-		rate_type = 'Floating (MCLR-linked)'.
+		Args:
+			prepayment_amount: Amount being prepaid
+		
+		Returns:
+			Dict with new outstanding, new EMI (if recalculated), and prepayment status
 		"""
+		if self.account_status not in ("Active", "NPA"):
+			frappe.throw(f"Cannot prepay loan in '{self.account_status}' status.")
+
+		prepayment_amount = float(prepayment_amount)
+		if prepayment_amount <= 0:
+			frappe.throw("Prepayment amount must be greater than zero.")
+		if prepayment_amount > self.outstanding_principal:
+			# Full prepayment — close the loan
+			prepayment_amount = self.outstanding_principal
+			self.account_status = "Prepaid"
+			self.db_set("account_status", "Prepaid")
+
+		# Log prepayment as a transaction
+		account = self._get_customer_account()
+		if account:
+			ledger = frappe.get_doc({
+				"doctype": "Banking Transaction Ledger",
+				"posting_date": today(),
+				"value_date": today(),
+				"account": account,
+				"debit_amount": 0,
+				"credit_amount": prepayment_amount,
+				"running_balance": self.outstanding_principal - prepayment_amount,
+				"source_doctype": "Banking Loan Account",
+				"source_docname": self.name,
+				"transaction_type": "Credit",
+				"is_reversed": 0
+			})
+			ledger.insert(ignore_permissions=True)
+
+		old_outstanding = self.outstanding_principal
+		self.outstanding_principal -= prepayment_amount
+		self.db_set("outstanding_principal", self.outstanding_principal)
+
+		# Recalculate EMI if partial prepayment and still active
+		old_emi = self.emi_amount
+		new_emi = old_emi
+		if self.account_status == "Active" and self.outstanding_principal > 0:
+			# Estimate remaining tenure and recalculate EMI
+			monthly_rate = self.interest_rate / 12 / 100
+			remaining_tenure = max(1, round(self.outstanding_principal / old_emi) if old_emi > 0 else 1)
+			if monthly_rate > 0:
+				factor = (1 + monthly_rate) ** remaining_tenure
+				new_emi = round(
+					self.outstanding_principal * monthly_rate * factor / (factor - 1)
+				)
+				self.emi_amount = new_emi
+				self.db_set("emi_amount", new_emi)
+		elif self.account_status == "Prepaid":
+			self.emi_amount = 0
+			self.db_set("emi_amount", 0)
+
+		frappe.msgprint(
+			f"Prepayment of ₹{prepayment_amount:,.2f} processed for Loan {self.name}.\n"
+			f"Outstanding reduced from ₹{old_outstanding:,.2f} to ₹{self.outstanding_principal:,.2f}.\n"
+			f"EMI updated from ₹{old_emi:,.2f} to ₹{new_emi:,.2f}."
+		)
+
+		return {
+			"status": "success",
+			"prepayment_amount": prepayment_amount,
+			"old_outstanding": old_outstanding,
+			"new_outstanding": self.outstanding_principal,
+			"old_emi": old_emi,
+			"new_emi": new_emi,
+			"account_status": self.account_status
+		}
+
+	def update_interest_rate(self, new_rate):
+		"""Update interest rate for floating-rate loans."""
 		if self.rate_type != "Floating (MCLR-linked)":
 			frappe.throw(f"Loan {self.name} is not a floating-rate loan. Cannot update rate.")
 
@@ -148,18 +222,15 @@ class BankingLoanAccount(Document):
 		# Recalculate EMI based on new rate
 		if self.emi_amount > 0 and self.outstanding_principal > 0:
 			monthly_rate = new_rate / 12 / 100
-			# Estimate remaining tenure based on current EMI
 			remaining_tenure_months = max(1, round(self.outstanding_principal / self.emi_amount))
-			# Recalculate EMI
 			if monthly_rate > 0 and remaining_tenure_months > 0:
+				factor = (1 + monthly_rate) ** remaining_tenure_months
 				new_emi = round(
-					self.outstanding_principal * monthly_rate * (1 + monthly_rate) ** remaining_tenure_months
-					/ ((1 + monthly_rate) ** remaining_tenure_months - 1)
+					self.outstanding_principal * monthly_rate * factor / (factor - 1)
 				)
 				self.emi_amount = new_emi
 				self.db_set("emi_amount", new_emi)
 
-		# Log the rate change
 		frappe.msgprint(
 			f"Interest rate for Loan {self.name} updated from {old_rate}% to {new_rate}%. "
 			f"New EMI: ₹{self.emi_amount}"

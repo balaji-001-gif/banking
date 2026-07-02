@@ -136,3 +136,57 @@ class BankingRegulatoryReport(Document):
 			frappe.msgprint(f"{self.report_type} report generated successfully with {len(data)} records.")
 		else:
 			frappe.msgprint(f"No data found for {self.report_type} report in the selected period.")
+
+
+def generate_scheduled_reports():
+	"""Scheduled function to auto-generate regulatory reports weekly.
+	
+	Generates:
+	- NPA Return (quarterly)
+	- CTR for large cash transactions
+	- Priority Sector report (quarterly)
+	"""
+	from frappe.utils import add_months, get_first_day, get_last_day, getdate
+	
+	# Generate NPA Return for current quarter
+	today_date = getdate(today())
+	
+	# Check if any report already generated this period
+	existing = frappe.get_all(
+		"Banking Regulatory Report",
+		filters={
+			"report_type": "NPA Return",
+			"period_to": today_date,
+			"submission_status": ("in", ["Generated", "Submitted", "Acknowledged"])
+		}
+	)
+	if not existing:
+		npa_report = frappe.get_doc({
+			"doctype": "Banking Regulatory Report",
+			"report_type": "NPA Return",
+			"period_from": get_first_day(add_months(today_date, -3)),
+			"period_to": today_date,
+			"submission_status": "Draft"
+		})
+		npa_report.insert(ignore_permissions=True)
+		npa_report.generate_and_submit()
+
+	# Generate Priority Sector report
+	psl_existing = frappe.get_all(
+		"Banking Regulatory Report",
+		filters={
+			"report_type": "Priority Sector",
+			"period_to": today_date,
+			"submission_status": ("in", ["Generated", "Submitted", "Acknowledged"])
+		}
+	)
+	if not psl_existing:
+		psl_report = frappe.get_doc({
+			"doctype": "Banking Regulatory Report",
+			"report_type": "Priority Sector",
+			"period_from": get_first_day(add_months(today_date, -3)),
+			"period_to": today_date,
+			"submission_status": "Draft"
+		})
+		psl_report.insert(ignore_permissions=True)
+		psl_report.generate_and_submit()

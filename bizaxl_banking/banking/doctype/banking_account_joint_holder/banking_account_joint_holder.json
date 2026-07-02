@@ -10,6 +10,7 @@
  "field_order": [
   "customer",
   "relation",
+  "operating_mode",
   "allocation_pct"
  ],
  "fields": [
@@ -26,6 +27,13 @@
    "fieldtype": "Select",
    "reqd": 1,
    "options": "Self\nSpouse\nFather\nMother\nSon\nDaughter\nBrother\nSister\nOther"
+  },
+  {
+   "fieldname": "operating_mode",
+   "label": "Operating Mode",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Either or Survivor\nJointly\nFormer or Survivor\nAnyone or Survivor"
   },
   {
    "fieldname": "allocation_pct",
