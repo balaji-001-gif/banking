@@ -1,6 +1,7 @@
 [
  {
   "doctype": "Banking Deposit Product",
+  "name": "Regular Savings",
   "product_name": "Regular Savings",
   "product_type": "Savings",
   "interest_rate": 3.5,
@@ -12,6 +13,7 @@
  },
  {
   "doctype": "Banking Deposit Product",
+  "name": "Premium Savings",
   "product_name": "Premium Savings",
   "product_type": "Savings",
   "interest_rate": 4.0,
@@ -23,6 +25,7 @@
  },
  {
   "doctype": "Banking Deposit Product",
+  "name": "Salary Savings",
   "product_name": "Salary Savings",
   "product_type": "Savings",
   "interest_rate": 3.5,
@@ -34,6 +37,7 @@
  },
  {
   "doctype": "Banking Deposit Product",
+  "name": "Standard FD (1 Yr)",
   "product_name": "Standard FD (1 Yr)",
   "product_type": "Fixed Deposit",
   "interest_rate": 6.5,
@@ -45,6 +49,7 @@
  },
  {
   "doctype": "Banking Deposit Product",
+  "name": "Senior Citizen FD (1 Yr)",
   "product_name": "Senior Citizen FD (1 Yr)",
   "product_type": "Fixed Deposit",
   "interest_rate": 7.0,
@@ -56,6 +61,7 @@
  },
  {
   "doctype": "Banking Deposit Product",
+  "name": "Recurring Deposit (12M)",
   "product_name": "Recurring Deposit (12M)",
   "product_type": "Recurring Deposit",
   "interest_rate": 6.0,
@@ -67,6 +73,7 @@
  },
  {
   "doctype": "Banking Deposit Product",
+  "name": "PPF",
   "product_name": "PPF",
   "product_type": "PPF",
   "interest_rate": 7.1,
@@ -78,6 +85,7 @@
  },
  {
   "doctype": "Banking Deposit Product",
+  "name": "Sukanya Samriddhi Yojana (SSY)",
   "product_name": "Sukanya Samriddhi Yojana (SSY)",
   "product_type": "SSY",
   "interest_rate": 8.2,

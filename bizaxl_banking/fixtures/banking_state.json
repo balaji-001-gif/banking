@@ -1,6 +1,7 @@
 [
  {
   "doctype": "Banking State",
+  "name": "Andhra Pradesh",
   "state_name": "Andhra Pradesh",
   "state_code": "AP",
   "region": "South",
@@ -8,6 +9,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Arunachal Pradesh",
   "state_name": "Arunachal Pradesh",
   "state_code": "AR",
   "region": "North-East",
@@ -15,6 +17,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Assam",
   "state_name": "Assam",
   "state_code": "AS",
   "region": "North-East",
@@ -22,6 +25,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Bihar",
   "state_name": "Bihar",
   "state_code": "BR",
   "region": "East",
@@ -29,6 +33,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Chhattisgarh",
   "state_name": "Chhattisgarh",
   "state_code": "CG",
   "region": "Central",
@@ -36,6 +41,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Goa",
   "state_name": "Goa",
   "state_code": "GA",
   "region": "West",
@@ -43,6 +49,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Gujarat",
   "state_name": "Gujarat",
   "state_code": "GJ",
   "region": "West",
@@ -50,6 +57,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Haryana",
   "state_name": "Haryana",
   "state_code": "HR",
   "region": "North",
@@ -57,6 +65,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Himachal Pradesh",
   "state_name": "Himachal Pradesh",
   "state_code": "HP",
   "region": "North",
@@ -64,6 +73,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Jharkhand",
   "state_name": "Jharkhand",
   "state_code": "JH",
   "region": "East",
@@ -71,6 +81,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Karnataka",
   "state_name": "Karnataka",
   "state_code": "KA",
   "region": "South",
@@ -78,6 +89,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Kerala",
   "state_name": "Kerala",
   "state_code": "KL",
   "region": "South",
@@ -85,6 +97,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Madhya Pradesh",
   "state_name": "Madhya Pradesh",
   "state_code": "MP",
   "region": "Central",
@@ -92,6 +105,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Maharashtra",
   "state_name": "Maharashtra",
   "state_code": "MH",
   "region": "West",
@@ -99,6 +113,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Manipur",
   "state_name": "Manipur",
   "state_code": "MN",
   "region": "North-East",
@@ -106,6 +121,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Meghalaya",
   "state_name": "Meghalaya",
   "state_code": "ML",
   "region": "North-East",
@@ -113,6 +129,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Mizoram",
   "state_name": "Mizoram",
   "state_code": "MZ",
   "region": "North-East",
@@ -120,6 +137,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Nagaland",
   "state_name": "Nagaland",
   "state_code": "NL",
   "region": "North-East",
@@ -127,6 +145,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Odisha",
   "state_name": "Odisha",
   "state_code": "OD",
   "region": "East",
@@ -134,6 +153,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Punjab",
   "state_name": "Punjab",
   "state_code": "PB",
   "region": "North",
@@ -141,6 +161,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Rajasthan",
   "state_name": "Rajasthan",
   "state_code": "RJ",
   "region": "North",
@@ -148,6 +169,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Sikkim",
   "state_name": "Sikkim",
   "state_code": "SK",
   "region": "North-East",
@@ -155,6 +177,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Tamil Nadu",
   "state_name": "Tamil Nadu",
   "state_code": "TN",
   "region": "South",
@@ -162,6 +185,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Telangana",
   "state_name": "Telangana",
   "state_code": "TS",
   "region": "South",
@@ -169,6 +193,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Tripura",
   "state_name": "Tripura",
   "state_code": "TR",
   "region": "North-East",
@@ -176,6 +201,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Uttar Pradesh",
   "state_name": "Uttar Pradesh",
   "state_code": "UP",
   "region": "North",
@@ -183,6 +209,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "Uttarakhand",
   "state_name": "Uttarakhand",
   "state_code": "UK",
   "region": "North",
@@ -190,6 +217,7 @@
  },
  {
   "doctype": "Banking State",
+  "name": "West Bengal",
   "state_name": "West Bengal",
   "state_code": "WB",
   "region": "East",
