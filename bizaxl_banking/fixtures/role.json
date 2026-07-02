@@ -1,48 +1,56 @@
 [
  {
   "doctype": "Role",
+  "name": "Banking System Admin",
   "role_name": "Banking System Admin",
   "desc": "Auto-created role for the Banking app (Banking System Admin).",
   "disabled": 0
  },
  {
   "doctype": "Role",
+  "name": "Banking Branch Manager",
   "role_name": "Banking Branch Manager",
   "desc": "Auto-created role for the Banking app (Banking Branch Manager).",
   "disabled": 0
  },
  {
   "doctype": "Role",
+  "name": "Banking Relationship Manager",
   "role_name": "Banking Relationship Manager",
   "desc": "Auto-created role for the Banking app (Banking Relationship Manager).",
   "disabled": 0
  },
  {
   "doctype": "Role",
+  "name": "Banking Compliance Officer",
   "role_name": "Banking Compliance Officer",
   "desc": "Auto-created role for the Banking app (Banking Compliance Officer).",
   "disabled": 0
  },
  {
   "doctype": "Role",
+  "name": "Banking Credit Officer",
   "role_name": "Banking Credit Officer",
   "desc": "Auto-created role for the Banking app (Banking Credit Officer).",
   "disabled": 0
  },
  {
   "doctype": "Role",
+  "name": "Banking Recovery Officer",
   "role_name": "Banking Recovery Officer",
   "desc": "Auto-created role for the Banking app (Banking Recovery Officer).",
   "disabled": 0
  },
  {
   "doctype": "Role",
+  "name": "Banking Teller",
   "role_name": "Banking Teller",
   "desc": "Auto-created role for the Banking app (Banking Teller).",
   "disabled": 0
  },
  {
   "doctype": "Role",
+  "name": "Banking Auditor",
   "role_name": "Banking Auditor",
   "desc": "Auto-created role for the Banking app (Banking Auditor).",
   "disabled": 0
