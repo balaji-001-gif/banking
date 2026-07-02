@@ -6,11 +6,25 @@ from frappe.model.document import Document
 
 
 class BankingKycDocument(Document):
-	"""Auto-generated stub controller for Banking KYC Document.
+	"""Controller for Banking KYC Document with verification tracking."""
 
-	This is a schema-only scaffold. Business logic (balance updates, EMI
-	calculation, workflow transitions, external API calls, etc.) is NOT
-	implemented here and must be added before this doctype is used for
-	anything beyond data storage. See the app README for what's stubbed.
-	"""
-	pass
+	def validate(self):
+		self.validate_expiry()
+		self.auto_update_customer_status()
+
+	def validate_expiry(self):
+		"""Warn if document is expired or expiring soon."""
+		if self.expiry_date:
+			from frappe.utils import date_diff, getdate, add_days
+			days_until_expiry = date_diff(getdate(self.expiry_date), getdate())
+			if days_until_expiry < 0:
+				frappe.msgprint(f"Warning: Document {self.document_type} (No. {self.document_number}) has already expired.")
+			elif days_until_expiry <= 30:
+				frappe.msgprint(f"Warning: Document {self.document_type} (No. {self.document_number}) is expiring in {days_until_expiry} days.")
+
+	def auto_update_customer_status(self):
+		"""Auto-update customer KYC status on document verification."""
+		if self.verification_status == "Verified" and self.customer:
+			customer = frappe.get_doc("Banking Customer", self.customer)
+			if customer.kyc_status != "Verified":
+				customer.db_set("kyc_status", "Verified")

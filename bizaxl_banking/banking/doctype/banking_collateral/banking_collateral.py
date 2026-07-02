@@ -6,11 +6,18 @@ from frappe.model.document import Document
 
 
 class BankingCollateral(Document):
-	"""Auto-generated stub controller for Banking Collateral.
+	"""Controller for Banking Collateral with lien management."""
 
-	This is a schema-only scaffold. Business logic (balance updates, EMI
-	calculation, workflow transitions, external API calls, etc.) is NOT
-	implemented here and must be added before this doctype is used for
-	anything beyond data storage. See the app README for what's stubbed.
-	"""
-	pass
+	def validate(self):
+		self.validate_values()
+		self.validate_lien()
+
+	def validate_values(self):
+		"""Ensure market value is positive."""
+		if self.market_value <= 0:
+			frappe.throw("Market Value must be greater than zero.")
+
+	def validate_lien(self):
+		"""Ensure lien amount doesn't exceed market value."""
+		if self.lien_amount and self.lien_amount > self.market_value:
+			frappe.throw("Lien Amount cannot exceed Market Value.")

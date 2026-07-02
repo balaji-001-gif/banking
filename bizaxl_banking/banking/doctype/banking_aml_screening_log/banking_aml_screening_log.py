@@ -6,11 +6,12 @@ from frappe.model.document import Document
 
 
 class BankingAmlScreeningLog(Document):
-	"""Auto-generated stub controller for Banking AML Screening Log.
+	"""Controller for Banking AML Screening Log."""
+	
+	def validate(self):
+		self.validate_match_disposition()
 
-	This is a schema-only scaffold. Business logic (balance updates, EMI
-	calculation, workflow transitions, external API calls, etc.) is NOT
-	implemented here and must be added before this doctype is used for
-	anything beyond data storage. See the app README for what's stubbed.
-	"""
-	pass
+	def validate_match_disposition(self):
+		"""If match found, disposition must not be 'Clear'."""
+		if self.match_found and self.disposition == "Clear":
+			frappe.throw("Disposition cannot be 'Clear' when a match is found.")

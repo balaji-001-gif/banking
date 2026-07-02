@@ -11,7 +11,9 @@
  "autoname": "hash",
  "field_order": [
   "applicant",
-  "co_applicants_note",
+  "co_applicants_section",
+  "co_applicants",
+  "column_break_ca",
   "loan_product",
   "requested_amount",
   "requested_tenure_months",
@@ -31,9 +33,22 @@
    "options": "Banking Customer"
   },
   {
-   "fieldname": "co_applicants_note",
-   "label": "Co-applicants (notes -- see child table TODO)",
-   "fieldtype": "Small Text",
+   "fieldname": "co_applicants_section",
+   "label": "Co-applicants",
+   "fieldtype": "Section Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "co_applicants",
+   "label": "Co-applicants",
+   "fieldtype": "Table",
+   "reqd": 0,
+   "options": "Banking Loan Co-applicant"
+  },
+  {
+   "fieldname": "column_break_ca",
+   "label": "",
+   "fieldtype": "Column Break",
    "reqd": 0
   },
   {

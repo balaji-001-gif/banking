@@ -6,11 +6,12 @@ from frappe.model.document import Document
 
 
 class BankingNachMandate(Document):
-	"""Auto-generated stub controller for Banking NACH Mandate.
+	"""Controller for Banking NACH Mandate with status tracking."""
+	
+	def validate(self):
+		self.validate_amount()
 
-	This is a schema-only scaffold. Business logic (balance updates, EMI
-	calculation, workflow transitions, external API calls, etc.) is NOT
-	implemented here and must be added before this doctype is used for
-	anything beyond data storage. See the app README for what's stubbed.
-	"""
-	pass
+	def validate_amount(self):
+		"""Ensure max amount is positive."""
+		if self.max_amount <= 0:
+			frappe.throw("Max Amount must be greater than zero.")

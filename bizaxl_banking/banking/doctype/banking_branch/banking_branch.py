@@ -6,11 +6,20 @@ from frappe.model.document import Document
 
 
 class BankingBranch(Document):
-	"""Auto-generated stub controller for Banking Branch.
+	"""Controller for Banking Branch with IFSC and branch code validation."""
 
-	This is a schema-only scaffold. Business logic (balance updates, EMI
-	calculation, workflow transitions, external API calls, etc.) is NOT
-	implemented here and must be added before this doctype is used for
-	anything beyond data storage. See the app README for what's stubbed.
-	"""
-	pass
+	def validate(self):
+		self.validate_ifsc()
+		self.validate_branch_code()
+
+	def validate_ifsc(self):
+		"""Validate IFSC format: 4 letters, 0, 6 alphanumeric."""
+		if self.ifsc_code:
+			import re
+			if not re.match(r"^[A-Z]{4}0[A-Z0-9]{6}$", self.ifsc_code.upper()):
+				frappe.throw("Invalid IFSC Code format. Must be 11 characters (e.g., HDFC0001234).")
+
+	def validate_branch_code(self):
+		"""Ensure branch code is set."""
+		if not self.branch_code:
+			frappe.throw("Branch Code is required.")

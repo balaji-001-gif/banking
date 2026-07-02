@@ -1,0 +1,39 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Loan Co-applicant",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 1,
+ "issingle": 0,
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "customer",
+  "relation",
+  "income_share_pct"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Customer"
+  },
+  {
+   "fieldname": "relation",
+   "label": "Relation",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Spouse\nFather\nMother\nSon\nDaughter\nBrother\nSister\nGuarantor\nOther"
+  },
+  {
+   "fieldname": "income_share_pct",
+   "label": "Income Share %",
+   "fieldtype": "Percent",
+   "reqd": 0
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

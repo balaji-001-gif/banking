@@ -19,7 +19,9 @@
   "available_balance",
   "account_status",
   "date_opened",
-  "joint_holders_note",
+  "joint_holders_section",
+  "joint_holders",
+  "column_break_jh",
   "nominee"
  ],
  "fields": [
@@ -83,9 +85,22 @@
    "reqd": 1
   },
   {
-   "fieldname": "joint_holders_note",
-   "label": "Joint Holders (notes -- see child table TODO)",
-   "fieldtype": "Small Text",
+   "fieldname": "joint_holders_section",
+   "label": "Joint Holders",
+   "fieldtype": "Section Break",
+   "reqd": 0
+  },
+  {
+   "fieldname": "joint_holders",
+   "label": "Joint Holders",
+   "fieldtype": "Table",
+   "reqd": 0,
+   "options": "Banking Account Joint Holder"
+  },
+  {
+   "fieldname": "column_break_jh",
+   "label": "",
+   "fieldtype": "Column Break",
    "reqd": 0
   },
   {

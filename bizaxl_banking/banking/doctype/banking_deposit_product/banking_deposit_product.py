@@ -6,11 +6,21 @@ from frappe.model.document import Document
 
 
 class BankingDepositProduct(Document):
-	"""Auto-generated stub controller for Banking Deposit Product.
+	"""Controller for Banking Deposit Product with validation."""
 
-	This is a schema-only scaffold. Business logic (balance updates, EMI
-	calculation, workflow transitions, external API calls, etc.) is NOT
-	implemented here and must be added before this doctype is used for
-	anything beyond data storage. See the app README for what's stubbed.
-	"""
-	pass
+	def validate(self):
+		self.validate_interest_rate()
+		self.validate_tenure()
+
+	def validate_interest_rate(self):
+		"""Ensure interest rate is within reasonable range."""
+		if self.interest_rate:
+			if self.interest_rate < 0:
+				frappe.throw("Interest Rate cannot be negative.")
+			if self.interest_rate > 25:
+				frappe.throw("Interest Rate exceeds maximum allowed limit of 25%.")
+
+	def validate_tenure(self):
+		"""Ensure min tenure doesn't exceed max tenure."""
+		if self.min_tenure_days and self.max_tenure_days and self.min_tenure_days > self.max_tenure_days:
+			frappe.throw("Minimum Tenure cannot exceed Maximum Tenure.")
