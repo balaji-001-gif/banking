@@ -1,0 +1,192 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Loan Application",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "field_order": [
+  "applicant",
+  "co_applicants_note",
+  "loan_product",
+  "requested_amount",
+  "requested_tenure_months",
+  "purpose",
+  "bureau_score",
+  "foir",
+  "internal_risk_grade",
+  "decision",
+  "rejection_reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "applicant",
+   "label": "Applicant",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Customer"
+  },
+  {
+   "fieldname": "co_applicants_note",
+   "label": "Co-applicants (notes -- see child table TODO)",
+   "fieldtype": "Small Text",
+   "reqd": 0
+  },
+  {
+   "fieldname": "loan_product",
+   "label": "Loan Product",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Personal\nMSME\nHome\nVehicle\nGold\nAgri\nMicrofinance"
+  },
+  {
+   "fieldname": "requested_amount",
+   "label": "Requested Amount",
+   "fieldtype": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "requested_tenure_months",
+   "label": "Requested Tenure (Months)",
+   "fieldtype": "Int",
+   "reqd": 1
+  },
+  {
+   "fieldname": "purpose",
+   "label": "Purpose",
+   "fieldtype": "Small Text",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bureau_score",
+   "label": "Bureau Score",
+   "fieldtype": "Int",
+   "reqd": 0
+  },
+  {
+   "fieldname": "foir",
+   "label": "FOIR (%)",
+   "fieldtype": "Percent",
+   "reqd": 0
+  },
+  {
+   "fieldname": "internal_risk_grade",
+   "label": "Internal Risk Grade",
+   "fieldtype": "Select",
+   "reqd": 0,
+   "options": "A1\nA2\nB1\nB2\nC\nD"
+  },
+  {
+   "fieldname": "decision",
+   "label": "Decision",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Pending\nApproved\nReferred\nRejected"
+  },
+  {
+   "fieldname": "rejection_reason",
+   "label": "Rejection Reason",
+   "fieldtype": "Small Text",
+   "reqd": 0
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "role": "Banking System Admin",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "role": "Banking Branch Manager",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "if_owner": 1,
+   "role": "Banking Relationship Manager",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Compliance Officer",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "role": "Banking Credit Officer",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Auditor",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

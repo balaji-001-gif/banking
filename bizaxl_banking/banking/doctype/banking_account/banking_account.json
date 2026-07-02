@@ -1,0 +1,220 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Account",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "field:account_number",
+ "field_order": [
+  "account_number",
+  "customer",
+  "account_type",
+  "deposit_product",
+  "branch",
+  "current_balance",
+  "available_balance",
+  "account_status",
+  "date_opened",
+  "joint_holders_note",
+  "nominee"
+ ],
+ "fields": [
+  {
+   "fieldname": "account_number",
+   "label": "Account Number",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Customer"
+  },
+  {
+   "fieldname": "account_type",
+   "label": "Account Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Savings\nCurrent\nSalary\nNRE\nNRO\nCash Credit\nOverdraft"
+  },
+  {
+   "fieldname": "deposit_product",
+   "label": "Deposit Product",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Deposit Product"
+  },
+  {
+   "fieldname": "branch",
+   "label": "Branch",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Branch"
+  },
+  {
+   "fieldname": "current_balance",
+   "label": "Current Balance",
+   "fieldtype": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "available_balance",
+   "label": "Available Balance",
+   "fieldtype": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "account_status",
+   "label": "Account Status",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Active\nDormant\nFrozen\nClosed"
+  },
+  {
+   "fieldname": "date_opened",
+   "label": "Date Opened",
+   "fieldtype": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "joint_holders_note",
+   "label": "Joint Holders (notes -- see child table TODO)",
+   "fieldtype": "Small Text",
+   "reqd": 0
+  },
+  {
+   "fieldname": "nominee",
+   "label": "Nominee",
+   "fieldtype": "Link",
+   "reqd": 0,
+   "options": "Banking Customer"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "role": "Banking System Admin",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "role": "Banking Branch Manager",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Relationship Manager",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Compliance Officer",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Credit Officer",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Recovery Officer",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "if_owner": 1,
+   "role": "Banking Teller",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Auditor",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

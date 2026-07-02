@@ -1,0 +1,150 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Regulatory Report",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "field_order": [
+  "report_type",
+  "period_from",
+  "period_to",
+  "generated_on",
+  "report_file",
+  "submission_status",
+  "submitted_by"
+ ],
+ "fields": [
+  {
+   "fieldname": "report_type",
+   "label": "Report Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "NPA Return\nCTR\nSTR\nOSS\nCRILC\nPriority Sector\nNABARD Annual Return"
+  },
+  {
+   "fieldname": "period_from",
+   "label": "Period From",
+   "fieldtype": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "period_to",
+   "label": "Period To",
+   "fieldtype": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "generated_on",
+   "label": "Generated On",
+   "fieldtype": "Datetime",
+   "reqd": 1
+  },
+  {
+   "fieldname": "report_file",
+   "label": "Report File",
+   "fieldtype": "Attach",
+   "reqd": 0
+  },
+  {
+   "fieldname": "submission_status",
+   "label": "Submission Status",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Draft\nGenerated\nSubmitted\nAcknowledged"
+  },
+  {
+   "fieldname": "submitted_by",
+   "label": "Submitted By",
+   "fieldtype": "Link",
+   "reqd": 0,
+   "options": "User"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "role": "Banking System Admin",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Branch Manager",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "role": "Banking Compliance Officer",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Credit Officer",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Auditor",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

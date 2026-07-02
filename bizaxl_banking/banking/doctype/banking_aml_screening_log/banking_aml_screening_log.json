@@ -1,0 +1,78 @@
+{
+ "doctype": "DocType",
+ "name": "Banking AML Screening Log",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "field_order": [
+  "screening_type",
+  "customer",
+  "lists_checked",
+  "match_found",
+  "disposition",
+  "screened_at"
+ ],
+ "fields": [
+  {
+   "fieldname": "screening_type",
+   "label": "Screening Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Onboarding\nPeriodic\nTransaction"
+  },
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Customer"
+  },
+  {
+   "fieldname": "lists_checked",
+   "label": "Lists Checked",
+   "fieldtype": "Small Text",
+   "reqd": 1
+  },
+  {
+   "fieldname": "match_found",
+   "label": "Match Found",
+   "fieldtype": "Check",
+   "reqd": 1
+  },
+  {
+   "fieldname": "disposition",
+   "label": "Disposition",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Clear\nFalse Positive\nTrue Match - STR Filed"
+  },
+  {
+   "fieldname": "screened_at",
+   "label": "Screened At",
+   "fieldtype": "Datetime",
+   "reqd": 1
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

@@ -1,0 +1,100 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Configuration",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 1,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "field_order": [
+  "bank_name",
+  "license_type",
+  "rbi_license_no",
+  "sponsor_bank",
+  "ifsc_prefix",
+  "default_currency",
+  "financial_year_start",
+  "aml_threshold_inr",
+  "regulatory_email"
+ ],
+ "fields": [
+  {
+   "fieldname": "bank_name",
+   "label": "Bank Name",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "license_type",
+   "label": "License Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "SFB\nCo-operative\nRRB\nUrban Co-op\nNBFC"
+  },
+  {
+   "fieldname": "rbi_license_no",
+   "label": "RBI License No",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sponsor_bank",
+   "label": "Sponsor Bank",
+   "fieldtype": "Link",
+   "reqd": 0,
+   "options": "Bank"
+  },
+  {
+   "fieldname": "ifsc_prefix",
+   "label": "IFSC Prefix",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "default_currency",
+   "label": "Default Currency",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Currency"
+  },
+  {
+   "fieldname": "financial_year_start",
+   "label": "Financial Year Start",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "April\nJanuary\nCustom"
+  },
+  {
+   "fieldname": "aml_threshold_inr",
+   "label": "AML Threshold (INR)",
+   "fieldtype": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "regulatory_email",
+   "label": "Regulatory Email",
+   "fieldtype": "Data",
+   "reqd": 1
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

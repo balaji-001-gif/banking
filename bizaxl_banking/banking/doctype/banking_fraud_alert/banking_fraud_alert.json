@@ -1,0 +1,164 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Fraud Alert",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "field_order": [
+  "alert_type",
+  "triggered_on",
+  "account",
+  "risk_score",
+  "auto_hold_applied",
+  "status",
+  "investigated_by"
+ ],
+ "fields": [
+  {
+   "fieldname": "alert_type",
+   "label": "Alert Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Velocity Breach\nUnusual Geography\nAccount Takeover\nPositive Pay Mismatch\nManual"
+  },
+  {
+   "fieldname": "triggered_on",
+   "label": "Triggered On",
+   "fieldtype": "Datetime",
+   "reqd": 1
+  },
+  {
+   "fieldname": "account",
+   "label": "Account",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Account"
+  },
+  {
+   "fieldname": "risk_score",
+   "label": "Risk Score",
+   "fieldtype": "Int",
+   "reqd": 1
+  },
+  {
+   "fieldname": "auto_hold_applied",
+   "label": "Auto-hold Applied",
+   "fieldtype": "Check",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Open\nUnder Review\nConfirmed Fraud\nFalse Positive\nClosed"
+  },
+  {
+   "fieldname": "investigated_by",
+   "label": "Investigated By",
+   "fieldtype": "Link",
+   "reqd": 0,
+   "options": "User"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "role": "Banking System Admin",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Branch Manager",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "role": "Banking Compliance Officer",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Credit Officer",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Recovery Officer",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Auditor",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

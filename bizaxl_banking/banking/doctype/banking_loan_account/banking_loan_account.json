@@ -1,0 +1,198 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Loan Account",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "field:loan_account_no",
+ "field_order": [
+  "loan_application",
+  "loan_account_no",
+  "sanctioned_amount",
+  "outstanding_principal",
+  "interest_rate",
+  "rate_type",
+  "emi_amount",
+  "emi_date",
+  "account_status",
+  "linked_mandate"
+ ],
+ "fields": [
+  {
+   "fieldname": "loan_application",
+   "label": "Loan Application",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Loan Application"
+  },
+  {
+   "fieldname": "loan_account_no",
+   "label": "Loan Account No",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sanctioned_amount",
+   "label": "Sanctioned Amount",
+   "fieldtype": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "outstanding_principal",
+   "label": "Outstanding Principal",
+   "fieldtype": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "interest_rate",
+   "label": "Interest Rate (%)",
+   "fieldtype": "Percent",
+   "reqd": 1
+  },
+  {
+   "fieldname": "rate_type",
+   "label": "Rate Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Fixed\nFloating (MCLR-linked)"
+  },
+  {
+   "fieldname": "emi_amount",
+   "label": "EMI Amount",
+   "fieldtype": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "emi_date",
+   "label": "EMI Date (Day of Month)",
+   "fieldtype": "Int",
+   "reqd": 1
+  },
+  {
+   "fieldname": "account_status",
+   "label": "Account Status",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Active\nNPA\nWritten Off\nClosed\nPrepaid"
+  },
+  {
+   "fieldname": "linked_mandate",
+   "label": "Linked Mandate",
+   "fieldtype": "Link",
+   "reqd": 0,
+   "options": "Banking NACH Mandate"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "role": "Banking System Admin",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Branch Manager",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Relationship Manager",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Compliance Officer",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "role": "Banking Credit Officer",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "role": "Banking Recovery Officer",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  },
+  {
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "if_owner": 0,
+   "role": "Banking Auditor",
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

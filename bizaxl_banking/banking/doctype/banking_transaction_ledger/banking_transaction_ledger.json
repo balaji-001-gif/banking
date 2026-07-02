@@ -1,0 +1,105 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Transaction Ledger",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "field_order": [
+  "posting_date",
+  "value_date",
+  "account",
+  "debit_amount",
+  "credit_amount",
+  "running_balance",
+  "source_doctype",
+  "source_docname",
+  "transaction_type",
+  "is_reversed"
+ ],
+ "fields": [
+  {
+   "fieldname": "posting_date",
+   "label": "Posting Date",
+   "fieldtype": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "value_date",
+   "label": "Value Date",
+   "fieldtype": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "account",
+   "label": "Account",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Account"
+  },
+  {
+   "fieldname": "debit_amount",
+   "label": "Debit Amount",
+   "fieldtype": "Currency",
+   "reqd": 0
+  },
+  {
+   "fieldname": "credit_amount",
+   "label": "Credit Amount",
+   "fieldtype": "Currency",
+   "reqd": 0
+  },
+  {
+   "fieldname": "running_balance",
+   "label": "Running Balance",
+   "fieldtype": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source_doctype",
+   "label": "Source Doctype",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source_docname",
+   "label": "Source Docname",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "transaction_type",
+   "label": "Transaction Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Debit\nCredit\nInterest\nFee\nPenalty\nReversal"
+  },
+  {
+   "fieldname": "is_reversed",
+   "label": "Is Reversed",
+   "fieldtype": "Check",
+   "reqd": 1
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

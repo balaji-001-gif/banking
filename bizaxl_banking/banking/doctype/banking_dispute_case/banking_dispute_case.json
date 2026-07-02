@@ -1,0 +1,87 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Dispute Case",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "field_order": [
+  "customer",
+  "linked_transaction",
+  "dispute_type",
+  "raised_on",
+  "sla_deadline",
+  "status",
+  "resolution_action"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Customer"
+  },
+  {
+   "fieldname": "linked_transaction",
+   "label": "Linked Transaction",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Payment Order"
+  },
+  {
+   "fieldname": "dispute_type",
+   "label": "Dispute Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Unauthorized Debit\nFailed Credit\nDouble Debit\nMerchant\nFee Reversal"
+  },
+  {
+   "fieldname": "raised_on",
+   "label": "Raised On",
+   "fieldtype": "Datetime",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sla_deadline",
+   "label": "SLA Deadline",
+   "fieldtype": "Datetime",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Open\nUnder Investigation\nResolved - Upheld\nResolved - Rejected\nEscalated"
+  },
+  {
+   "fieldname": "resolution_action",
+   "label": "Resolution Action",
+   "fieldtype": "Select",
+   "reqd": 0,
+   "options": "Reversal\nChargeback\nPartial Refund\nNo Action"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

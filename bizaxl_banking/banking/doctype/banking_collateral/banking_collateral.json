@@ -1,0 +1,84 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Collateral",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "field_order": [
+  "loan_account",
+  "collateral_type",
+  "description",
+  "market_value",
+  "valuation_date",
+  "lien_amount",
+  "document_ref"
+ ],
+ "fields": [
+  {
+   "fieldname": "loan_account",
+   "label": "Loan Account",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Loan Account"
+  },
+  {
+   "fieldname": "collateral_type",
+   "label": "Collateral Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Immovable Property\nFD Lien\nGold\nStocks\nVehicle\nMachinery\nGuarantee"
+  },
+  {
+   "fieldname": "description",
+   "label": "Description",
+   "fieldtype": "Small Text",
+   "reqd": 1
+  },
+  {
+   "fieldname": "market_value",
+   "label": "Market Value",
+   "fieldtype": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "valuation_date",
+   "label": "Valuation Date",
+   "fieldtype": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "lien_amount",
+   "label": "Lien Amount",
+   "fieldtype": "Currency",
+   "reqd": 0
+  },
+  {
+   "fieldname": "document_ref",
+   "label": "Document",
+   "fieldtype": "Attach",
+   "reqd": 0
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

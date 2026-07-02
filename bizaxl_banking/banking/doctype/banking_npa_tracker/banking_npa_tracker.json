@@ -1,0 +1,86 @@
+{
+ "doctype": "DocType",
+ "name": "Banking NPA Tracker",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "field_order": [
+  "loan_account",
+  "npa_classification",
+  "days_past_due",
+  "overdue_amount",
+  "provision_amount",
+  "recovery_stage",
+  "assigned_to"
+ ],
+ "fields": [
+  {
+   "fieldname": "loan_account",
+   "label": "Loan Account",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Loan Account"
+  },
+  {
+   "fieldname": "npa_classification",
+   "label": "NPA Classification",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "SMA-0\nSMA-1\nSMA-2\nSub-standard\nDoubtful\nLoss"
+  },
+  {
+   "fieldname": "days_past_due",
+   "label": "Days Past Due",
+   "fieldtype": "Int",
+   "reqd": 1
+  },
+  {
+   "fieldname": "overdue_amount",
+   "label": "Overdue Amount",
+   "fieldtype": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "provision_amount",
+   "label": "Provision Amount",
+   "fieldtype": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "recovery_stage",
+   "label": "Recovery Stage",
+   "fieldtype": "Select",
+   "reqd": 0,
+   "options": "Notice Sent\nLegal Filed\nLok Adalat\nSARFAESI\nDRT\nWritten Off"
+  },
+  {
+   "fieldname": "assigned_to",
+   "label": "Assigned To",
+   "fieldtype": "Link",
+   "reqd": 0,
+   "options": "User"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

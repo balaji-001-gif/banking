@@ -1,0 +1,78 @@
+{
+ "doctype": "DocType",
+ "name": "Banking NACH Mandate",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "field_order": [
+  "account",
+  "mandate_ref",
+  "max_amount",
+  "frequency",
+  "status",
+  "registered_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "account",
+   "label": "Account",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Account"
+  },
+  {
+   "fieldname": "mandate_ref",
+   "label": "Mandate Reference",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "max_amount",
+   "label": "Max Amount",
+   "fieldtype": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "frequency",
+   "label": "Frequency",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Monthly\nQuarterly\nAs and When Presented"
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Pending Registration\nActive\nRejected\nCancelled"
+  },
+  {
+   "fieldname": "registered_on",
+   "label": "Registered On",
+   "fieldtype": "Date",
+   "reqd": 0
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

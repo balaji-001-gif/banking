@@ -1,0 +1,11 @@
+[project]
+name = "bizaxl_banking"
+version = "0.1.0"
+description = "Banking app module scaffold for ERPNext v15+"
+authors = [{ name = "Your Organisation", email = "you@example.com" }]
+requires-python = ">=3.10"
+dependencies = []
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"

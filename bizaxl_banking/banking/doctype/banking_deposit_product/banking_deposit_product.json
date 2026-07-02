@@ -1,0 +1,91 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Deposit Product",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "title_field": "product_name",
+ "field_order": [
+  "product_name",
+  "product_type",
+  "interest_rate",
+  "min_balance",
+  "min_tenure_days",
+  "max_tenure_days",
+  "premature_penalty_pct",
+  "tds_applicable"
+ ],
+ "fields": [
+  {
+   "fieldname": "product_name",
+   "label": "Product Name",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "product_type",
+   "label": "Product Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Savings\nCurrent\nFixed Deposit\nRecurring Deposit\nPPF\nSSY"
+  },
+  {
+   "fieldname": "interest_rate",
+   "label": "Interest Rate (%)",
+   "fieldtype": "Percent",
+   "reqd": 1
+  },
+  {
+   "fieldname": "min_balance",
+   "label": "Minimum Balance",
+   "fieldtype": "Currency",
+   "reqd": 0
+  },
+  {
+   "fieldname": "min_tenure_days",
+   "label": "Min Tenure (Days)",
+   "fieldtype": "Int",
+   "reqd": 0
+  },
+  {
+   "fieldname": "max_tenure_days",
+   "label": "Max Tenure (Days)",
+   "fieldtype": "Int",
+   "reqd": 0
+  },
+  {
+   "fieldname": "premature_penalty_pct",
+   "label": "Premature Withdrawal Penalty (%)",
+   "fieldtype": "Percent",
+   "reqd": 0
+  },
+  {
+   "fieldname": "tds_applicable",
+   "label": "TDS Applicable",
+   "fieldtype": "Check",
+   "reqd": 1
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

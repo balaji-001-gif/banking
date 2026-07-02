@@ -1,0 +1,93 @@
+{
+ "doctype": "DocType",
+ "name": "Banking Standing Instruction",
+ "module": "Banking",
+ "custom": 0,
+ "istable": 0,
+ "issingle": 0,
+ "editable_grid": 1,
+ "track_changes": 1,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "field_order": [
+  "from_account",
+  "instruction_type",
+  "amount",
+  "frequency",
+  "start_date",
+  "end_date",
+  "status",
+  "last_run_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "from_account",
+   "label": "From Account",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "options": "Banking Account"
+  },
+  {
+   "fieldname": "instruction_type",
+   "label": "Instruction Type",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Utility Bill\nLoan EMI\nInvestment\nSweep\nCustom"
+  },
+  {
+   "fieldname": "amount",
+   "label": "Amount",
+   "fieldtype": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "frequency",
+   "label": "Frequency",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Daily\nWeekly\nMonthly\nQuarterly\nAnnual"
+  },
+  {
+   "fieldname": "start_date",
+   "label": "Start Date",
+   "fieldtype": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "label": "End Date",
+   "fieldtype": "Date",
+   "reqd": 0
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "reqd": 1,
+   "options": "Active\nPaused\nCancelled\nCompleted"
+  },
+  {
+   "fieldname": "last_run_date",
+   "label": "Last Run Date",
+   "fieldtype": "Date",
+   "reqd": 0
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "if_owner": 0,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "share": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
