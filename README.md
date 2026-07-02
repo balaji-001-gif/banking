@@ -1,6 +1,8 @@
 # Bizaxl Banking — ERPNext Banking Module
 
-A comprehensive banking module for **ERPNext v15+ / Frappe Framework v15** that covers the full lifecycle of retail banking operations — from customer onboarding and KYC, through deposits and payments, to lending, NPA management, fraud detection, and regulatory reporting.
+A comprehensive banking module for **ERPNext v15+ / Frappe Framework v15** that covers the full lifecycle of retail banking operations — from customer onboarding and KYC, through deposits and payments, to lending, NPA management, fraud detection, dispute resolution, and regulatory reporting.
+
+**Total: 27 DocTypes** (18 Master, 2 Child Tables, 7 Supporting) + **12 Report Scripts** + **10 Scheduler Jobs**
 
 ---
 
@@ -8,15 +10,18 @@ A comprehensive banking module for **ERPNext v15+ / Frappe Framework v15** that 
 
 1. [Overview](#overview)
 2. [Architecture & Data Model](#architecture--data-model)
-3. [Installation Guide (Developer)](#installation-guide-developer)
-4. [Feature Modules & Business Logic](#feature-modules--business-logic)
-5. [Scheduler Jobs (Automated Tasks)](#scheduler-jobs-automated-tasks)
-6. [Roles & Permissions](#roles--permissions)
-7. [End-User SOP (Step-by-Step Workflows)](#end-user-sop-step-by-step-workflows)
-8. [Developer Guide](#developer-guide)
-9. [API Reference](#api-reference)
-10. [Customization & Extending](#customization--extending)
-11. [Roadmap](#roadmap)
+3. [DocTypes at a Glance](#doctypes-at-a-glance)
+4. [New Doctypes (v2.0)](#new-doctypes-v20)
+5. [Schema Enhancements (v2.0)](#schema-enhancements-v20)
+6. [Feature Modules & Business Logic](#feature-modules--business-logic)
+7. [New Features (v2.0)](#new-features-v20)
+8. [Scheduler Jobs (Automated Tasks)](#scheduler-jobs-automated-tasks)
+9. [Roles & Permissions](#roles--permissions)
+10. [End-User SOP (Step-by-Step Workflows)](#end-user-sop-step-by-step-workflows)
+11. [Installation Guide (Developer)](#installation-guide-developer)
+12. [Developer Guide](#developer-guide)
+13. [API Reference](#api-reference)
+14. [Roadmap](#roadmap)
 
 ---
 
@@ -24,12 +29,15 @@ A comprehensive banking module for **ERPNext v15+ / Frappe Framework v15** that 
 
 Bizaxl Banking is a **full-featured banking operations module** built as a Frappe/ERPNext custom app. It provides:
 
-- **18 Master DocTypes** covering the complete banking domain
-- **2 Child Table DocTypes** for joint account holders and loan co-applicants
+- **27 DocTypes** covering the complete banking domain including 7 new in v2.0
 - **8 Custom Roles** with granular permission matrices
-- **Business logic in all controllers** — validation, auto-numbering, interest calculation, EMI processing, NPA classification, fraud detection, and more
-- **Scheduled jobs** for daily and monthly automation
-- **Regulatory report generation** (CTR, STR, CRILC, NPA Return, Priority Sector)
+- **Full business logic in all controllers** — validation, auto-numbering, interest calculation, EMI processing, NPA classification, fraud detection, prepayment, and more
+- **10 scheduled jobs** for daily, weekly, and monthly automation
+- **12 Report scripts** for operations and regulatory compliance
+- **Reconciliation engine** for daily balance matching
+- **Bulk payment processing** with CSV upload
+- **CRM lead pipeline** with lead-to-customer conversion
+- **Fraud detection** with 5 alert types (Velocity Breach, Unusual Geography, Account Takeover, Positive Pay Mismatch, Manual)
 
 The module follows Indian banking regulations and RBI guidelines for:
 - KYC norms (Aadhaar/PAN/Video KYC)
@@ -37,6 +45,7 @@ The module follows Indian banking regulations and RBI guidelines for:
 - Payment rail limits (UPI/IMPS/NEFT/RTGS)
 - AML screening and fraud detection
 - Priority Sector Lending (PSL) reporting
+- SLA-based dispute resolution (T+5 UPI, T+30 others)
 
 ---
 
@@ -45,68 +54,811 @@ The module follows Indian banking regulations and RBI guidelines for:
 ### Entity-Relationship Diagram
 
 ```
-Banking Configuration (Singleton)
-         │
-         ▼
-Banking Branch ─────────────────────┐
-         │                          │
-         ▼                          ▼
-Banking Customer ◄──── Banking Account
-         │                   │       │
-         │                   │       ├── Banking Account Joint Holder (child)
-         │                   │       │
-         ▼                   ▼       └── Banking NACH Mandate
-Banking KYC Document    Banking Transaction Ledger
-                                │
-                                ▼
-Banking Payment Order ──── Banking Transaction Ledger
-         │
-         ├── Maker / Checker (User links)
-         └── UTR Number (auto-generated)
-                               
-Banking Deposit Product ──── Banking Account (product link)
+                               ┌─────────────────────────┐
+                               │ Banking Configuration    │
+                               │ (Singleton — Bank Admin) │
+                               └─────────┬───────────────┘
+                                         │
+┌────────────────────────────────────────┼───────────────────────────────┐
+│                                        │                               │
+▼                                        ▼                               ▼
+┌──────────────────┐           ┌──────────────────────┐      ┌──────────────────────┐
+│ Banking State      │◄──────────│ Banking Branch        │      │ Banking Interest      │
+│ (Master — 28       │           │ (IFSC, Manager,      │      │ Rate Schedule         │
+│  Indian states)    │           │  Address, Type)       │      │ (Slab-based rates)    │
+└──────────────────┘           └──────────┬───────────┘      └──────────────────────┘
+                                          │
+                                          ▼
+                          ┌──────────────────────────────┐
+                          │ Banking Customer               │
+                          │ (Individual/Company/Trust/...) │
+                          │ PAN validation, AML log       │
+                          └──┬───────────────┬───────────┘
+                             │               │
+              ┌──────────────┘               └──────────────┐
+              ▼                                              ▼
+┌──────────────────────────┐              ┌──────────────────────────────┐
+│ Banking KYC Document      │              │ Banking Customer Lead        │
+│ (Aadhaar/PAN/Passport)    │              │ (CRM — Lead → Customer      │
+│ Expiry tracking          │              │  conversion pipeline)        │
+└──────────────────────────┘              └──────────────────────────────┘
 
-Banking Loan Application ◄──── Banking Customer
-         │                      │
-         ├── Co-applicants (child table)
-         │                      │
-         ▼                      ▼
-Banking Loan Account ──── Banking NPA Tracker
-         │                      │
-         ├── Banking Collateral │
-         ├── Banking NACH Mandate
-         └── EMI → Transaction Ledger
+                          ┌──────────────────────────────────────────────────┐
+                          │                  Banking Account                  │
+                          │  (Savings/Current/Salary/NRE/NRO/CC/OD)         │
+                          │  Joint Holders (child) · Nominee · Balance      │
+                          └──┬────────────────┬──────────────┬──────────────┘
+                             │                │              │
+                             ▼                ▼              ▼
+              ┌─────────────────────┐  ┌──────────────┐  ┌──────────────────┐
+              │ Banking Account     │  │ Banking NACH │  │ Banking Service  │
+              │ Entitlement         │  │ Mandate      │  │ Charge Rule      │
+              │ (Multi-user access) │  │ (Auto-debit) │  │ (Fee config)     │
+              └─────────────────────┘  └──────────────┘  └──────────────────┘
 
-Banking Fraud Alert ──── Banking Account
-Banking Dispute Case ──── Banking Customer / Payment Order
-Banking AML Screening Log ──── Banking Customer
-Banking Regulatory Report (CTR/STR/CRILC/NPA/PSL)
+              ┌──────────────────────────────────────────────────────────────┐
+              │                  Banking Payment Order                        │
+              │  Maker → Checker → Submitted → Settled                      │
+              │  UPI/IMPS/NEFT/RTGS/Cheque                                  │
+              │  UTR auto-generation · Balance check                        │
+              └──┬───────────────────────────────────────────────────────────┘
+                 │
+                 ▼
+              ┌──────────────────────────────────────────────────────────────┐
+              │              Banking Transaction Ledger                       │
+              │  Double-entry · Running balance · Dynamic Link to source     │
+              │  Transaction types: Debit/Credit/Interest/Fee/Penalty        │
+              └──────────────────────────────────────────────────────────────┘
+
+              ┌──────────────────────────────────────────────────────────────┐
+              │                  Banking Standing Instruction                 │
+              │  Recurring payments — Utility/EMI/Investment/Sweep/Custom    │
+              │  Daily/Weekly/Monthly/Quarterly/Annual                       │
+              └──────────────────────────────────────────────────────────────┘
+
+                        ┌───────────────────────────────────┐
+                        │       Lending Module               │
+                        ├───────────────────────────────────┤
+                        ▼                                   ▼
+        ┌──────────────────────────┐    ┌──────────────────────────┐
+        │ Banking Loan Application │    │ Banking Loan Account      │
+        │ Risk grading A1→D       │◄───│ EMI · Interest · NPA     │
+        │ Bureau score · FOIR     │    │ Prepayment · Rate update  │
+        │ Co-applicants (child)   │    │ Linked Mandate            │
+        └──────────────────────────┘    └────────┬─────────────────┘
+                                                  │
+                          ┌───────────────────────┼───────────────────┐
+                          ▼                       ▼                   ▼
+              ┌──────────────────────┐  ┌──────────────────┐  ┌──────────────┐
+              │ Banking Collateral   │  │ Banking NPA      │  │ Banking Bulk │
+              │ (Property/FD/Gold)  │  │ Tracker          │  │ Payment      │
+              └──────────────────────┘  │ SMA-0→Loss      │  │ (CSV batch)  │
+                                        │ Provision %     │  └──────────────┘
+                                        └──────────────────┘
+
+                        ┌───────────────────────────────────┐
+                        │    Fraud & Compliance Module       │
+                        ├───────────────────────────────────┤
+                        ▼               ▼               ▼
+        ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐
+        │ Banking Fraud    │  │ Banking AML      │  │ Banking Dispute  │
+        │ Alert            │  │ Screening Log    │  │ Case             │
+        │ 5 alert types    │  │ ONSC/OFAC/PEP    │  │ SLA · Reversal   │
+        │ Auto-hold        │  │ Match detection  │  │ Escalation       │
+        └──────────────────┘  └──────────────────┘  └──────────────────┘
+
+        ┌──────────────────────────────────────────────────────────────┐
+        │              Banking Regulatory Report                        │
+        │  CTR · STR · CRILC · NPA Return · Priority Sector           │
+        │  Auto-generation · Weekly/Monthly/Quarterly                 │
+        └──────────────────────────────────────────────────────────────┘
+
+        ┌──────────────────────────────────────────────────────────────┐
+        │              Banking Positive Pay Record                      │
+        │  Check fraud prevention — pre-submit cheque details         │
+        │  System matches presented cheques against submitted data    │
+        └──────────────────────────────────────────────────────────────┘
+
+        ┌──────────────────────────────────────────────────────────────┐
+        │              Reports (12 Scripts)                            │
+        │  Portfolio Summary · Transaction Log · KYC Pending          │
+        │  Fraud Dashboard · NPA Register · EMI Dues                 │
+        │  Payment Reconciliation · AML Summary · Interest Accrual   │
+        │  RBI NPA Return · Priority Sector · CTR/STR Export         │
+        └──────────────────────────────────────────────────────────────┘
 ```
 
-### DocTypes at a Glance
+---
+
+## DocTypes at a Glance
+
+### Foundation Layer
 
 | # | DocType | Type | Purpose | Key Logic |
 |---|---------|------|---------|-----------|
 | 1 | Banking Configuration | Single | Bank-level settings (RBI license, IFSC prefix, AML threshold) | IFSC prefix validation, AML threshold validation |
-| 2 | Banking Branch | Master | Branch details, IFSC code | IFSC format validation (4 letters + 0 + 6 alphanumeric) |
-| 3 | Banking Customer | Master | Customer profile (Individual/Company/Trust etc.) | Auto-numbering (CUST-YYYY-MM-XXXXX), PAN validation, mobile validation, AML log creation |
-| 4 | Banking KYC Document | Master | KYC documents (Aadhaar/PAN/Passport etc.) | Expiry tracking, auto-update customer KYC status on verification |
-| 5 | Banking Account | Master | Deposit accounts (Savings/Current/Salary/NRE/NRO/CC/OD) | Auto-numbering (ACC-YYYYMM-XXXXX), balance management, transaction ledger integration |
-| 6 | Banking Account Joint Holder | **Child Table** | Joint account holders | Linked to Banking Account via Table field |
-| 7 | Banking Deposit Product | Master | Product catalog (Savings/FD/RD/PPF/SSY) | Interest rate validation (0-25%), tenure validation |
-| 8 | Banking Payment Order | Master | Payment instructions (UPI/IMPS/NEFT/RTGS/Cheque) | Maker-Checker enforcement, balance check, payment rail limits, UTR generation |
-| 9 | Banking Transaction Ledger | Master | Double-entry transaction log | Running balance calculation, account balance sync |
-| 10 | Banking Standing Instruction | Master | Recurring payments (EMI/Utility/SIP) | Auto-execution, balance check, pause on failure |
-| 11 | Banking NACH Mandate | Master | NACH auto-debit mandates | Amount validation |
-| 12 | Banking Loan Application | Master | Loan applications (Personal/MSME/Home/Vehicle/Gold/Agri/Microfinance) | Risk grading (A1→D), FOIR validation, auto-create Loan Account on approval |
-| 13 | Banking Loan Co-applicant | **Child Table** | Loan co-applicants | Linked to Banking Loan Application via Table field |
-| 14 | Banking Loan Account | Master | Sanctioned loans with EMI schedules | Daily reducing balance interest, EMI processing, NPA tracker creation |
-| 15 | Banking Collateral | Master | Collateral against loans (Property/FD/Gold/Stocks etc.) | Lien validation (lien ≤ market value) |
-| 16 | Banking NPA Tracker | Master | NPA classification & provisioning | Auto-classification (RBI guidelines), provision calculation |
-| 17 | Banking Fraud Alert | Master | Fraud alerts & case management | Auto-detection (velocity breach, high-value), auto-hold |
-| 18 | Banking AML Screening Log | Master | AML/sanctions screening records | Match-disposition validation |
-| 19 | Banking Dispute Case | Master | Customer dispute resolution | SLA deadline tracking, resolution enforcement |
-| 20 | Banking Regulatory Report | Master | Regulatory submissions (CTR/STR/CRILC/NPA/PSL) | Auto-generation from transaction data |
+| 2 | Banking State | Master | Indian states with RBI zone mapping | Master data (28 states) |
+| 3 | Banking Branch | Master | Branch details, IFSC code | Link → State, IFSC format validation |
+| 4 | Banking Interest Rate Schedule | Master | Slab-based interest rate configuration | Slab rate lookup, interest calculation |
+
+### Onboarding & KYC
+
+| # | DocType | Type | Purpose | Key Logic |
+|---|---------|------|---------|-----------|
+| 5 | Banking Customer Lead | Master | CRM lead pipeline | Lead-to-customer conversion, auto-RM assignment |
+| 6 | Banking Customer | Master | Customer profile (Individual/Company/Trust etc.) | Auto-numbering, PAN validation, mobile validation, AML log, risk scoring |
+| 7 | Banking KYC Document | Master | KYC documents (Aadhaar/PAN/Passport etc.) | Expiry tracking, re-KYC trigger, auto-freeze on 90+ days expired |
+| 8 | Banking Account Entitlement | Master | Multi-user access for business accounts | Owner/Accountant/Auditor levels, duplicate user check |
+
+### Deposits
+
+| # | DocType | Type | Purpose | Key Logic |
+|---|---------|------|---------|-----------|
+| 9 | Banking Deposit Product | Master | Product catalog (Savings/FD/RD/PPF/SSY) | Interest rate validation, tenure validation |
+| 10 | Banking Account | Master | Deposit accounts (Savings/Current/Salary/NRE/NRO/CC/OD) | Auto-numbering, balance management, joint holders, dormant classification, closure validation |
+| 11 | Banking Account Joint Holder | **Child Table** | Joint account holders with operating mode | Operating mode: Either or Survivor/Jointly/Former or Survivor/Anyone or Survivor |
+| 12 | Banking Service Charge Rule | Master | Bank fee configuration | Account maintenance, ATM, cheque return, SMS charges |
+
+### Payments
+
+| # | DocType | Type | Purpose | Key Logic |
+|---|---------|------|---------|-----------|
+| 13 | Banking Payment Order | Master | Payment instructions (UPI/IMPS/NEFT/RTGS/Cheque) | Maker-Checker, balance check, rail limits, UTR generation |
+| 14 | Banking Transaction Ledger | Master | Double-entry transaction log | Running balance, Dynamic Link to source, account sync |
+| 15 | Banking Standing Instruction | Master | Recurring payments (EMI/Utility/SIP) | Auto-execution, balance check, pause on failure |
+| 16 | Banking NACH Mandate | Master | NACH auto-debit mandates | Amount validation |
+| 17 | Banking Bulk Payment | Master | Batch payment processing | CSV upload, batch processing, auto-creates Payment Orders |
+| 18 | Banking Bulk Payment Entry | **Child Table** | Individual beneficiary in bulk payment | Status tracking, UTR capture, error messages |
+
+### Lending
+
+| # | DocType | Type | Purpose | Key Logic |
+|---|---------|------|---------|-----------|
+| 19 | Banking Loan Application | Master | Loan applications (Personal/MSME/Home/Vehicle/Gold/Agri/Microfinance) | Risk grading (A1→D), FOIR validation, auto-create Loan Account |
+| 20 | Banking Loan Co-applicant | **Child Table** | Loan co-applicants | Linked via Table field |
+| 21 | Banking Loan Account | Master | Sanctioned loans with EMI schedules | Daily reducing balance interest, EMI processing, prepayment, floating rate update, NPA tracker |
+| 22 | Banking Collateral | Master | Collateral against loans (Property/FD/Gold/Stocks) | Lien validation (lien ≤ market value) |
+| 23 | Banking NPA Tracker | Master | NPA classification & provisioning | Auto-classification (SMA-0→Loss), provision calculation |
+
+### Risk & Compliance
+
+| # | DocType | Type | Purpose | Key Logic |
+|---|---------|------|---------|-----------|
+| 24 | Banking Fraud Alert | Master | Fraud alerts & case management | 5 alert types, auto-detection, auto-hold |
+| 25 | Banking Positive Pay Record | Master | Check fraud prevention | Pre-submit cheque details, match against presented cheques |
+| 26 | Banking AML Screening Log | Master | AML/sanctions screening records | Match-disposition validation |
+| 27 | Banking Dispute Case | Master | Customer dispute resolution | SLA deadline (T+5 UPI, T+30 others), auto-escalation, auto-reversal |
+| 28 | Banking Regulatory Report | Master | Regulatory submissions (CTR/STR/CRILC/NPA/PSL) | Auto-generation, generate_scheduled_reports() weekly |
+
+### Reports (12 Scripts)
+
+| # | Report | Purpose | Frequency |
+|---|--------|---------|-----------|
+| R1 | Portfolio Summary | Total deposits, advances, NPA%, CD ratio by branch | Daily |
+| R2 | Transaction Log | All posted debits/credits with UTR, rail, settlement | Daily |
+| R3 | KYC Pending Tracker | Customers with pending/rejected/re-KYC status | Daily |
+| R4 | Fraud Alert Dashboard | Open alerts by type, risk score, SLA breach | Real-time |
+| R5 | NPA Register | All NPA accounts: DPD bucket, outstanding, provision | Weekly |
+| R6 | EMI Dues & Collections | EMIs due next 7 days, collected vs pending | Daily |
+| R7 | Payment Reconciliation | System-settled vs ledger-posted, unmatched flagged | Daily |
+| R8 | AML Screening Summary | Total screened, matches, false positives, STRs | Weekly |
+| R9 | Interest Income Accrual | Accrued interest by product, FD maturity, TDS | Monthly |
+| R10 | RBI NPA Return | Prescribed RBI format: Sub-standard, Doubtful, Loss split | Quarterly |
+| R11 | Priority Sector Lending | PSL achievement vs target: Agri, MSME, Weaker Section | Quarterly |
+| R12 | CTR/STR Export | FIU-IND prescribed export ready for submission | On demand |
+
+---
+
+## New Doctypes (v2.0)
+
+### Banking State
+**Purpose:** Master data for Indian states with RBI zone mapping for jurisdiction-based reporting.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| state_name | Data | Full state name (e.g., Maharashtra) |
+| state_code | Data | ISO state code (e.g., MH) |
+| region | Select | North/South/East/West/Central/North-East |
+| rbi_zone | Select | RBI zone (Mumbai/New Delhi/Chennai/Kolkata etc.) |
+
+### Banking Interest Rate Schedule
+**Purpose:** Configure slab-based interest rates for deposit products.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| product_type | Select | Savings/Current/FD/RD/PPF/SSY |
+| deposit_product | Link → Banking Deposit Product | Optional product link |
+| min_amount | Currency | Lower bound of slab (inclusive) |
+| max_amount | Currency | Upper bound of slab (inclusive) |
+| interest_rate | Percent | Annual interest rate for this slab |
+| min_tenure_days | Int | Minimum tenure in days |
+| max_tenure_days | Int | Maximum tenure in days |
+| is_active | Check | Enable/disable this slab |
+
+**Key Methods:**
+- `get_applicable_rate(amount, tenure_days)` — Find matching rate for given amount
+- `calculate_interest(principal, tenure_days)` — Calculate interest using slab rate
+
+### Banking Service Charge Rule
+**Purpose:** Define bank charges — account maintenance, ATM fees, cheque return, SMS alerts, etc.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| charge_type | Select | Account Maintenance/ATM Fee/Cheque Return/SMS Alert/DD/RTGS-NEFT/Debit Card/Overdraft Interest |
+| account_type | Select | All/Savings/Current/Salary/NRE/NRO/Cash Credit/Overdraft |
+| charge_amount | Currency | Fixed fee amount |
+| charge_percentage | Percent | Optional % of transaction value |
+| min_charge | Currency | Floor for percentage-based charges |
+| max_charge | Currency | Cap for percentage-based charges |
+| frequency | Select | One-time/Monthly/Quarterly/Annual/Per Transaction |
+| applicable_if_balance_below | Currency | Only charge if balance below this threshold |
+
+### Banking Customer Lead
+**Purpose:** CRM-style lead pipeline — capture prospects before they become customers.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| full_name | Data | Prospect name |
+| customer_type | Select | Individual/Proprietary/Partnership/Company/Trust/Co-op Society |
+| mobile | Data | 10-digit Indian mobile (validated) |
+| lead_source | Select | Walk-in/Referral/Website/Campaign/Agent/Branch/Partner/Other |
+| lead_status | Select | New/Contacted/Qualified/Proposal/Converted/Lost |
+| branch | Link → Banking Branch | Assigned branch |
+| assigned_rm | Link → User | Auto-assigned Relationship Manager |
+| product_interest | Select | Savings/Current/FD/RD/Personal Loan/Home Loan/etc. |
+| converted_to_customer | Link → Banking Customer | Auto-set on conversion |
+
+**Key Methods:**
+- `convert_to_customer()` — Creates Banking Customer record, updates lead status to "Converted"
+- `before_save()` — Auto-assigns RM from branch if not set
+
+### Banking Account Entitlement
+**Purpose:** Multi-user access levels for business accounts — Owner/Accountant/Auditor.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| account | Link → Banking Account | Target account |
+| user | Link → User | Entitled user |
+| access_level | Select | Owner (full)/Accountant (payments)/Auditor (read-only)/Viewer |
+| can_initiate_payments | Check | Payment creation permission |
+| can_approve_payments | Check | Payment approval permission |
+| can_view_statements | Check | Statement access |
+
+### Banking Bulk Payment
+**Purpose:** Batch payment processing — upload CSV of beneficiaries, process in bulk with consolidated approval.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| batch_reference | Data | Batch identifier |
+| from_account | Link → Banking Account | Debit account |
+| total_amount | Currency | Auto-calculated sum of all entries |
+| total_entries | Int | Auto-calculated entry count |
+| status | Select | Draft/Pending Approval/Approved/Processing/Completed/Partially Completed/Failed |
+| uploaded_csv | Attach | CSV file input |
+| entries | Table (Banking Bulk Payment Entry) | Beneficiary list |
+
+**Key Methods:**
+- `load_csv()` — Parse uploaded CSV (columns: beneficiary_name, to_account_no, to_ifsc, payment_rail, amount)
+- `process_batch()` — Create individual Payment Orders for each entry, track status
+
+### Banking Bulk Payment Entry (Child Table)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| beneficiary_name | Data | Payee name |
+| to_account_no | Data | Beneficiary account number |
+| to_ifsc | Data | Beneficiary IFSC code |
+| payment_rail | Select | UPI/IMPS/NEFT/RTGS/Internal |
+| amount | Currency | Payment amount |
+| status | Select | Pending/Settled/Failed (read-only) |
+| utr_number | Data | Auto-populated on settlement |
+| error_message | Small Text | Failure reason |
+| payment_order_ref | Data | Link to created Payment Order |
+
+---
+
+## Schema Enhancements (v2.0)
+
+### 1. Banking Branch → State Field
+- **Before:** `state` was a plain `Data` field
+- **After:** `state` is now `Link → Banking State` — enables RBI zone filtering and state-level reporting
+
+### 2. Banking Account Joint Holder → Operating Mode
+- **New field:** `operating_mode` (Select)
+- **Options:** Either or Survivor / Jointly / Former or Survivor / Anyone or Survivor
+- Required for compliance with joint account operating instructions
+
+### 3. Banking Transaction Ledger → Dynamic Link
+- **Before:** `source_doctype` and `source_docname` were separate `Data` fields
+- **After:**
+  - `source_doctype` is now `Link → DocType`
+  - `source_docname` is now `Dynamic Link (options: source_doctype)`
+- Enables native Frappe linking with proper referential integrity and UI navigation
+
+---
+
+## Feature Modules & Business Logic
+
+### 1. Customer Onboarding & KYC
+
+```
+Banking Customer Lead → Banking Customer → Banking KYC Document → AML Screening
+       │                       │                     │                    │
+       │  CRM pipeline         │  PAN/Mobile         │  Expiry tracking  │  Match detection
+       │  Lead→Customer        │  validation         │  Re-KYC trigger   │  Disposition check
+       │  Auto-RM              │  Risk scoring       │  90d→auto-freeze  │
+       └───────────────────────┴─────────────────────┴───────────────────┘
+```
+
+**Validations:**
+- PAN format: `ABCDE1234F` (10 characters, regex validated)
+- Mobile: 10-digit Indian mobile (starts with 6-9)
+- Customer auto-numbering: `CUST-YYYY-MM-XXXXX`
+- Lead auto-conversion: Qualified leads can be converted to full customers
+- KYC expiry: Documents expiring → Customer status "Re-KYC Due"; 90+ days expired → Account frozen
+
+### 2. Account Management
+
+```
+Banking Customer → Banking Account → Banking Transaction Ledger
+                        │
+                    ├── Joint Holders (child table with operating mode)
+                    ├── Nominee
+                    ├── Entitlements (multi-user access)
+                    └── Dormant classification (12 months inactivity)
+```
+
+**Validations:**
+- Account auto-numbering: `ACC-YYYYMM-XXXXX`
+- Available balance ≤ Current balance
+- Date Opened defaults to today
+- Balance auto-updates on every Transaction Ledger submission
+- **Dormant classification**: Accounts with no transactions for 12+ months auto-classified as "Dormant"
+- **Closure validation**: Zero balance check, no active standing instructions, no NACH mandates, no pending payments
+
+### 3. Payments (Maker-Checker Workflow)
+
+```
+Banking Payment Order
+    │
+    ├── Draft → Pending Approval → Approved → Submitted → Settled
+    │                                                          │
+    │  Maker: creates                               UTR auto-generated
+    │  Checker: approves                            Balance deducted
+    │  Rules: Maker ≠ Checker                       Transaction Ledger entry
+    │
+    └── Payment Rails: UPI (≤₹1L), IMPS (24×7), NEFT (batch), RTGS (min ₹2L)
+
+Banking Bulk Payment
+    │
+    ├── CSV Upload → Validation → Approval
+    ├── Batch processing → Individual Payment Orders
+    └── Status: Completed / Partially Completed / Failed
+```
+
+**Business Rules:**
+- Maker and Checker must be different users
+- Checker is required before submission
+- Sufficient balance checked before settlement
+- Payment rail limits enforced:
+  - RTGS: Minimum ₹2,00,000
+  - NEFT: Maximum ₹50,00,000
+  - UPI: Maximum ₹1,00,000
+- UTR number auto-generated: `UTR{YYYYMMDDHHMMSS}{random}`
+- Settlement creates Transaction Ledger entry and debits account
+
+### 4. Loan Lifecycle
+
+```
+Loan Application → Approval → Loan Account → EMI Schedule → NPA Tracking
+      │                                                           │
+      │  Risk grading (A1-D)                         SMA-0 (0-30 DPD)
+      │  Bureau score (300-900)                      SMA-1 (31-60 DPD)
+      │  FOIR validation (≤70%)                      SMA-2 (61-90 DPD)
+      │  Co-applicants (child table)                 Sub-standard (91-180)
+      │  Auto-create Loan Account on approval        Doubtful (181-365)
+      └── Loan Products: Personal/MSME/Home/Vehicle  Loss (365+ DPD)
+                          Gold/Agri/Microfinance
+```
+
+**Interest Calculation (Daily Reducing Balance):**
+```
+Interest = Outstanding Principal × Rate% ÷ 100 ÷ 365 × Days
+Monthly Interest = Outstanding Principal × Rate% ÷ 1200
+```
+
+**EMI Processing:**
+- Scheduled daily: processes loans where `emi_date` matches today's date
+- Posts EMI credit to Transaction Ledger
+- Reduces outstanding principal
+- Creates NPA Tracker entry for monitoring
+- Auto-closes loan when final EMI is processed
+
+**Prepayment:**
+- `process_prepayment(amount)` — Reduce outstanding, recalculate EMI
+- Partial prepayment → EMI recalculation using amortization formula
+- Full prepayment → Account status "Prepaid"
+
+**Floating Rate Updates:**
+- `update_interest_rate(new_rate)` — For MCLR-linked loans
+- Recalculates EMI based on new rate
+- Logs rate change
+
+**NPA Classification (RBI Guidelines):**
+
+| DPD | Classification | Provision % |
+|-----|---------------|-------------|
+| 0-30 | SMA-0 (Special Mention) | 0% |
+| 31-60 | SMA-1 | 5% |
+| 61-90 | SMA-2 | 10% |
+| 91-180 | Sub-standard | 15% |
+| 181-365 | Doubtful | 40% |
+| 365+ | Loss | 100% |
+
+### 5. Fraud Detection
+
+**5 Alert Types:**
+
+| Alert Type | Detection Rule | Risk Score | Auto-Hold Threshold |
+|------------|---------------|------------|---------------------|
+| Velocity Breach | ≥5 payments in 1 hour OR single payment ≥₹10L | 65-75 | ≥80 |
+| Unusual Geography | Beneficiary IFSC prefix differs from branch IFSC prefix | 60 | ≥80 |
+| Account Takeover | ≥3 failed/draft payments in 1 hour OR ≥3 cancelled in 24h | 80 | ≥80 |
+| Positive Pay Mismatch | Presented cheque details don't match Positive Pay Record | 85 | Yes |
+| Manual | Created by compliance officer | User-defined | Configurable |
+
+**Auto-Hold Behavior:**
+- Risk score ≥ 80 → Account frozen (`account_status = "Frozen"`)
+- Deduplication: Same account/alerts within 24 hours don't duplicate
+
+### 6. Standing Instructions
+
+- **Types:** Utility, Loan EMI, Investment, Sweep, Custom
+- **Frequencies:** Daily, Weekly, Monthly, Quarterly, Annual
+- **Auto-execution:** Runs daily for due instructions
+  - Sufficient balance → executes payment
+  - Insufficient balance → status = "Paused", error logged
+  - End date reached → status = "Completed"
+
+### 7. Dispute Management
+
+- **SLA deadlines:** T+5 for UPI disputes, T+30 for other transaction types
+- **SLA auto-escalation:** Daily job escalates disputes past their deadline
+- **Auto-reversal:** When dispute is resolved "Upheld" with "Reversal" action → auto-creates reversal Transaction Ledger entry
+- **Status flow:** Open → Under Investigation → Resolved - Upheld / Resolved - Rejected / Escalated
+
+### 8. Reconciliation
+
+**Daily Reconciliation (`run_daily_reconciliation()`):**
+- For each active account, compare settled payments vs ledger entries
+- Flag discrepancies with ₹1+ difference as Fraud Alerts
+
+**CSV Upload (`upload_statement_csv()`):**
+- Upload bank statement CSV with columns: txn_date, narration, debit, credit, reference
+- Matches against Transaction Ledger entries
+- Returns matched/unmatched/error counts
+
+---
+
+## New Features (v2.0)
+
+### Bulk Payment Processing
+- Upload CSV of multiple beneficiaries → creates individual Payment Orders
+- Consolidated approval workflow
+- Per-entry status tracking (Settled/Failed) with UTR capture
+- Scheduler: `process_pending_bulk_payments()` — auto-processes approved batches
+
+### Loan Prepayment
+- Partial or full prepayment with EMI recalculation
+- Amortization formula: `EMI = P × r × (1+r)^n / ((1+r)^n - 1)`
+- Full prepayment → Account status "Prepaid"
+
+### CRM Lead Workflow
+- Full lead pipeline: New → Contacted → Qualified → Proposal → Converted → Lost
+- `convert_to_customer()` — single-click conversion with KYC defaults
+- Auto-RM assignment based on branch
+
+### 12 Banking Reports
+Runnable via Frappe Report Builder. Each report supports filters (date range, branch, status, etc.).
+
+### Positive Pay System
+- Pre-submit cheque details (number, date, amount, payee)
+- System matches presented cheques against submitted records
+- Mismatch → Fraud Alert (Positive Pay Mismatch, Risk Score: 85)
+
+---
+
+## Scheduler Jobs (Automated Tasks)
+
+### Daily Tasks (`daily_long`) — 10 Jobs
+
+| Function | Purpose | When |
+|----------|---------|------|
+| `auto_classify_npa()` | Calculate DPD for all loans, classify SMA-0→Loss | Every day |
+| `process_due_instructions()` | Execute standing instructions due today | Every day |
+| `auto_detect_fraud()` | Check for velocity breaches, geography mismatches, ATO, Positive Pay | Every day |
+| `process_all_emis()` | Process EMIs for loans where today matches emi_date | Every day |
+| `auto_escalate_overdue_disputes()` | Escalate disputes past their SLA deadline | Every day |
+| `check_kyc_reverification_due()` | Flag customers with expired KYC docs, freeze 90+ days | Every day |
+| `auto_classify_dormant_accounts()` | Mark accounts with 12 months inactivity as Dormant | Every day |
+| `recalculate_customer_risk_scores()` | Upgrade risk based on transaction volumes | Every day |
+| `process_pending_bulk_payments()` | Auto-process approved bulk payment batches | Every day |
+| `run_daily_reconciliation()` | Match settled payments vs ledger, flag discrepancies | Every day |
+
+### Weekly Tasks (`weekly_long`) — 1 Job
+
+| Function | Purpose | When |
+|----------|---------|------|
+| `generate_scheduled_reports()` | Auto-generate NPA Return and Priority Sector reports | Weekly |
+
+### Monthly Tasks (`monthly_long`) — 1 Job
+
+| Function | Purpose | When |
+|----------|---------|------|
+| `post_all_interest()` | Post monthly interest on active/NPA loan accounts | 1st of month |
+
+---
+
+## Roles & Permissions
+
+| Role | Access Scope | Key Permissions |
+|------|-------------|-----------------|
+| **Banking System Admin** | Full system | Read/Write/Create/Delete on all 27 doctypes |
+| **Banking Branch Manager** | Branch-wide | Full CRUD on customers, accounts, loans (branch scope); approve payments |
+| **Banking Relationship Manager** | Own customers | Create/Edit own records; initiate payments; read-only on others |
+| **Banking Credit Officer** | Loan processing | Full CRUD on loan applications, loan accounts, collateral |
+| **Banking Recovery Officer** | NPA management | Full CRUD on NPA trackers, recovery actions; read-only accounts |
+| **Banking Compliance Officer** | Regulatory | Full CRUD on AML logs, fraud alerts, regulatory reports; verify KYC |
+| **Banking Teller** | Cash counter | Create payment orders; own-branch customers; initiate payments |
+| **Banking Auditor** | Read-only | Read-only access to all transactions and reports |
+
+---
+
+## End-User SOP (Step-by-Step Workflows)
+
+### Workflow 1: Lead-to-Customer Onboarding
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────┐
+│                        LEAD-TO-CUSTOMER ONBOARDING SOP                              │
+├────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                     │
+│  Step 1: Capture Lead                                                               │
+│  └── RM creates Banking Customer Lead (Walk-in/Referral/Website/Campaign)          │
+│  └── Enter: Full Name, Customer Type, Mobile, Lead Source, Product Interest        │
+│  └── System auto-assigns RM based on branch                                        │
+│                                                                                     │
+│  Step 2: Qualify Lead                                                               │
+│  └── Contact prospect, collect KYC documents                                       │
+│  └── Update Lead Status → "Qualified"                                              │
+│                                                                                     │
+│  Step 3: Convert to Customer                                                        │
+│  └── Click "Convert to Customer" button                                            │
+│  └── System auto-creates Banking Customer with:                                    │
+│      ├── Customer ID: CUST-YYYY-MM-XXXXX                                           │
+│      ├── KYC Status: Pending                                                       │
+│      ├── Risk Category: Auto-calculated                                            │
+│      ├── AML Screening Log: Created                                                │
+│      └── Lead Status: "Converted"                                                  │
+│                                                                                     │
+│  Step 4: KYC Verification                                                           │
+│  └── Upload Aadhaar/PAN/Passport as Banking KYC Document                           │
+│  └── Select verification method: eKYC/Video/Physical                               │
+│  └── On verification → Customer KYC status = "Verified"                            │
+│  └── KYC docs tracked for expiry → Re-KYC trigger at expiry                        │
+│                                                                                     │
+│  Step 5: Open Account                                                               │
+│  └── Create Banking Account                                                         │
+│  └── Select account type: Savings/Current/Salary                                   │
+│  └── Link deposit product, add joint holders (with operating mode)                 │
+│  └── Set nominee, configure entitlements for business accounts                     │
+│  └── System auto-generates: ACC-YYYYMM-XXXXX                                       │
+│                                                                                     │
+└────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Workflow 2: Payment Processing (Maker-Checker)
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────┐
+│                         PAYMENT PROCESSING SOP                                      │
+├────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                     │
+│  Step 1: Maker Creates Payment Order                                                │
+│  └── Select From Account (must have sufficient balance)                            │
+│  └── Enter To Account No, To IFSC                                                  │
+│  └── Select Payment Rail: UPI/IMPS/NEFT/RTGS/Internal/Cheque                      │
+│  └── Enter Amount, Narration (optional)                                            │
+│  └── Set yourself as Maker                                                          │
+│  └── Status: Draft                                                                  │
+│                                                                                     │
+│  Step 2: Submit for Approval                                                        │
+│  └── Set Checker (different user)                                                   │
+│  └── Submit → Status: Pending Approval                                              │
+│                                                                                     │
+│  Step 3: Checker Reviews & Approves                                                 │
+│  └── Checker logs in, verifies payment details                                     │
+│  └── System validates:                                                             │
+│      ├── Maker ≠ Checker                                                           │
+│      ├── Sufficient balance                                                         │
+│      ├── Rail limits (UPI ≤₹1L, RTGS ≥₹2L, etc.)                                  │
+│  └── Approves → Status: Submitted                                                   │
+│  └── System auto-processes:                                                        │
+│      ├── Generates UTR: UTR{timestamp}{random}                                     │
+│      ├── Debits account balance                                                     │
+│      ├── Creates Transaction Ledger entry                                           │
+│      └── Status: Settled                                                            │
+│                                                                                     │
+│  Step 4: Bulk Payment (Alternative)                                                 │
+│  └── Upload CSV with columns: beneficiary_name, to_account_no, to_ifsc,           │
+│       payment_rail, amount                                                          │
+│  └── System validates and loads entries                                             │
+│  └── Set Maker, Checker → Submit                                                   │
+│  └── Batch processed: individual Payment Orders created for each entry             │
+│  └── Status: Completed / Partially Completed                                       │
+│                                                                                     │
+└────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Workflow 3: Loan Origination & Prepayment
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────┐
+│                       LOAN ORIGINATION & PREPAYMENT SOP                              │
+├────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                     │
+│  Step 1: Loan Application                                                           │
+│  └── Credit Officer creates loan application                                       │
+│  └── Link Applicant (Banking Customer)                                              │
+│  └── Select Loan Product: Personal/MSME/Home/Vehicle/Gold/Agri/Microfinance        │
+│  └── Enter Amount, Tenure, Purpose                                                  │
+│  └── Add Co-applicants (child table) if applicable                                  │
+│  └── Enter Bureau Score (300-900)                                                   │
+│  └── Enter FOIR % (must be ≤ 70%)                                                  │
+│  └── System auto-calculates Risk Grade:                                             │
+│      ├── ≥750: A1  │ ≥700: A2  │ ≥650: B1  │ ≥600: B2  │ ≥500: C  │ <500: D     │
+│                                                                                     │
+│  Step 2: Credit Assessment & Approval                                               │
+│  └── Review application details, risk grade                                        │
+│  └── Set Decision: Approved/Referred/Rejected                                      │
+│  └── Submit                                                                         │
+│                                                                                     │
+│  Step 3: Loan Account Creation (automatic)                                          │
+│  └── If Approved → System auto-creates Loan Account                                │
+│  └── Fields auto-populated:                                                        │
+│      ├── Loan Account No: LOAN-YYYYMM-XXXXX                                        │
+│      ├── Sanctioned Amount = Requested Amount                                      │
+│      ├── Interest Rate = 12% (configurable)                                        │
+│      ├── Rate Type: Fixed or Floating (MCLR-linked)                                │
+│      ├── EMI = Calculated via amortization formula                                  │
+│      ├── EMI Date = 5th of month (default)                                          │
+│      └── Status: Active                                                             │
+│                                                                                     │
+│  Step 4: Collateral (if applicable)                                                 │
+│  └── Create Banking Collateral record                                              │
+│  └── Link to Loan Account                                                           │
+│  └── Set Market Value, Valuation Date, Lien Amount                                 │
+│  └── Validation: Lien Amount ≤ Market Value                                        │
+│                                                                                     │
+│  Step 5: Prepayment (if needed)                                                     │
+│  └── Use process_prepayment(amount) method                                         │
+│  └── Partial prepayment:                                                           │
+│      ├── Outstanding reduced                                                        │
+│      ├── EMI recalculated using amortization formula                                │
+│      └── Transaction posted to ledger                                               │
+│  └── Full prepayment:                                                               │
+│      └── Account status → "Prepaid"                                                 │
+│                                                                                     │
+│  Step 6: Interest Rate Change (Floating Rate Loans)                                 │
+│  └── Use update_interest_rate(new_rate) method                                     │
+│  └── Only for rate_type = "Floating (MCLR-linked)"                                  │
+│  └── EMI recalculated, change logged                                                │
+│                                                                                     │
+└────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Workflow 4: NPA Management
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────┐
+│                          NPA MANAGEMENT SOP                                          │
+├────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                     │
+│  Daily (automated by scheduler):                                                    │
+│  └── System calculates DPD for all active loans                                    │
+│  └── Classifies based on DPD:                                                      │
+│      ├── 0-30 DPD: SMA-0                                                            │
+│      ├── 31-60 DPD: SMA-1                                                           │
+│      ├── 61-90 DPD: SMA-2                                                           │
+│      ├── 91-180: Sub-standard                                                       │
+│      ├── 181-365: Doubtful                                                          │
+│      └── 365+: Loss                                                                 │
+│  └── Updates Loan Account status to "NPA" if DPD > 90                              │
+│  └── Calculates provision amount:                                                   │
+│      ├── SMA-0: 0.25% of outstanding                                               │
+│      ├── SMA-1: 5%                                                                 │
+│      ├── SMA-2: 10%                                                                │
+│      ├── Sub-standard: 15%                                                          │
+│      ├── Doubtful: 25% (secured) / 40% (unsecured)                                │
+│      └── Loss: 100%                                                                │
+│                                                                                     │
+│  Manual Actions (Recovery Officer):                                                │
+│  └── Monitor NPA Tracker for overdue accounts                                       │
+│  └── Set Recovery Stage: Notice Sent / Legal Filed / Lok Adalat /                  │
+│       SARFAESI / DRT / Written Off                                                  │
+│  └── Assign to recovery team member                                                 │
+│  └── Update provision amounts as needed                                             │
+│                                                                                     │
+└────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Workflow 5: Fraud Detection & Dispute Resolution
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────┐
+│                    FRAUD DETECTION & DISPUTE RESOLUTION SOP                          │
+├────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                     │
+│  Automatic Detection (scheduled daily):                                             │
+│  └── Velocity Breach: ≥5 payments in 1 hour OR single payment ≥₹10L               │
+│  └── Unusual Geography: Beneficiary IFSC prefix ≠ Branch IFSC prefix               │
+│  └── Account Takeover: ≥3 failed payments in 1 hour OR ≥3 cancelled in 24h         │
+│  └── Positive Pay Mismatch: Cheque presented without matching Positive Pay Record  │
+│  └── If risk score ≥ 80 → Account auto-frozen                                      │
+│                                                                                     │
+│  Manual Review (Compliance Officer):                                                │
+│  └── Review open fraud alerts by type and risk score                               │
+│  └── Investigate → Update status:                                                   │
+│      ├── Confirmed Fraud → File STR, take recovery action                          │
+│      ├── False Positive → Close alert, unfreeze account                            │
+│      └── Closed (manual action taken)                                               │
+│                                                                                     │
+│  Customer Dispute:                                                                  │
+│  └── Customer raises dispute (portal/manual)                                       │
+│  └── Create Banking Dispute Case                                                    │
+│  └── SLA timer starts:                                                             │
+│      ├── UPI dispute: T+5 days                                                      │
+│      └── Other disputes: T+30 days                                                  │
+│  └── Investigate → Update status:                                                   │
+│      ├── Resolved - Upheld → Auto-reversal of transaction                          │
+│      └── Resolved - Rejected → Close case                                          │
+│  └── If SLA deadline passes → Auto-escalated to management                         │
+│                                                                                     │
+└────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Workflow 6: Regulatory Reporting
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────┐
+│                         REGULATORY REPORTING SOP                                     │
+├────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                     │
+│  Step 1: Create Regulatory Report                                                   │
+│  └── Compliance Officer creates report                                              │
+│  └── Select Report Type: CTR / STR / CRILC / NPA Return / Priority Sector          │
+│  └── Set Period From / Period To                                                    │
+│                                                                                     │
+│  Step 2: Generate Report                                                             │
+│  └── System queries relevant data:                                                  │
+│      ├── CTR: Transactions > ₹10L/day from Transaction Ledger                       │
+│      ├── STR: Confirmed fraud alerts / Under Review                                 │
+│      ├── CRILC: Loans with sanction ≥ ₹5Cr                                          │
+│      ├── NPA Return: Sub-standard/Doubtful/Loss accounts with provisions            │
+│      └── PSL: Agri/MSME/Microfinance loan portfolio vs targets                       │
+│  └── Status: Generated                                                              │
+│                                                                                     │
+│  Step 3: Weekly Auto-Generation                                                     │
+│  └── Scheduler runs generate_scheduled_reports() weekly                             │
+│  └── Auto-generates NPA Return and Priority Sector reports                         │
+│  └── No duplicate generation for same period                                        │
+│                                                                                     │
+│  Step 4: Submit to Regulator                                                        │
+│  └── Submitted By: Compliance Officer                                               │
+│  └── Status: Submitted → Acknowledged                                              │
+│                                                                                     │
+└────────────────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
@@ -156,342 +908,12 @@ bench start
 
 After installation, log in as **System Manager** and:
 
-1. **Create Bank Configuration**: Go to `Banking Configuration` → Set Bank Name, License Type, RBI License No, IFSC Prefix, AML Threshold
-2. **Create Branches**: Go to `Banking Branch` → Add at least one branch with IFSC code
-3. **Create Deposit Products**: Go to `Banking Deposit Product` → Add Savings, Current, FD, RD products with interest rates
-4. **Assign Roles**: Go to `User` → Assign `Banking Branch Manager`, `Banking Relationship Manager`, `Banking Teller`, `Banking Credit Officer`, `Banking Compliance Officer`, `Banking Auditor` roles to appropriate users
-
----
-
-## Feature Modules & Business Logic
-
-### 1. Customer Onboarding & KYC
-
-```
-Banking Customer ──► Banking KYC Document ──► AML Screening
-     │                        │                      │
-     │  PAN validation        │  Expiry tracking     │  Match detection
-     │  Mobile validation     │  Auto-verify KYC     │  Disposition check
-     └────────────────────────┴──────────────────────┘
-```
-
-**Validations:**
-- PAN format: `ABCDE1234F` (10 characters)
-- Mobile: 10-digit Indian mobile (starts with 6-9)
-- Auto-numbering: `CUST-YYYY-MM-XXXXX`
-- On KYC document verification → auto-updates Customer KYC status to "Verified"
-- On KYC verification → creates AML Screening Log with type "Onboarding"
-
-### 2. Account Management
-
-```
-Banking Customer ──► Banking Account ──► Banking Transaction Ledger
-                         │
-                         ├── Joint Holders (child table)
-                         └── Nominee
-```
-
-**Validations:**
-- Auto-numbering: `ACC-YYYYMM-XXXXX`
-- Available balance ≤ Current balance
-- Date Opened defaults to today
-- Balance auto-updates on every Transaction Ledger submission
-
-### 3. Payments (Maker-Checker Workflow)
-
-```
-Banking Payment Order
-    │
-    ├── Draft ──► Pending Approval ──► Approved ──► Submitted ──► Settled
-    │                                                              │
-    │  Maker: creates                                   UTR auto-generated
-    │  Checker: approves                                Balance deducted
-    │  Rules: Maker ≠ Checker                           Transaction Ledger entry
-    │
-    └── Payment Rails: UPI (₹1L), IMPS (₹5L), NEFT (₹50L), RTGS (min ₹2L)
-```
-
-**Business Rules:**
-- Maker and Checker must be different users
-- Checker is required before submission
-- Sufficient balance checked before settlement
-- Payment rail limits enforced:
-  - RTGS: Minimum ₹2,00,000
-  - NEFT: Maximum ₹50,00,000
-  - UPI: Maximum ₹1,00,000
-- UTR number auto-generated on settlement: `UTR{YYYYMMDDHHMMSS}{random}`
-- Settlement creates Transaction Ledger entry and debits account
-
-### 4. Loan Lifecycle
-
-```
-Loan Application ──► Approval ──► Loan Account ──► EMI Schedule ──► NPA Tracking
-      │                                                                 │
-      │  Risk grading (A1-D)                              SMA-0 (0-30 DPD)
-      │  Bureau score (300-900)                            SMA-1 (31-60 DPD)
-      │  FOIR validation (≤70%)                            SMA-2 (61-90 DPD)
-      │  Co-applicants (child table)                       Sub-standard (91-180)
-      │  Auto-create Loan Account on approval              Doubtful (181-365)
-      └── Loan Products: Personal/MSME/Home/Vehicle        Loss (365+ DPD)
-                          Gold/Agri/Microfinance
-```
-
-**Interest Calculation (Daily Reducing Balance):**
-```
-Interest = Outstanding Principal × Rate% ÷ 100 ÷ 365 × Days
-Monthly Interest = Outstanding Principal × Rate% ÷ 1200
-```
-
-**EMI Processing:**
-- Scheduled daily: processes loans where `emi_date` matches today's date
-- Posts EMI credit to Transaction Ledger
-- Reduces outstanding principal
-- Creates NPA Tracker entry for monitoring
-- Auto-closes loan when final EMI is processed
-
-**NPA Classification (RBI Guidelines):**
-
-| DPD | Classification | Provision % |
-|-----|---------------|-------------|
-| 0-30 | SMA-0 (Special Mention) | 0% |
-| 31-60 | SMA-1 | 5% |
-| 61-90 | SMA-2 | 10% |
-| 91-180 | Sub-standard | 15% |
-| 181-365 | Doubtful | 40% |
-| 365+ | Loss | 100% |
-
-### 5. Fraud Detection
-
-**Auto-Detection Rules (scheduled daily):**
-1. **High-value transactions**: Any Payment Order ≥ ₹10,00,000 triggers a Velocity Breach alert (Risk Score: 65)
-2. **Rapid payment attempts**: ≥5 payments from the same account within 1 hour triggers a Velocity Breach alert (Risk Score: 75)
-3. **Auto-hold**: If risk score ≥ 80, the account is automatically frozen (status → "Frozen")
-
-### 6. Standing Instructions
-
-- Supports Utility, Loan EMI, Investment, Sweep, and Custom types
-- Frequencies: Daily, Weekly, Monthly, Quarterly, Annual
-- Auto-executes on due date if sufficient balance
-- If insufficient balance → status changes to "Paused" and error is logged
-- Auto-completes when end date is reached
-
-### 7. Regulatory Reports
-
-| Report | Source Data | Purpose |
-|--------|-------------|---------|
-| CTR (Cash Transaction Report) | Transaction Ledger | Cash transactions > ₹10L/day |
-| STR (Suspicious Transaction Report) | Fraud Alerts | Confirmed fraud cases |
-| CRILC | Loan Accounts ≥ ₹5Cr | Large credit data to RBI |
-| NPA Return | NPA Tracker | Sub-standard/Doubtful/Loss accounts |
-| Priority Sector | Agri/MSME/Microfinance loans | PSL compliance |
-
----
-
-## Scheduler Jobs (Automated Tasks)
-
-### Daily Tasks (`daily_long`)
-
-| Function | Purpose | When |
-|----------|---------|------|
-| `auto_classify_npa()` | Calculate DPD for all loans, classify SMA-0→Loss | Every day |
-| `process_due_instructions()` | Execute standing instructions due today | Every day |
-| `auto_detect_fraud()` | Check for high-value payments, rapid payment attempts | Every day |
-| `process_all_emis()` | Process EMIs for loans where today matches emi_date | Every day |
-
-### Monthly Tasks (`monthly_long`)
-
-| Function | Purpose | When |
-|----------|---------|------|
-| `post_all_interest()` | Post monthly interest on active/NPA loan accounts | 1st of month |
-
----
-
-## Roles & Permissions
-
-| Role | Access Scope | Key Permissions |
-|------|-------------|-----------------|
-| **Banking System Admin** | Full system | Read/Write/Create/Delete on all doctypes |
-| **Banking Branch Manager** | Branch-wide | Full CRUD on customers, accounts, loans (branch scope) |
-| **Banking Relationship Manager** | Own customers | Create/Edit own records, read-only on others |
-| **Banking Credit Officer** | Loan processing | Full CRUD on loan applications, loan accounts |
-| **Banking Recovery Officer** | NPA management | Full CRUD on NPA trackers, recovery actions |
-| **Banking Compliance Officer** | Regulatory | Full CRUD on AML logs, fraud alerts, regulatory reports |
-| **Banking Teller** | Cash counter | Create payment orders, read-only customer data |
-| **Banking Auditor** | Read-only | Read-only access to all transactions and reports |
-
----
-
-## End-User SOP (Step-by-Step Workflows)
-
-### Workflow 1: Customer Onboarding
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   CUSTOMER ONBOARDING SOP                        │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  Step 1: Banking Configuration                                  │
-│  └── Admin sets up bank settings (license, IFSC, AML threshold) │
-│                                                                  │
-│  Step 2: Banking Branch                                         │
-│  └── Admin creates branch(es) with IFSC codes                   │
-│                                                                  │
-│  Step 3: Banking Customer                                       │
-│  └── Relationship Manager creates customer profile              │
-│  └── Enters: Full Name, DOB, PAN, Aadhaar, Mobile              │
-│  └── Selects: Customer Type, Branch, Risk Category             │
-│  └── System auto-generates: CUST-YYYY-MM-XXXXX                 │
-│  └── System validates: PAN format, Mobile format               │
-│                                                                  │
-│  Step 4: Banking KYC Document                                   │
-│  └── Upload Aadhaar/PAN/Passport/etc.                          │
-│  └── Select verification method: eKYC/Video/Physical           │
-│  └── On verification → Customer KYC status = "Verified"        │
-│  └── System creates AML Screening Log entry                    │
-│                                                                  │
-│  Step 5: Banking Account                                        │
-│  └── Teller/Relationship Manager creates account               │
-│  └── Select account type: Savings/Current/Salary               │
-│  └── Link deposit product, add joint holders (child table)     │
-│  └── Set nominee                                               │
-│  └── System auto-generates: ACC-YYYYMM-XXXXX                   │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### Workflow 2: Payment Processing (Maker-Checker)
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   PAYMENT PROCESSING SOP                         │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  Step 1: Maker Creates Payment Order                            │
-│  └── Select From Account (must have sufficient balance)         │
-│  └── Enter To Account No, To IFSC                              │
-│  └── Select Payment Rail: UPI/IMPS/NEFT/RTGS/Internal/Cheque   │
-│  └── Enter Amount, Narration (optional)                        │
-│  └── Set yourself as Maker                                      │
-│  └── Status: Draft                                               │
-│                                                                  │
-│  Step 2: Submit for Approval                                    │
-│  └── Set Checker (different user)                               │
-│  └── Submit → Status: Pending Approval                          │
-│                                                                  │
-│  Step 3: Checker Reviews & Approves                             │
-│  └── Checker logs in, verifies payment details                 │
-│  └── Approves → Status: Submitted                               │
-│  └── System auto-processes:                                    │
-│      ├── Validates balance                                      │
-│      ├── Validates payment rail limits                          │
-│      ├── Generates UTR: UTR{timestamp}{random}                  │
-│      ├── Dedits account balance                                 │
-│      ├── Creates Transaction Ledger entry                       │
-│      └── Status: Settled                                        │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### Workflow 3: Loan Origination
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   LOAN ORIGINATION SOP                           │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  Step 1: Loan Application                                       │
-│  └── Credit Officer creates loan application                   │
-│  └── Link Applicant (Banking Customer)                          │
-│  └── Select Loan Product: Personal/MSME/Home/Vehicle/Gold/...  │
-│  └── Enter Amount, Tenure, Purpose                              │
-│  └── Add Co-applicants (child table) if applicable              │
-│  └── Enter Bureau Score (300-900)                               │
-│  └── Enter FOIR % (must be ≤ 70%)                              │
-│  └── System auto-calculates Risk Grade:                         │
-│      ├── ≥750: A1 │ ≥700: A2 │ ≥650: B1                       │
-│      ├── ≥600: B2 │ ≥500: C  │ <500: D                        │
-│                                                                  │
-│  Step 2: Credit Assessment                                      │
-│  └── Review application details, risk grade                    │
-│  └── Set Decision: Approved/Referred/Rejected                  │
-│  └── Submit                                                     │
-│                                                                  │
-│  Step 3: Loan Account Creation (automatic)                     │
-│  └── If Approved → System auto-creates Loan Account            │
-│  └── Fields auto-populated:                                    │
-│      ├── Loan Account No: LOAN-YYYYMM-XXXXX                    │
-│      ├── Sanctioned Amount = Requested Amount                   │
-│      ├── Interest Rate = 12% (configurable)                     │
-│      ├── EMI = Calculated via amortization formula              │
-│      ├── EMI Date = 5th of month (default)                      │
-│      └── Status: Active                                         │
-│                                                                  │
-│  Step 4: Collateral (if applicable)                             │
-│  └── Create Banking Collateral record                          │
-│  └── Link to Loan Account                                       │
-│  └── Set Market Value, Valuation Date, Lien Amount             │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### Workflow 4: NPA Management
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   NPA MANAGEMENT SOP                             │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  Daily (automated by scheduler):                                │
-│  └── System calculates DPD for all active loans                │
-│  └── Classifies based on DPD:                                   │
-│      ├── 0-30 DPD: SMA-0                                        │
-│      ├── 31-60 DPD: SMA-1                                       │
-│      ├── 61-90 DPD: SMA-2                                       │
-│      ├── 91-180: Sub-standard                                   │
-│      ├── 181-365: Doubtful                                      │
-│      └── 365+: Loss                                              │
-│  └── Updates Loan Account status to "NPA" if DPD > 90          │
-│  └── Calculates provision amount                                 │
-│                                                                  │
-│  Manual Actions (Recovery Officer):                             │
-│  └── Monitor NPA Tracker for overdue accounts                   │
-│  └── Set Recovery Stage: Notice/Legal/Lok Adalat/SARFAESI/DRT   │
-│  └── Assign to recovery team member                              │
-│  └── Update provision amounts as needed                          │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### Workflow 5: Regulatory Reporting
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   REGULATORY REPORTING SOP                       │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  Step 1: Create Regulatory Report                               │
-│  └── Compliance Officer creates report                          │
-│  └── Select Report Type: CTR/STR/CRILC/NPA Return/PSL          │
-│  └── Set Period From / Period To                                │
-│                                                                  │
-│  Step 2: Generate Report                                        │
-│  └── Click "Generate" button                                    │
-│  └── System queries relevant data:                              │
-│      ├── CTR: Transactions > ₹10L/day from Transaction Ledger   │
-│      ├── STR: Confirmed fraud alerts                            │
-│      ├── CRILC: Loans with sanction ≥ ₹5Cr                      │
-│      ├── NPA Return: Sub-standard/Doubtful/Loss accounts        │
-│      └── PSL: Agri/MSME/Microfinance loan portfolio             │
-│  └── Status: Generated                                           │
-│  └── Download report file                                        │
-│                                                                  │
-│  Step 3: Submit to Regulator                                    │
-│  └── Submitted By: Compliance Officer                           │
-│  └── Status: Submitted                                           │
-│  └── On regulator acknowledgment: Status → Acknowledged         │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+1. **Create State Master**: Go to `Banking State` → Add applicable Indian states with RBI zones
+2. **Create Bank Configuration**: Go to `Banking Configuration` → Set Bank Name, License Type, RBI License No, IFSC Prefix, AML Threshold
+3. **Create Branches**: Go to `Banking Branch` → Add branches with IFSC codes, link to State
+4. **Create Deposit Products**: Go to `Banking Deposit Product` → Add Savings, Current, FD, RD, PPF, SSY products
+5. **Create Interest Rate Schedules**: Go to `Banking Interest Rate Schedule` → Configure slab-based rates
+6. **Assign Roles**: Go to `User` → Assign `Banking Branch Manager`, `Banking Relationship Manager`, `Banking Teller`, `Banking Credit Officer`, `Banking Compliance Officer`, `Banking Auditor` roles
 
 ---
 
@@ -526,39 +948,38 @@ scheduler_events = {
         "bizaxl_banking.banking.doctype.your_doctype.your_module.your_function"
     ],
     "hourly": [...],
-    "weekly": [...],
+    "weekly_long": [...],
     "monthly_long": [...]
 }
 ```
 
-### Naming Series
+### Adding New Reports
 
-Custom naming is configured in hooks.py and class `autoname()` methods:
+Create a new `.py` file in `bizaxl_banking/banking/reports/` with the standard Frappe report interface:
 
 ```python
-naming_series = {
-    "Banking Customer": "CUST-.YYYY.-.MM.-.#####",
-    "Banking Account": "ACC-.YYYYMM.-.#####",
-    "Banking Payment Order": "PAY-.YYYYMM.-.#####",
-}
+def execute(filters=None):
+    columns = [...]
+    data = [...]
+    return columns, data
 ```
+
+The report will auto-register when you run `bench migrate`.
+
+### Naming Series
+
+Custom naming is configured in class `autoname()` methods:
+
+- Banking Customer: `CUST-YYYY-MM-XXXXX`
+- Banking Account: `ACC-YYYYMM-XXXXX`
+- Banking Payment Order: `PAY-YYYYMM-XXXXX`
+- Banking Loan Account: `LOAN-YYYYMM-XXXXX`
+- Banking Customer Lead: `LEAD-YYYYMM-XXXXX`
+- Banking Bulk Payment: `BULK-YYYYMM-XXXXX`
 
 ### Extending Permissions
 
-Permissions are defined in each DocType's `.json` file under the `permissions` array. Add new role entries:
-
-```json
-{
-    "role": "Banking Custom Role",
-    "read": 1,
-    "write": 1,
-    "create": 1,
-    "delete": 0,
-    "if_owner": 1,
-    "print": 1,
-    "email": 1
-}
-```
+Permissions are defined in each DocType's `.json` file under the `permissions` array.
 
 ### Adding Child Tables
 
@@ -576,12 +997,8 @@ All DocTypes are accessible via Frappe's standard REST API:
 ### Authentication
 
 ```bash
-# Login
 POST /api/method/login
-{
-    "usr": "administrator",
-    "pwd": "password"
-}
+{"usr": "administrator", "pwd": "password"}
 ```
 
 ### Customer APIs
@@ -598,7 +1015,7 @@ POST /api/resource/Banking Customer
     "kyc_status": "Pending",
     "risk_category": "Medium",
     "fatca_status": "Compliant",
-    "branch": "BRN-00001"
+    "branch": "MAH-0001"
 }
 
 # Get Customer
@@ -618,7 +1035,7 @@ POST /api/resource/Banking Account
     "customer": "CUST-2026-07-00001",
     "account_type": "Savings",
     "deposit_product": "Regular Savings",
-    "branch": "BRN-00001",
+    "branch": "MAH-0001",
     "current_balance": 10000,
     "available_balance": 10000,
     "account_status": "Active"
@@ -626,7 +1043,6 @@ POST /api/resource/Banking Account
 
 # Get Balance
 GET /api/resource/Banking Account/{name}
-# Returns: current_balance, available_balance
 ```
 
 ### Payment APIs
@@ -642,6 +1058,14 @@ POST /api/resource/Banking Payment Order
     "amount": 50000,
     "maker": "user@bank.com",
     "checker": "manager@bank.com"
+}
+
+# Bulk Payment Upload
+POST /api/resource/Banking Bulk Payment
+{
+    "from_account": "ACC-202607-00001",
+    "payment_date": "2026-07-02",
+    "uploaded_csv": "/files/bulk_salary.csv"
 }
 ```
 
@@ -660,96 +1084,85 @@ POST /api/resource/Banking Loan Application
     "foir": 40,
     "decision": "Approved"
 }
+
+# Process Prepayment
+POST /api/method/bizaxl_banking.banking.doctype.banking_loan_account.banking_loan_account.process_prepayment
+{
+    "prepayment_amount": 50000
+}
+```
+
+### Lead APIs
+
+```bash
+# Create Lead
+POST /api/resource/Banking Customer Lead
+{
+    "full_name": "Priya Patel",
+    "customer_type": "Individual",
+    "mobile": "9876543210",
+    "lead_source": "Referral",
+    "product_interest": "Savings Account"
+}
+
+# Convert Lead to Customer
+POST /api/method/bizaxl_banking.banking.doctype.banking_customer_lead.banking_customer_lead.convert_to_customer
 ```
 
 ### Running Reports
 
 ```bash
-# Generate Regulatory Report
-POST /api/resource/Banking Regulatory Report
-{
-    "report_type": "CRILC",
-    "period_from": "2026-04-01",
-    "period_to": "2026-06-30"
-}
+# Portfolio Summary
+GET /api/method/bizaxl_banking.banking.reports.portfolio_summary.execute
+
+# Fraud Dashboard
+GET /api/method/bizaxl_banking.banking.reports.fraud_alert_dashboard.execute?filters={"status":"Open"}
+
+# FIU XML Export
+GET /api/method/bizaxl_banking.banking.reports.ctr_str_export.generate_fiu_xml
 ```
 
 ### Triggering Scheduler Jobs Manually
 
 ```bash
-# Run NPA classification
 bench --site banking.local execute bizaxl_banking.banking.doctype.banking_npa_tracker.banking_npa_tracker.auto_classify_npa
-
-# Run EMI processing
 bench --site banking.local execute bizaxl_banking.banking.doctype.banking_loan_account.banking_loan_account.process_all_emis
-
-# Run fraud detection
 bench --site banking.local execute bizaxl_banking.banking.doctype.banking_fraud_alert.banking_fraud_alert.auto_detect_fraud
+bench --site banking.local execute bizaxl_banking.banking.reconciliation.run_daily_reconciliation
 ```
-
----
-
-## Customization & Extending
-
-### Adding Payment Rail Integrations
-
-The current implementation validates limits and generates UTRs but does not execute against real payment rails (NPCI, sponsor bank). To add real integration:
-
-1. Create a new Python module: `bizaxl_banking/payment_gateways/`
-2. Implement API calls for each payment rail (UPI/IMPS/NEFT/RTGS)
-3. Call from `BankingPaymentOrder.process_payment()` after validation
-4. Update status based on API response
-
-### Adding Credit Bureau Integration
-
-1. Create `bizaxl_banking/bureau/` module
-2. Implement CIBIL/Experian/CRIF API calls
-3. Call from `BankingLoanApplication.validate()` or a separate API endpoint
-4. Update `bureau_score` field with retrieved score
-
-### Adding eKYC Integration
-
-1. Create `bizaxl_banking/kyc/` module
-2. Implement UIDAI Aadhaar eKYC or DigiLocker API
-3. Call from `BankingKYCDocument` on verification
-4. Auto-update verification status based on API response
-
-### Adding Mobile/Email Notifications
-
-1. Edit `hooks.py` and add `doc_events` for relevant triggers
-2. Implement notification functions using Frappe's email/SMS integration
-3. Example: Send SMS on payment settlement, email on NPA classification
 
 ---
 
 ## Roadmap
 
 ### Phase 1: Core Operations (✅ Implemented)
-- [x] Customer onboarding & KYC
-- [x] Account management with joint holders
-- [x] Payment processing with Maker-Checker
-- [x] Loan origination & EMI processing
-- [x] NPA classification & provisioning
-- [x] Fraud detection & auto-hold
-- [x] Standing instruction automation
-- [x] Regulatory report generation
-- [x] Role-based permissions (8 roles)
+- [x] Foundation: Configuration, Branch, State, Interest Rate Schedules, Service Charges
+- [x] CRM: Customer Lead → Customer → KYC → Account
+- [x] Payments: Payment Orders (5 rails), Transaction Ledger, Standing Instructions, NACH Mandates
+- [x] Lending: Loan Application → Loan Account → EMI → NPA → Collateral
+- [x] Risk: Fraud Detection (5 types), AML Screening, Dispute Management, Positive Pay
+- [x] Reporting: 12 Report scripts, Regulatory Reports (CTR/STR/CRILC/NPA/PSL)
+- [x] Business Logic: Interest calculation, prepayment, floating rate updates, dormant classification
+- [x] Automation: 10 daily, 1 weekly, 1 monthly scheduler jobs
+- [x] Bulk Operations: Bulk Payment with CSV upload, batch processing
+- [x] Reconciliation: Daily balance matching, statement CSV upload
 
 ### Phase 2: Integrations (Future)
-- [ ] Payment rail integration (UPI/IMPS/NEFT/RTGS APIs)
-- [ ] Credit bureau integration (CIBIL/Experian)
-- [ ] Aadhaar eKYC / DigiLocker integration
+- [ ] Payment rail integration (UPI/IMPS/NEFT/RTGS APIs via NPCI)
+- [ ] Credit bureau integration (CIBIL/Experian/CRIF)
+- [ ] Aadhaar eKYC / DigiLocker / UIDAI integration
 - [ ] NACH mandate registration with sponsor bank
-- [ ] Email/SMS notifications
+- [ ] Email/SMS/WhatsApp notifications
 - [ ] Account statements (PDF generation)
 
 ### Phase 3: Advanced (Future)
-- [ ] Interest rate change engine (MCLR-linked)
-- [ ] Automated provisioning & NPA write-offs
-- [ ] Credit scoring engine (internal scorecard)
-- [ ] Mobile banking API
 - [ ] Core Banking Integration (T24/Finacle)
+- [ ] Mobile banking API
+- [ ] Interest rate change engine (MCLR-linked automated updates)
+- [ ] Automated provisioning & NPA write-offs
+- [ ] Internal credit scoring engine
 - [ ] Audit trail & data retention compliance
+- [ ] Customer portal (self-service)
 
 ---
 
