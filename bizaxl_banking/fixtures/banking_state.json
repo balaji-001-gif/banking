@@ -1,0 +1,198 @@
+[
+ {
+  "doctype": "Banking State",
+  "state_name": "Andhra Pradesh",
+  "state_code": "AP",
+  "region": "South",
+  "rbi_zone": "Hyderabad"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Arunachal Pradesh",
+  "state_code": "AR",
+  "region": "North-East",
+  "rbi_zone": "Guwahati"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Assam",
+  "state_code": "AS",
+  "region": "North-East",
+  "rbi_zone": "Guwahati"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Bihar",
+  "state_code": "BR",
+  "region": "East",
+  "rbi_zone": "Patna"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Chhattisgarh",
+  "state_code": "CG",
+  "region": "Central",
+  "rbi_zone": "Nagpur"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Goa",
+  "state_code": "GA",
+  "region": "West",
+  "rbi_zone": "Mumbai"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Gujarat",
+  "state_code": "GJ",
+  "region": "West",
+  "rbi_zone": "Ahmedabad"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Haryana",
+  "state_code": "HR",
+  "region": "North",
+  "rbi_zone": "Chandigarh"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Himachal Pradesh",
+  "state_code": "HP",
+  "region": "North",
+  "rbi_zone": "Chandigarh"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Jharkhand",
+  "state_code": "JH",
+  "region": "East",
+  "rbi_zone": "Kolkata"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Karnataka",
+  "state_code": "KA",
+  "region": "South",
+  "rbi_zone": "Bangalore"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Kerala",
+  "state_code": "KL",
+  "region": "South",
+  "rbi_zone": "Thiruvananthapuram"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Madhya Pradesh",
+  "state_code": "MP",
+  "region": "Central",
+  "rbi_zone": "Nagpur"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Maharashtra",
+  "state_code": "MH",
+  "region": "West",
+  "rbi_zone": "Mumbai"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Manipur",
+  "state_code": "MN",
+  "region": "North-East",
+  "rbi_zone": "Guwahati"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Meghalaya",
+  "state_code": "ML",
+  "region": "North-East",
+  "rbi_zone": "Guwahati"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Mizoram",
+  "state_code": "MZ",
+  "region": "North-East",
+  "rbi_zone": "Guwahati"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Nagaland",
+  "state_code": "NL",
+  "region": "North-East",
+  "rbi_zone": "Guwahati"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Odisha",
+  "state_code": "OD",
+  "region": "East",
+  "rbi_zone": "Bhubaneswar"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Punjab",
+  "state_code": "PB",
+  "region": "North",
+  "rbi_zone": "Chandigarh"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Rajasthan",
+  "state_code": "RJ",
+  "region": "North",
+  "rbi_zone": "Jaipur"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Sikkim",
+  "state_code": "SK",
+  "region": "North-East",
+  "rbi_zone": "Guwahati"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Tamil Nadu",
+  "state_code": "TN",
+  "region": "South",
+  "rbi_zone": "Chennai"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Telangana",
+  "state_code": "TS",
+  "region": "South",
+  "rbi_zone": "Hyderabad"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Tripura",
+  "state_code": "TR",
+  "region": "North-East",
+  "rbi_zone": "Guwahati"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Uttar Pradesh",
+  "state_code": "UP",
+  "region": "North",
+  "rbi_zone": "Lucknow"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "Uttarakhand",
+  "state_code": "UK",
+  "region": "North",
+  "rbi_zone": "Lucknow"
+ },
+ {
+  "doctype": "Banking State",
+  "state_name": "West Bengal",
+  "state_code": "WB",
+  "region": "East",
+  "rbi_zone": "Kolkata"
+ }
+]
