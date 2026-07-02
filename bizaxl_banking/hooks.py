@@ -22,7 +22,11 @@ scheduler_events = {
 		"bizaxl_banking.banking.doctype.banking_npa_tracker.banking_npa_tracker.auto_classify_npa",
 		"bizaxl_banking.banking.doctype.banking_standing_instruction.banking_standing_instruction.process_due_instructions",
 		"bizaxl_banking.banking.doctype.banking_fraud_alert.banking_fraud_alert.auto_detect_fraud",
-		"bizaxl_banking.banking.doctype.banking_loan_account.banking_loan_account.process_all_emis"
+		"bizaxl_banking.banking.doctype.banking_loan_account.banking_loan_account.process_all_emis",
+		"bizaxl_banking.banking.doctype.banking_dispute_case.banking_dispute_case.auto_escalate_overdue_disputes",
+		"bizaxl_banking.banking.doctype.banking_kyc_document.banking_kyc_document.check_kyc_reverification_due",
+		"bizaxl_banking.banking.doctype.banking_account.banking_account.auto_classify_dormant_accounts",
+		"bizaxl_banking.banking.doctype.banking_customer.banking_customer.recalculate_customer_risk_scores"
 	],
 	"monthly_long": [
 		"bizaxl_banking.banking.doctype.banking_loan_account.banking_loan_account.post_all_interest"

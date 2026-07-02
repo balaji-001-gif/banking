@@ -7,7 +7,7 @@ from frappe.utils import today, add_months, getdate, date_diff
 
 
 class BankingLoanAccount(Document):
-	"""Controller for Banking Loan Account with EMI and interest management."""
+	"""Controller for Banking Loan Account with EMI, interest, and floating rate management."""
 
 	def validate(self):
 		self.validate_amounts()
@@ -29,24 +29,14 @@ class BankingLoanAccount(Document):
 
 	def calculate_interest(self, days=None):
 		"""Calculate interest using daily reducing balance method.
-
+		
 		Interest = Outstanding Principal x Rate x Days / 365
 		"""
 		if not days:
-			days = 30  # Default to monthly
+			days = 30
 		daily_rate = self.interest_rate / 100 / 365
 		interest_amount = round(self.outstanding_principal * daily_rate * days, 2)
 		return interest_amount
-
-	def _get_customer_account(self):
-		"""Get the linked customer account for transaction ledger."""
-		if self.loan_application:
-			customer = frappe.db.get_value("Banking Loan Application", self.loan_application, "applicant")
-			if customer:
-				accounts = frappe.get_all("Banking Account", filters={"customer": customer}, limit=1)
-				if accounts:
-					return accounts[0].name
-		return None
 
 	def post_interest(self):
 		"""Post interest for the current period."""
@@ -74,9 +64,18 @@ class BankingLoanAccount(Document):
 		})
 		ledger.insert(ignore_permissions=True)
 
-		# Update outstanding principal
 		self.outstanding_principal += interest
 		self.db_set("outstanding_principal", self.outstanding_principal)
+
+	def _get_customer_account(self):
+		"""Get the linked customer account for transaction ledger."""
+		if self.loan_application:
+			customer = frappe.db.get_value("Banking Loan Application", self.loan_application, "applicant")
+			if customer:
+				accounts = frappe.get_all("Banking Account", filters={"customer": customer}, limit=1)
+				if accounts:
+					return accounts[0].name
+		return None
 
 	def process_emi(self):
 		"""Process EMI for this loan account."""
@@ -130,8 +129,42 @@ class BankingLoanAccount(Document):
 		})
 		tracker.insert(ignore_permissions=True)
 
+	def update_interest_rate(self, new_rate):
+		"""Update interest rate for floating-rate loans.
+		
+		This is called when MCLR changes. Only affects loans with 
+		rate_type = 'Floating (MCLR-linked)'.
+		"""
+		if self.rate_type != "Floating (MCLR-linked)":
+			frappe.throw(f"Loan {self.name} is not a floating-rate loan. Cannot update rate.")
 
-# ----- Scheduled Task Functions -----
+		if new_rate <= 0 or new_rate > 50:
+			frappe.throw("New interest rate must be between 0.01% and 50%.")
+
+		old_rate = self.interest_rate
+		self.interest_rate = new_rate
+		self.db_set("interest_rate", new_rate)
+
+		# Recalculate EMI based on new rate
+		if self.emi_amount > 0 and self.outstanding_principal > 0:
+			monthly_rate = new_rate / 12 / 100
+			# Estimate remaining tenure based on current EMI
+			remaining_tenure_months = max(1, round(self.outstanding_principal / self.emi_amount))
+			# Recalculate EMI
+			if monthly_rate > 0 and remaining_tenure_months > 0:
+				new_emi = round(
+					self.outstanding_principal * monthly_rate * (1 + monthly_rate) ** remaining_tenure_months
+					/ ((1 + monthly_rate) ** remaining_tenure_months - 1)
+				)
+				self.emi_amount = new_emi
+				self.db_set("emi_amount", new_emi)
+
+		# Log the rate change
+		frappe.msgprint(
+			f"Interest rate for Loan {self.name} updated from {old_rate}% to {new_rate}%. "
+			f"New EMI: ₹{self.emi_amount}"
+		)
+
 
 def process_all_emis():
 	"""Scheduled function to process EMIs for all active loan accounts."""

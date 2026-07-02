@@ -3,11 +3,12 @@
 
 import frappe
 from frappe.model.document import Document
-from frappe.utils import today
+from frappe.utils import today, add_months, getdate, date_diff
 
 
 class BankingAccount(Document):
-	"""Controller for Banking Account with balance management and joint holders."""
+	"""Controller for Banking Account with balance management, joint holders,
+	dormant classification, and closure validation."""
 
 	def autoname(self):
 		"""Auto-generate account number: ACC-YYYYMM-XXXXX."""
@@ -18,7 +19,7 @@ class BankingAccount(Document):
 	def validate(self):
 		self.validate_balances()
 		self.validate_opening()
-		self.update_account_status()
+		self.validate_closure()
 
 	def validate_balances(self):
 		"""Ensure available_balance never exceeds current_balance."""
@@ -30,15 +31,64 @@ class BankingAccount(Document):
 		if not self.date_opened:
 			self.date_opened = today()
 
-	def update_account_status(self):
-		"""Auto-update account status based on balance."""
-		if self.account_status == "Active" and self.current_balance <= 0:
-			# Don't auto-dormant; only flag for manual review
-			pass
+	def validate_closure(self):
+		"""Validate account closure requirements.
+		
+		When closing an account:
+		- Balance must be zero
+		- No active standing instructions
+		- No active NACH mandates
+		- No pending payment orders
+		"""
+		if self.has_value_changed("account_status") and self.account_status == "Closed":
+			# Check balance is zero
+			if self.current_balance != 0:
+				frappe.throw(
+					f"Cannot close account {self.name}. Current balance is ₹{self.current_balance}. "
+					f"Please transfer/withdraw all funds before closing."
+				)
 
-	def on_update(self):
-		"""Log balance changes to Transaction Ledger if relevant."""
-		pass
+			# Check no active standing instructions
+			active_instructions = frappe.get_all(
+				"Banking Standing Instruction",
+				filters={
+					"from_account": self.name,
+					"status": "Active"
+				}
+			)
+			if active_instructions:
+				frappe.throw(
+					f"Cannot close account {self.name}. There are {len(active_instructions)} "
+					f"active standing instruction(s). Please cancel them first."
+				)
+
+			# Check no active NACH mandates
+			active_mandates = frappe.get_all(
+				"Banking NACH Mandate",
+				filters={
+					"account": self.name,
+					"status": ("in", ["Pending Registration", "Active"])
+				}
+			)
+			if active_mandates:
+				frappe.throw(
+					f"Cannot close account {self.name}. There are {len(active_mandates)} "
+					f"active NACH mandate(s). Please cancel them first."
+				)
+
+			# Check no pending payment orders
+			pending_payments = frappe.get_all(
+				"Banking Payment Order",
+				filters={
+					"from_account": self.name,
+					"status": ("in", ["Draft", "Pending Approval", "Approved"])
+				}
+			)
+			if pending_payments:
+				frappe.throw(
+					f"Cannot close account {self.name}. There are {len(pending_payments)} "
+					f"pending payment order(s). Please clear them first."
+				)
 
 	def get_balance(self):
 		"""Return current balance."""
@@ -72,3 +122,29 @@ class BankingAccount(Document):
 		})
 		ledger.insert(ignore_permissions=True)
 		return ledger
+
+
+def auto_classify_dormant_accounts():
+	"""Scheduled function to classify accounts as dormant.
+	
+	An account is considered dormant if:
+	- No transaction in the last 12 months
+	- Current status is Active
+	"""
+	twelve_months_ago = add_months(getdate(today()), -12)
+	
+	dormant_accounts = frappe.db.sql("""
+		SELECT ba.name
+		FROM `tabBanking Account` ba
+		WHERE ba.account_status = 'Active'
+			AND ba.modified <= %s
+			AND NOT EXISTS (
+				SELECT 1 FROM `tabBanking Transaction Ledger` btl
+				WHERE btl.account = ba.name
+					AND btl.creation >= %s
+			)
+	""", (twelve_months_ago, twelve_months_ago), as_dict=True)
+
+	for acc in dormant_accounts:
+		frappe.db.set_value("Banking Account", acc.name, "account_status", "Dormant")
+		frappe.msgprint(f"Account {acc.name} has been classified as Dormant due to 12 months of inactivity.")
