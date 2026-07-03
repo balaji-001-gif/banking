@@ -10,7 +10,7 @@
   "payment_date": "2026-06-01",
   "uploaded_csv": "",
   "maker": "Administrator",
-  "checker": "Administrator",
+  "checker": null,
   "entries": [
    {
     "beneficiary_name": "Arun Kumar",
@@ -85,7 +85,7 @@
   "payment_date": "2026-06-15",
   "uploaded_csv": "",
   "maker": "Administrator",
-  "checker": "Administrator",
+  "checker": null,
   "entries": [
    {
     "beneficiary_name": "Sand & Stone Suppliers",
