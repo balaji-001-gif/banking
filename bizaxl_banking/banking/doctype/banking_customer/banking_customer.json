@@ -217,5 +217,27 @@
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "links": [
+  {
+   "link_doctype": "Banking Account",
+   "link_fieldname": "customer",
+   "group": "Accounts & Deposits"
+  },
+  {
+   "link_doctype": "Banking KYC Document",
+   "link_fieldname": "customer",
+   "group": "KYC & Compliance"
+  },
+  {
+   "link_doctype": "Banking AML Screening Log",
+   "link_fieldname": "customer",
+   "group": "KYC & Compliance"
+  },
+  {
+   "link_doctype": "Banking Loan Application",
+   "link_fieldname": "applicant",
+   "group": "Lending"
+  }
+ ]
 }

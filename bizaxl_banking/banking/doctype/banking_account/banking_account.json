@@ -231,5 +231,47 @@
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "links": [
+  {
+   "link_doctype": "Banking Payment Order",
+   "link_fieldname": "from_account",
+   "group": "Payments & Transfers"
+  },
+  {
+   "link_doctype": "Banking Standing Instruction",
+   "link_fieldname": "from_account",
+   "group": "Payments & Transfers"
+  },
+  {
+   "link_doctype": "Banking NACH Mandate",
+   "link_fieldname": "account",
+   "group": "Payments & Transfers"
+  },
+  {
+   "link_doctype": "Banking Bulk Payment",
+   "link_fieldname": "from_account",
+   "group": "Payments & Transfers"
+  },
+  {
+   "link_doctype": "Banking Transaction Ledger",
+   "link_fieldname": "account",
+   "group": "Transactions"
+  },
+  {
+   "link_doctype": "Banking Fraud Alert",
+   "link_fieldname": "account",
+   "group": "Compliance & Risk"
+  },
+  {
+   "link_doctype": "Banking Dispute Case",
+   "link_fieldname": "linked_transaction",
+   "group": "Compliance & Risk"
+  },
+  {
+   "link_doctype": "Banking Account Entitlement",
+   "link_fieldname": "account",
+   "group": "Settings"
+  }
+ ]
 }

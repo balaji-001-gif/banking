@@ -203,5 +203,18 @@
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "links": [
+  {
+   "link_doctype": "Banking Loan Account",
+   "link_fieldname": "loan_application",
+   "group": "Loan Lifecycle"
+  },
+  {
+   "link_doctype": "Banking Customer",
+   "link_fieldname": "name",
+   "group": "Customer Info",
+   "table_fieldname": "applicant"
+  }
+ ]
 }

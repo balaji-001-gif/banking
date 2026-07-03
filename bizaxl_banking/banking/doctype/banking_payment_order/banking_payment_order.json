@@ -196,5 +196,17 @@
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "links": [
+  {
+   "link_doctype": "Banking Dispute Case",
+   "link_fieldname": "linked_transaction",
+   "group": "Disputes"
+  },
+  {
+   "link_doctype": "Banking Transaction Ledger",
+   "link_fieldname": "source_docname",
+   "group": "Ledger"
+  }
+ ]
 }
