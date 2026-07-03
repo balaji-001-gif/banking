@@ -12,7 +12,7 @@ class BankingCustomerLead(Document):
 	def autoname(self):
 		from frappe.model.naming import make_autoname
 		prefix = f"LEAD-{frappe.utils.nowdate()[:7]}-"
-		self.name = make_autoname(prefix + "#####")
+		self.name = make_autoname(prefix + ".#####")
 
 	def validate(self):
 		self.validate_mobile()
