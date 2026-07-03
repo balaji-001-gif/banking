@@ -17,7 +17,6 @@ fixtures = [
 	{"doctype": "Banking Interest Rate Schedule", "filters": [["product_type", "like", "%"]]},
 	{"doctype": "Banking State", "filters": [["state_name", "like", "%"]]},
 	{"doctype": "Banking Integration Settings"},
-	{"doctype": "Workspace", "filters": [["module", "=", "Banking"]]},
 	{"doctype": "Notification", "filters": [["module", "=", "Banking"]]}
 ]
 
