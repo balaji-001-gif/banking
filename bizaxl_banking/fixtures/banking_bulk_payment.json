@@ -1,0 +1,103 @@
+[
+ {
+  "doctype": "Banking Bulk Payment",
+  "name": "BULK-PAY-2026-001",
+  "batch_reference": "SALARY-JUNE-2026",
+  "from_account": "100289",
+  "total_amount": 375000.00,
+  "total_entries": 5,
+  "status": "Completed",
+  "payment_date": "2026-06-01",
+  "maker": "Administrator",
+  "checker": "Administrator",
+  "entries": [
+   {
+    "beneficiary_name": "Employee 1",
+    "to_account_no": "400112233445566",
+    "to_ifsc": "SBIN0001234",
+    "payment_rail": "NEFT",
+    "amount": 85000.00,
+    "narration": "Salary June 2026",
+    "status": "Settled",
+    "utr_number": "SBIN20260601123461"
+   },
+   {
+    "beneficiary_name": "Employee 2",
+    "to_account_no": "400556677889900",
+    "to_ifsc": "HDFC0004321",
+    "payment_rail": "NEFT",
+    "amount": 75000.00,
+    "narration": "Salary June 2026",
+    "status": "Settled",
+    "utr_number": "HDFC20260601123462"
+   },
+   {
+    "beneficiary_name": "Employee 3",
+    "to_account_no": "400998877665544",
+    "to_ifsc": "ICIC0005678",
+    "payment_rail": "IMPS",
+    "amount": 65000.00,
+    "narration": "Salary June 2026",
+    "status": "Settled",
+    "utr_number": "ICIC20260601123463"
+   },
+   {
+    "beneficiary_name": "Employee 4",
+    "to_account_no": "400123450987654",
+    "to_ifsc": "AXIS0009012",
+    "payment_rail": "NEFT",
+    "amount": 80000.00,
+    "narration": "Salary June 2026",
+    "status": "Settled",
+    "utr_number": "AXIS20260601123464"
+   },
+   {
+    "beneficiary_name": "Employee 5",
+    "to_account_no": "400334455667788",
+    "to_ifsc": "SBIN0004321",
+    "payment_rail": "NEFT",
+    "amount": 70000.00,
+    "narration": "Salary June 2026",
+    "status": "Settled",
+    "utr_number": "SBIN20260601123465"
+   }
+  ]
+ },
+ {
+  "doctype": "Banking Bulk Payment",
+  "name": "BULK-PAY-2026-002",
+  "batch_reference": "VENDOR-PAY-JUNE",
+  "from_account": "101167",
+  "total_amount": 850000.00,
+  "total_entries": 3,
+  "status": "Pending Approval",
+  "payment_date": "2026-06-25",
+  "maker": "Administrator",
+  "entries": [
+   {
+    "beneficiary_name": "Raw Material Supplier A",
+    "to_account_no": "600112233445566",
+    "to_ifsc": "SBIN0009876",
+    "payment_rail": "NEFT",
+    "amount": 350000.00,
+    "narration": "May invoice payment"
+   },
+   {
+    "beneficiary_name": "Raw Material Supplier B",
+    "to_account_no": "600998877665544",
+    "to_ifsc": "HDFC0005678",
+    "payment_rail": "NEFT",
+    "amount": 250000.00,
+    "narration": "May invoice payment"
+   },
+   {
+    "beneficiary_name": "Logistics Partner",
+    "to_account_no": "600556677889900",
+    "to_ifsc": "ICIC0009012",
+    "payment_rail": "IMPS",
+    "amount": 250000.00,
+    "narration": "Monthly logistics charges"
+   }
+  ]
+ }
+]

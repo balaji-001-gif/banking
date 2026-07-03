@@ -1,0 +1,62 @@
+[
+ {
+  "doctype": "Banking Branch",
+  "name": "BIZAXL001",
+  "branch_name": "Head Office Mumbai",
+  "branch_code": "BIZAXL001",
+  "ifsc_code": "BZXL0000001",
+  "branch_manager": "Administrator",
+  "address": "BKC, Bandra East, Mumbai - 400051",
+  "state": "Maharashtra",
+  "branch_type": "Head Office",
+  "is_active": 1
+ },
+ {
+  "doctype": "Banking Branch",
+  "name": "BIZAXL002",
+  "branch_name": "Andheri Branch",
+  "branch_code": "BIZAXL002",
+  "ifsc_code": "BZXL0000002",
+  "branch_manager": "Administrator",
+  "address": "Andheri West, Mumbai - 400053",
+  "state": "Maharashtra",
+  "branch_type": "Branch",
+  "is_active": 1
+ },
+ {
+  "doctype": "Banking Branch",
+  "name": "BIZAXL003",
+  "branch_name": "Pune Branch",
+  "branch_code": "BIZAXL003",
+  "ifsc_code": "BZXL0000003",
+  "branch_manager": "Administrator",
+  "address": "FC Road, Shivajinagar, Pune - 411004",
+  "state": "Maharashtra",
+  "branch_type": "Branch",
+  "is_active": 1
+ },
+ {
+  "doctype": "Banking Branch",
+  "name": "BIZAXL004",
+  "branch_name": "Bangalore Branch",
+  "branch_code": "BIZAXL004",
+  "ifsc_code": "BZXL0000004",
+  "branch_manager": "Administrator",
+  "address": "MG Road, Bangalore - 560001",
+  "state": "Karnataka",
+  "branch_type": "Branch",
+  "is_active": 1
+ },
+ {
+  "doctype": "Banking Branch",
+  "name": "BIZAXL005",
+  "branch_name": "Chennai Branch",
+  "branch_code": "BIZAXL005",
+  "ifsc_code": "BZXL0000005",
+  "branch_manager": "Administrator",
+  "address": "Anna Salai, Chennai - 600002",
+  "state": "Tamil Nadu",
+  "branch_type": "Branch",
+  "is_active": 1
+ }
+]

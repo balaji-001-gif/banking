@@ -1,0 +1,35 @@
+[
+ {
+  "doctype": "Banking Dispute Case",
+  "name": "DSP-2026-001",
+  "customer": "Rajesh Sharma",
+  "linked_transaction": "PAY-BZXL-2026-001",
+  "dispute_type": "Unauthorized Debit",
+  "raised_on": "2026-04-05 10:00:00",
+  "sla_deadline": "2026-04-12 10:00:00",
+  "status": "Resolved - Upheld",
+  "resolution_action": "Reversal"
+ },
+ {
+  "doctype": "Banking Dispute Case",
+  "name": "DSP-2026-002",
+  "customer": "Amit Singh",
+  "linked_transaction": "PAY-BZXL-2026-003",
+  "dispute_type": "Failed Credit",
+  "raised_on": "2026-06-15 14:30:00",
+  "sla_deadline": "2026-06-22 14:30:00",
+  "status": "Open",
+  "resolution_action": null
+ },
+ {
+  "doctype": "Banking Dispute Case",
+  "name": "DSP-2026-003",
+  "customer": "Kavita Mehta",
+  "linked_transaction": "PAY-BZXL-2026-005",
+  "dispute_type": "Merchant",
+  "raised_on": "2026-06-22 09:00:00",
+  "sla_deadline": "2026-06-29 09:00:00",
+  "status": "Under Investigation",
+  "resolution_action": null
+ }
+]

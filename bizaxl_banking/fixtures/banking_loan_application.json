@@ -1,0 +1,101 @@
+[
+ {
+  "doctype": "Banking Loan Application",
+  "name": "LOAN-APP-2026-001",
+  "applicant": "Rajesh Sharma",
+  "co_applicants": [
+   {
+    "customer": "Deepa Nair",
+    "relation": "Spouse",
+    "income_share_pct": 40
+   }
+  ],
+  "loan_product": "Home",
+  "requested_amount": 5000000.00,
+  "requested_tenure_months": 240,
+  "purpose": "Purchase of residential flat in Andheri West, Mumbai",
+  "bureau_score": 780,
+  "foir": 45,
+  "internal_risk_grade": "A1",
+  "decision": "Approved"
+ },
+ {
+  "doctype": "Banking Loan Application",
+  "name": "LOAN-APP-2026-002",
+  "applicant": "Amit Singh",
+  "loan_product": "MSME",
+  "requested_amount": 2500000.00,
+  "requested_tenure_months": 60,
+  "purpose": "Working capital for trading business expansion",
+  "bureau_score": 720,
+  "foir": 50,
+  "internal_risk_grade": "A2",
+  "decision": "Approved"
+ },
+ {
+  "doctype": "Banking Loan Application",
+  "name": "LOAN-APP-2026-003",
+  "applicant": "Priya Patel",
+  "loan_product": "Personal",
+  "requested_amount": 500000.00,
+  "requested_tenure_months": 36,
+  "purpose": "Higher education expense for daughter",
+  "bureau_score": 810,
+  "foir": 35,
+  "internal_risk_grade": "A1",
+  "decision": "Approved"
+ },
+ {
+  "doctype": "Banking Loan Application",
+  "name": "LOAN-APP-2026-004",
+  "applicant": "Rohan Deshmukh",
+  "loan_product": "Vehicle",
+  "requested_amount": 800000.00,
+  "requested_tenure_months": 60,
+  "purpose": "Purchase of new SUV car",
+  "bureau_score": 750,
+  "foir": 42,
+  "internal_risk_grade": "B1",
+  "decision": "Pending"
+ },
+ {
+  "doctype": "Banking Loan Application",
+  "name": "LOAN-APP-2026-005",
+  "applicant": "Sunshine Constructions",
+  "loan_product": "MSME",
+  "requested_amount": 15000000.00,
+  "requested_tenure_months": 120,
+  "purpose": "Construction equipment purchase and working capital",
+  "bureau_score": 680,
+  "foir": 55,
+  "internal_risk_grade": "C",
+  "decision": "Referred"
+ },
+ {
+  "doctype": "Banking Loan Application",
+  "name": "LOAN-APP-2026-006",
+  "applicant": "Manoj Kumar",
+  "loan_product": "Personal",
+  "requested_amount": 300000.00,
+  "requested_tenure_months": 24,
+  "purpose": "Medical emergency - family health treatment",
+  "bureau_score": 620,
+  "foir": 65,
+  "internal_risk_grade": "D",
+  "decision": "Rejected",
+  "rejection_reason": "Low bureau score, high FOIR, existing overdue on other accounts"
+ },
+ {
+  "doctype": "Banking Loan Application",
+  "name": "LOAN-APP-2026-007",
+  "applicant": "Kavita Mehta",
+  "loan_product": "Home",
+  "requested_amount": 3500000.00,
+  "requested_tenure_months": 180,
+  "purpose": "Purchase of 2 BHK flat in Chennai",
+  "bureau_score": 760,
+  "foir": 38,
+  "internal_risk_grade": "A2",
+  "decision": "Pending"
+ }
+]

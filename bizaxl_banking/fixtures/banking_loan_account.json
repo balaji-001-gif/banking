@@ -1,0 +1,56 @@
+[
+ {
+  "doctype": "Banking Loan Account",
+  "name": "BZXL-LOAN-2026-001",
+  "loan_account_no": "BZXL-LOAN-2026-001",
+  "loan_application": "LOAN-APP-2026-001",
+  "sanctioned_amount": 4500000.00,
+  "outstanding_principal": 4475000.00,
+  "interest_rate": 8.5,
+  "rate_type": "Floating (MCLR-linked)",
+  "emi_amount": 39850.00,
+  "emi_date": 5,
+  "account_status": "Active",
+  "linked_mandate": "NACH-100452-LOAN"
+ },
+ {
+  "doctype": "Banking Loan Account",
+  "name": "BZXL-LOAN-2026-002",
+  "loan_account_no": "BZXL-LOAN-2026-002",
+  "loan_application": "LOAN-APP-2026-002",
+  "sanctioned_amount": 2000000.00,
+  "outstanding_principal": 1950000.00,
+  "interest_rate": 11.0,
+  "rate_type": "Floating (MCLR-linked)",
+  "emi_amount": 46350.00,
+  "emi_date": 10,
+  "account_status": "Active"
+ },
+ {
+  "doctype": "Banking Loan Account",
+  "name": "BZXL-LOAN-2026-003",
+  "loan_account_no": "BZXL-LOAN-2026-003",
+  "loan_application": "LOAN-APP-2026-003",
+  "sanctioned_amount": 500000.00,
+  "outstanding_principal": 490000.00,
+  "interest_rate": 10.5,
+  "rate_type": "Fixed",
+  "emi_amount": 16325.00,
+  "emi_date": 15,
+  "account_status": "Active"
+ },
+ {
+  "doctype": "Banking Loan Account",
+  "name": "BZXL-LOAN-2024-001",
+  "loan_account_no": "BZXL-LOAN-2024-001",
+  "loan_application": "LOAN-APP-2026-002",
+  "sanctioned_amount": 1000000.00,
+  "outstanding_principal": 675000.00,
+  "interest_rate": 12.0,
+  "rate_type": "Fixed",
+  "emi_amount": 28000.00,
+  "emi_date": 2,
+  "account_status": "NPA",
+  "linked_mandate": "NACH-100452-LOAN"
+ }
+]

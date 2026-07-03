@@ -1,0 +1,23 @@
+[
+ {
+  "doctype": "Banking NPA Tracker",
+  "name": "NPA-2026-001",
+  "loan_account": "BZXL-LOAN-2024-001",
+  "npa_classification": "Sub-standard",
+  "days_past_due": 95,
+  "overdue_amount": 84000.00,
+  "provision_amount": 84000.00,
+  "recovery_stage": "Notice Sent",
+  "assigned_to": "Administrator"
+ },
+ {
+  "doctype": "Banking NPA Tracker",
+  "name": "NPA-2026-002",
+  "loan_account": "BZXL-LOAN-2026-001",
+  "npa_classification": "SMA-0",
+  "days_past_due": 5,
+  "overdue_amount": 39850.00,
+  "provision_amount": 0,
+  "recovery_stage": null
+ }
+]
