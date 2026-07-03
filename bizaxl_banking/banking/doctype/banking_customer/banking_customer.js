@@ -6,19 +6,17 @@ frappe.ui.form.on('Banking Customer', {
 		// Button to create a new Account
 		if (!frm.doc.__islocal) {
 			frm.add_custom_button(__('Create Account'), function() {
-				frappe.route_options = {
+				frappe.new_doc('Banking Account', {
 					'customer': frm.doc.name,
 					'branch': frm.doc.branch
-				};
-				frappe.set_route('Form', 'Banking Account', 'New Banking Account 1');
+				});
 			}, __('Create'));
 
 			// Button to create a new Loan Application
 			frm.add_custom_button(__('Create Loan Application'), function() {
-				frappe.route_options = {
+				frappe.new_doc('Banking Loan Application', {
 					'applicant': frm.doc.name
-				};
-				frappe.set_route('Form', 'Banking Loan Application', 'New Banking Loan Application 1');
+				});
 			}, __('Create'));
 		}
 	}
