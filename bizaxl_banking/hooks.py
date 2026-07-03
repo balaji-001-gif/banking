@@ -17,29 +17,7 @@ fixtures = [
 	{"doctype": "Banking Interest Rate Schedule", "filters": [["product_type", "like", "%"]]},
 	{"doctype": "Banking State", "filters": [["state_name", "like", "%"]]},
 	{"doctype": "Banking Integration Settings"},
-	{"doctype": "Notification", "filters": [["module", "=", "Banking"]]},
-	{"doctype": "Banking Configuration"},
-	{"doctype": "Banking Branch", "filters": [["branch_code", "like", "%"]]},
-	{"doctype": "Banking Service Charge Rule", "filters": [["charge_type", "like", "%"]]},
-	{"doctype": "Banking Customer", "filters": [["full_name", "like", "%"]]},
-	{"doctype": "Banking Customer Lead", "filters": [["full_name", "like", "%"]]},
-	{"doctype": "Banking KYC Document", "filters": [["document_type", "like", "%"]]},
-	{"doctype": "Banking Account", "filters": [["account_number", "like", "%"]]},
-	{"doctype": "Banking Account Entitlement", "filters": [["access_level", "like", "%"]]},
-	{"doctype": "Banking Standing Instruction", "filters": [["instruction_type", "like", "%"]]},
-	{"doctype": "Banking NACH Mandate", "filters": [["mandate_ref", "like", "%"]]},
-	{"doctype": "Banking Payment Order", "filters": [["payment_ref", "like", "%"]]},
-	{"doctype": "Banking Transaction Ledger", "filters": [["source_docname", "like", "%"]]},
-	{"doctype": "Banking Loan Application", "filters": [["loan_product", "like", "%"]]},
-	{"doctype": "Banking Loan Account", "filters": [["loan_account_no", "like", "%"]]},
-	{"doctype": "Banking Collateral", "filters": [["collateral_type", "like", "%"]]},
-	{"doctype": "Banking Fraud Alert", "filters": [["alert_type", "like", "%"]]},
-	{"doctype": "Banking Dispute Case", "filters": [["dispute_type", "like", "%"]]},
-	{"doctype": "Banking AML Screening Log", "filters": [["screening_type", "like", "%"]]},
-	{"doctype": "Banking NPA Tracker", "filters": [["npa_classification", "like", "%"]]},
-	{"doctype": "Banking Positive Pay Record", "filters": [["cheque_number", "like", "%"]]},
-	{"doctype": "Banking Regulatory Report", "filters": [["report_type", "like", "%"]]},
-	{"doctype": "Banking Bulk Payment", "filters": [["batch_reference", "like", "%"]]}
+	{"doctype": "Notification", "filters": [["module", "=", "Banking"]]}
 ]
 
 # Scheduled Tasks ------------------------------------------------------

@@ -2,14 +2,13 @@
  {
   "doctype": "Banking Configuration",
   "name": "Banking Configuration",
-  "bank_name": "Bizaxl Bank Ltd",
+  "bank_name": "Bizaxl Small Finance Bank",
   "license_type": "SFB",
-  "rbi_license_no": "RBI/SFB/2026/001234",
-  "sponsor_bank": "",
-  "ifsc_prefix": "BAXL",
+  "rbi_license_no": "SFB-2026-012345",
+  "ifsc_prefix": "BZXL",
   "default_currency": "INR",
   "financial_year_start": "April",
   "aml_threshold_inr": 1000000,
-  "regulatory_email": "compliance@bizaxlbank.in"
+  "regulatory_email": "compliance@bizaxlbank.com"
  }
 ]

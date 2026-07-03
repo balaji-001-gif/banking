@@ -222,13 +222,5 @@
   "state_code": "WB",
   "region": "East",
   "rbi_zone": "Kolkata"
- },
- {
-  "doctype": "Banking State",
-  "name": "Delhi",
-  "state_name": "Delhi",
-  "state_code": "DL",
-  "region": "North",
-  "rbi_zone": "Delhi"
  }
 ]
