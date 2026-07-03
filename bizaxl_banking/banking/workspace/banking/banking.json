@@ -192,10 +192,10 @@
    "hidden": 0
   },
   {
-   "label": "Banking Positive Pay",
+   "label": "Banking Positive Pay Record",
    "type": "Link",
    "link_type": "DocType",
-   "link_to": "Banking Positive Pay",
+   "link_to": "Banking Positive Pay Record",
    "is_standard": 1,
    "hidden": 0
   },
