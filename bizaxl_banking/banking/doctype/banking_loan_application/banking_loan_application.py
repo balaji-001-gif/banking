@@ -80,10 +80,13 @@ class BankingLoanApplication(Document):
 
 	def create_loan_account(self):
 		"""Create a Loan Account from approved application."""
-		loan_account_no = f"LOAN-{frappe.utils.nowdate()[:7].replace('-', '')}-{frappe.generate_hash(length=5)}"
+		from frappe.model.naming import make_autoname
+		loan_account_no = make_autoname(
+			f"LOAN-{frappe.utils.nowdate()[:7].replace('-', ''):}-" + ".#####"
+		)
 
-		# Calculate EMI (amortization formula)
-		annual_rate = 12.0
+		# Use rate from application if set, otherwise default to 12%
+		annual_rate = frappe.utils.flt(getattr(self, "interest_rate", None)) or 12.0
 		monthly_rate = annual_rate / 12 / 100
 		tenure_months = self.requested_tenure_months or 60
 		emi = round(
@@ -97,7 +100,7 @@ class BankingLoanApplication(Document):
 			"loan_account_no": loan_account_no,
 			"sanctioned_amount": self.requested_amount,
 			"outstanding_principal": self.requested_amount,
-			"interest_rate": 12.0,
+			"interest_rate": annual_rate,
 			"rate_type": "Floating (MCLR-linked)",
 			"emi_amount": emi,
 			"emi_date": 5,
@@ -127,7 +130,7 @@ class BankingLoanApplication(Document):
 				"mandate_ref": f"MAN-{loan_account.name}",
 				"max_amount": emi_amount,
 				"frequency": "Monthly",
-				"status": "Active"
+				"status": "Pending Registration"
 			})
 			mandate.insert(ignore_permissions=True)
 			loan_account.db_set("linked_mandate", mandate.name)

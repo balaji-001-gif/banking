@@ -71,17 +71,14 @@ class BankingStandingInstruction(Document):
 def process_due_instructions():
 	"""Scheduled function to process all due standing instructions."""
 	today_date = today()
-	# OR logic: last_run_date is NULL (never run) OR last_run_date is not today
-	instructions = frappe.get_all(
-		"Banking Standing Instruction",
-		filters=[
-			["status", "=", "Active"],
-			["start_date", "<=", today_date],
-			"or",
-			["last_run_date", "is", "not set"],
-			["last_run_date", "!=", today_date]
-		]
-	)
+	# Get all active instructions that started on or before today
+	# and either have never run OR last ran on a date before today
+	instructions = frappe.db.sql("""
+		SELECT name FROM `tabBanking Standing Instruction`
+		WHERE status = 'Active'
+			AND start_date <= %s
+			AND (last_run_date IS NULL OR last_run_date != %s)
+	""", (today_date, today_date), as_dict=True)
 
 	for inst in instructions:
 		doc = frappe.get_doc("Banking Standing Instruction", inst.name)

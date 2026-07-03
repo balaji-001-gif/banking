@@ -78,6 +78,9 @@ def auto_classify_npa():
 			if dpd > 90:
 				loan.db_set("account_status", "NPA")
 
+			# Update tracker fields on the object before calling calculate methods
+			tracker.days_past_due = dpd
+			tracker.npa_classification = tracker.npa_classification
 			tracker.db_set("days_past_due", dpd)
 			tracker.db_set("npa_classification", tracker.npa_classification)
 			tracker.calculate_overdue()

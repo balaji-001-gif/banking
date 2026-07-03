@@ -14,7 +14,7 @@ class BankingAccount(Document):
 		"""Auto-generate account number: ACC-YYYYMM-XXXXX."""
 		from frappe.model.naming import make_autoname
 		prefix = f"ACC-{frappe.utils.nowdate()[:7].replace('-', '')}-"
-		self.name = make_autoname(prefix + "#####")
+		self.name = make_autoname(prefix + ".#####")
 
 	def validate(self):
 		self.validate_balances()
@@ -23,7 +23,9 @@ class BankingAccount(Document):
 
 	def validate_balances(self):
 		"""Ensure available_balance never exceeds current_balance."""
-		if self.available_balance > self.current_balance:
+		available = frappe.utils.flt(self.available_balance)
+		current = frappe.utils.flt(self.current_balance)
+		if available > current:
 			frappe.throw("Available Balance cannot exceed Current Balance.")
 
 	def validate_opening(self):
@@ -147,4 +149,4 @@ def auto_classify_dormant_accounts():
 
 	for acc in dormant_accounts:
 		frappe.db.set_value("Banking Account", acc.name, "account_status", "Dormant")
-		frappe.msgprint(f"Account {acc.name} has been classified as Dormant due to 12 months of inactivity.")
+		frappe.log_error(f"Account {acc.name} classified as Dormant (12 months inactivity).", "Dormant Account")

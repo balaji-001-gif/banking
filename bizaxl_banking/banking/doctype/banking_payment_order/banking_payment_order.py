@@ -13,7 +13,7 @@ class BankingPaymentOrder(Document):
 		"""Auto-generate payment reference: PAY-YYYYMM-XXXXX."""
 		from frappe.model.naming import make_autoname
 		prefix = f"PAY-{frappe.utils.nowdate()[:7].replace('-', '')}-"
-		self.name = make_autoname(prefix + "#####")
+		self.name = make_autoname(prefix + ".#####")
 
 	def validate(self):
 		self.validate_maker_checker()
@@ -85,8 +85,6 @@ class BankingPaymentOrder(Document):
 			send_transaction_alert(account.customer, account.name, self)
 		except Exception:
 			pass  # Non-critical — don't fail payment if notification fails
-
-		frappe.db.commit()
 
 		status_msg = npci_result.get("message", "")
 		frappe.msgprint(f"Payment processed successfully. UTR: {self.utr_number}. {status_msg}")

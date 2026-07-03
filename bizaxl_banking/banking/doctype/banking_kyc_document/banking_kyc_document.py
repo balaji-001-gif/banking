@@ -34,11 +34,23 @@ class BankingKycDocument(Document):
 				)
 
 	def auto_update_customer_status(self):
-		"""Auto-update customer KYC status on document verification."""
+		"""Auto-update customer KYC status on document verification.
+		Only sets Verified if this was the last pending document.
+		"""
 		if self.verification_status == "Verified" and self.customer:
-			customer = frappe.get_doc("Banking Customer", self.customer)
-			if customer.kyc_status in ("Pending", "Re-KYC Due"):
-				customer.db_set("kyc_status", "Verified")
+			# Check if any other KYC docs are still pending for this customer
+			pending = frappe.get_all(
+				"Banking KYC Document",
+				filters={
+					"customer": self.customer,
+					"verification_status": ("!=", "Verified"),
+					"name": ("!=", self.name)
+				}
+			)
+			if not pending:
+				customer = frappe.get_doc("Banking Customer", self.customer)
+				if customer.kyc_status in ("Pending", "Re-KYC Due"):
+					customer.db_set("kyc_status", "Verified")
 
 
 def check_kyc_reverification_due():
@@ -69,6 +81,7 @@ def check_kyc_reverification_due():
 				for acc in accounts:
 					if frappe.db.get_value("Banking Account", acc.name, "account_status") == "Active":
 						frappe.db.set_value("Banking Account", acc.name, "account_status", "Frozen")
-						frappe.msgprint(
-							f"Account {acc.name} frozen due to KYC documents expired for 90+ days."
+						frappe.log_error(
+							f"Account {acc.name} frozen due to KYC documents expired for 90+ days.",
+							"KYC Expiry Freeze"
 						)

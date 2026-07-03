@@ -14,7 +14,7 @@ class BankingBulkPayment(Document):
 	def autoname(self):
 		from frappe.model.naming import make_autoname
 		prefix = f"BULK-{frappe.utils.nowdate()[:7].replace('-', '')}-"
-		self.name = make_autoname(prefix + "#####")
+		self.name = make_autoname(prefix + ".#####")
 
 	def validate(self):
 		self.calculate_totals()
@@ -40,8 +40,7 @@ class BankingBulkPayment(Document):
 		if not self.entries:
 			frappe.throw("At least one payment entry is required.")
 		if not self.checker:
-			# Self-approve if no checker set
-			self.checker = frappe.session.user
+			frappe.throw("Checker is required before submission. Maker-Checker control cannot be bypassed.")
 		self.status = "Approved"
 
 	def on_submit(self):

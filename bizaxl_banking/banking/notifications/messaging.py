@@ -182,12 +182,17 @@ def send_transaction_alert(customer, account, payment_order):
 	if isinstance(account, str):
 		account = frappe.get_doc("Banking Account", account)
 
-	mobile = customer.mobile
-	email = frappe.db.get_value("User", customer.relationship_manager, "email") if customer.relationship_manager else None
+	mobile = getattr(customer, "mobile", None)
+	# Get the customer's own email (look up from linked User or email field)
+	email = getattr(customer, "email", None) or frappe.db.get_value(
+		"User", {"mobile_no": customer.mobile}, "email"
+	) if customer.mobile else None
+
+	account_display = getattr(account, "account_number", None) or account.name
 
 	message = (
 		f"Transaction Alert: ₹{payment_order.amount:,.2f} debited from "
-		f"account {account.account_number}. "
+		f"account {account_display}. "
 		f"UTR: {payment_order.utr_number}. "
 		f"Date: {payment_order.settled_at}"
 	)
@@ -198,7 +203,7 @@ def send_transaction_alert(customer, account, payment_order):
 		send_whatsapp("91" + mobile, message)
 
 	if email:
-		send_email(email, f"Transaction Alert - {account.account_number}", message)
+		send_email(email, f"Transaction Alert - {account_display}", message)
 
 
 def send_emi_reminder(customer, loan_account, emi_amount, due_date):
