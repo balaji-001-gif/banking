@@ -1,0 +1,62 @@
+[
+ {
+  "doctype": "Banking AML Screening Log",
+  "name": "AML-000001",
+  "screening_type": "Onboarding",
+  "customer": "CUST-0001",
+  "lists_checked": "UNSC Sanctions, OFAC SDN, RBI Caution List, WHOIS List, Indian Domestic Sanctions",
+  "match_found": 0,
+  "disposition": "Clear",
+  "screened_at": "2026-01-10 10:00:00"
+ },
+ {
+  "doctype": "Banking AML Screening Log",
+  "name": "AML-000002",
+  "screening_type": "Onboarding",
+  "customer": "CUST-0006",
+  "lists_checked": "UNSC Sanctions, OFAC SDN, RBI Caution List, WHOIS List, Indian Domestic Sanctions",
+  "match_found": 0,
+  "disposition": "Clear",
+  "screened_at": "2026-01-05 09:30:00"
+ },
+ {
+  "doctype": "Banking AML Screening Log",
+  "name": "AML-000003",
+  "screening_type": "Periodic",
+  "customer": "CUST-0001",
+  "lists_checked": "UNSC Sanctions, OFAC SDN, RBI Caution List, Indian Domestic Sanctions",
+  "match_found": 0,
+  "disposition": "Clear",
+  "screened_at": "2026-04-10 11:00:00"
+ },
+ {
+  "doctype": "Banking AML Screening Log",
+  "name": "AML-000004",
+  "screening_type": "Onboarding",
+  "customer": "CUST-0008",
+  "lists_checked": "UNSC Sanctions, OFAC SDN, RBI Caution List, WHOIS List, Indian Domestic Sanctions",
+  "match_found": 1,
+  "disposition": "False Positive",
+  "screened_at": "2026-05-01 15:30:00"
+ },
+ {
+  "doctype": "Banking AML Screening Log",
+  "name": "AML-000005",
+  "screening_type": "Transaction",
+  "customer": "CUST-0006",
+  "lists_checked": "UNSC Sanctions, OFAC SDN, RBI Caution List, Indian Domestic Sanctions",
+  "match_found": 1,
+  "disposition": "True Match - STR Filed",
+  "screened_at": "2026-06-08 16:00:00"
+ },
+ {
+  "doctype": "Banking AML Screening Log",
+  "name": "AML-000006",
+  "screening_type": "Onboarding",
+  "customer": "CUST-0007",
+  "lists_checked": "UNSC Sanctions, OFAC SDN, RBI Caution List, WHOIS List, Indian Domestic Sanctions",
+  "match_found": 0,
+  "disposition": "Clear",
+  "screened_at": "2026-04-10 14:00:00"
+ }
+]

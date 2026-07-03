@@ -1,0 +1,68 @@
+[
+ {
+  "doctype": "Banking Fraud Alert",
+  "name": "FRAUD-000001",
+  "alert_type": "Velocity Breach",
+  "triggered_on": "2026-06-10 08:15:00",
+  "account": "BAXL1000000001",
+  "risk_score": 65,
+  "auto_hold_applied": 0,
+  "status": "Open",
+  "investigated_by": null
+ },
+ {
+  "doctype": "Banking Fraud Alert",
+  "name": "FRAUD-000002",
+  "alert_type": "Unusual Geography",
+  "triggered_on": "2026-06-08 14:30:00",
+  "account": "BAXL1000000006",
+  "risk_score": 80,
+  "auto_hold_applied": 1,
+  "status": "Under Review",
+  "investigated_by": "Administrator"
+ },
+ {
+  "doctype": "Banking Fraud Alert",
+  "name": "FRAUD-000003",
+  "alert_type": "Positive Pay Mismatch",
+  "triggered_on": "2026-06-05 11:00:00",
+  "account": "BAXL1000000004",
+  "risk_score": 90,
+  "auto_hold_applied": 1,
+  "status": "Confirmed Fraud",
+  "investigated_by": "Administrator"
+ },
+ {
+  "doctype": "Banking Fraud Alert",
+  "name": "FRAUD-000004",
+  "alert_type": "Manual",
+  "triggered_on": "2026-06-01 09:45:00",
+  "account": "BAXL1000000010",
+  "risk_score": 55,
+  "auto_hold_applied": 1,
+  "status": "False Positive",
+  "investigated_by": "Administrator"
+ },
+ {
+  "doctype": "Banking Fraud Alert",
+  "name": "FRAUD-000005",
+  "alert_type": "Account Takeover",
+  "triggered_on": "2026-05-28 23:55:00",
+  "account": "BAXL1000000008",
+  "risk_score": 95,
+  "auto_hold_applied": 1,
+  "status": "Under Review",
+  "investigated_by": null
+ },
+ {
+  "doctype": "Banking Fraud Alert",
+  "name": "FRAUD-000006",
+  "alert_type": "Velocity Breach",
+  "triggered_on": "2026-06-12 16:20:00",
+  "account": "BAXL1000000003",
+  "risk_score": 40,
+  "auto_hold_applied": 0,
+  "status": "Closed",
+  "investigated_by": "Administrator"
+ }
+]

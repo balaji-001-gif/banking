@@ -1,0 +1,167 @@
+[
+ {
+  "doctype": "Banking Bulk Payment",
+  "name": "BULK-000001",
+  "batch_reference": "SAL-JUN-2026",
+  "from_account": "BAXL1000000007",
+  "total_amount": 750000.00,
+  "total_entries": 5,
+  "status": "Completed",
+  "payment_date": "2026-06-01",
+  "uploaded_csv": "",
+  "maker": "Administrator",
+  "checker": "Administrator",
+  "entries": [
+   {
+    "beneficiary_name": "Arun Kumar",
+    "to_account_no": "HDFC00123456789",
+    "to_ifsc": "HDFC0001234",
+    "payment_rail": "NEFT",
+    "amount": 150000.00,
+    "narration": "June 2026 Salary",
+    "status": "Settled",
+    "utr_number": "NEFT260601BAXL001",
+    "error_message": "",
+    "payment_order_ref": "PAY/BULK/001"
+   },
+   {
+    "beneficiary_name": "Bhavna Singh",
+    "to_account_no": "SBIN00987654321",
+    "to_ifsc": "SBIN0009876",
+    "payment_rail": "NEFT",
+    "amount": 120000.00,
+    "narration": "June 2026 Salary",
+    "status": "Settled",
+    "utr_number": "NEFT260601BAXL002",
+    "error_message": "",
+    "payment_order_ref": "PAY/BULK/002"
+   },
+   {
+    "beneficiary_name": "Chandan Das",
+    "to_account_no": "ICICI00567812345",
+    "to_ifsc": "ICIC0005678",
+    "payment_rail": "NEFT",
+    "amount": 180000.00,
+    "narration": "June 2026 Salary",
+    "status": "Settled",
+    "utr_number": "NEFT260601BAXL003",
+    "error_message": "",
+    "payment_order_ref": "PAY/BULK/003"
+   },
+   {
+    "beneficiary_name": "Deepika Rani",
+    "to_account_no": "AXIS00789012345",
+    "to_ifsc": "AXIS0007890",
+    "payment_rail": "NEFT",
+    "amount": 100000.00,
+    "narration": "June 2026 Salary",
+    "status": "Settled",
+    "utr_number": "NEFT260601BAXL004",
+    "error_message": "",
+    "payment_order_ref": "PAY/BULK/004"
+   },
+   {
+    "beneficiary_name": "Esha Agarwal",
+    "to_account_no": "YESB00345678901",
+    "to_ifsc": "YESB0003456",
+    "payment_rail": "NEFT",
+    "amount": 200000.00,
+    "narration": "June 2026 Salary",
+    "status": "Settled",
+    "utr_number": "NEFT260601BAXL005",
+    "error_message": "",
+    "payment_order_ref": "PAY/BULK/005"
+   }
+  ]
+ },
+ {
+  "doctype": "Banking Bulk Payment",
+  "name": "BULK-000002",
+  "batch_reference": "VEN-PAY-001",
+  "from_account": "BAXL1000000004",
+  "total_amount": 350000.00,
+  "total_entries": 3,
+  "status": "Completed",
+  "payment_date": "2026-06-15",
+  "uploaded_csv": "",
+  "maker": "Administrator",
+  "checker": "Administrator",
+  "entries": [
+   {
+    "beneficiary_name": "Sand & Stone Suppliers",
+    "to_account_no": "HDFC00987654321",
+    "to_ifsc": "HDFC0009876",
+    "payment_rail": "NEFT",
+    "amount": 150000.00,
+    "narration": "Invoice #SI-2026-042",
+    "status": "Settled",
+    "utr_number": "NEFT260615BAXL006",
+    "error_message": "",
+    "payment_order_ref": "PAY/BULK/006"
+   },
+   {
+    "beneficiary_name": "CementCorp India",
+    "to_account_no": "ICIC00765432109",
+    "to_ifsc": "ICIC0007654",
+    "payment_rail": "NEFT",
+    "amount": 120000.00,
+    "narration": "Invoice #CC-2026-089",
+    "status": "Settled",
+    "utr_number": "NEFT260615BAXL007",
+    "error_message": "",
+    "payment_order_ref": "PAY/BULK/007"
+   },
+   {
+    "beneficiary_name": "Electrical Works Co",
+    "to_account_no": "SBIN00543210987",
+    "to_ifsc": "SBIN0005432",
+    "payment_rail": "NEFT",
+    "amount": 80000.00,
+    "narration": "Invoice #EW-2026-012",
+    "status": "Failed",
+    "utr_number": "",
+    "error_message": "Beneficiary account not found",
+    "payment_order_ref": ""
+   }
+  ]
+ },
+ {
+  "doctype": "Banking Bulk Payment",
+  "name": "BULK-000003",
+  "batch_reference": "DIV-PAY-Q2",
+  "from_account": "BAXL1000000006",
+  "total_amount": 1500000.00,
+  "total_entries": 2,
+  "status": "Pending Approval",
+  "payment_date": "2026-07-01",
+  "uploaded_csv": "",
+  "maker": "Administrator",
+  "checker": null,
+  "entries": [
+   {
+    "beneficiary_name": "Vikram Singhania",
+    "to_account_no": "BAXL1000000006",
+    "to_ifsc": "BAXL0000001",
+    "payment_rail": "Internal",
+    "amount": 1000000.00,
+    "narration": "Q2 dividend transfer to own account",
+    "status": "Pending",
+    "utr_number": "",
+    "error_message": "",
+    "payment_order_ref": ""
+   },
+   {
+    "beneficiary_name": "Priya Mehta",
+    "to_account_no": "BAXL1000000002",
+    "to_ifsc": "BAXL0000002",
+    "payment_rail": "Internal",
+    "amount": 500000.00,
+    "narration": "Q2 dividend share",
+    "status": "Pending",
+    "utr_number": "",
+    "error_message": "",
+    "payment_order_ref": ""
+   }
+  ]
+ }
+]

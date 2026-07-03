@@ -1,0 +1,46 @@
+[
+ {
+  "doctype": "Banking Dispute Case",
+  "name": "DISP-000001",
+  "customer": "CUST-0001",
+  "linked_transaction": "PAY/BAXL/2026/000001",
+  "dispute_type": "Failed Credit",
+  "raised_on": "2026-06-05 10:00:00",
+  "sla_deadline": "2026-06-12 10:00:00",
+  "status": "Resolved - Rejected",
+  "resolution_action": "No Action"
+ },
+ {
+  "doctype": "Banking Dispute Case",
+  "name": "DISP-000002",
+  "customer": "CUST-0006",
+  "linked_transaction": "PAY/BAXL/2026/000003",
+  "dispute_type": "Unauthorized Debit",
+  "raised_on": "2026-06-06 16:45:00",
+  "sla_deadline": "2026-06-13 16:45:00",
+  "status": "Under Investigation",
+  "resolution_action": ""
+ },
+ {
+  "doctype": "Banking Dispute Case",
+  "name": "DISP-000003",
+  "customer": "CUST-0004",
+  "linked_transaction": "PAY/BAXL/2026/000005",
+  "dispute_type": "Double Debit",
+  "raised_on": "2026-06-07 09:30:00",
+  "sla_deadline": "2026-06-14 09:30:00",
+  "status": "Open",
+  "resolution_action": ""
+ },
+ {
+  "doctype": "Banking Dispute Case",
+  "name": "DISP-000004",
+  "customer": "CUST-0005",
+  "linked_transaction": "PAY/BAXL/2026/000004",
+  "dispute_type": "Fee Reversal",
+  "raised_on": "2026-06-02 11:15:00",
+  "sla_deadline": "2026-06-09 11:15:00",
+  "status": "Resolved - Upheld",
+  "resolution_action": "Reversal"
+ }
+]

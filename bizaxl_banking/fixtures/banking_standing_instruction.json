@@ -1,0 +1,62 @@
+[
+ {
+  "doctype": "Banking Standing Instruction",
+  "name": "SI-0001",
+  "from_account": "BAXL1000000001",
+  "instruction_type": "Utility Bill",
+  "amount": 3500.00,
+  "frequency": "Monthly",
+  "start_date": "2026-02-01",
+  "end_date": "2027-01-31",
+  "status": "Active",
+  "last_run_date": "2026-06-01"
+ },
+ {
+  "doctype": "Banking Standing Instruction",
+  "name": "SI-0002",
+  "from_account": "BAXL1000000001",
+  "instruction_type": "Loan EMI",
+  "amount": 18500.00,
+  "frequency": "Monthly",
+  "start_date": "2026-03-01",
+  "end_date": "2029-02-28",
+  "status": "Active",
+  "last_run_date": "2026-06-01"
+ },
+ {
+  "doctype": "Banking Standing Instruction",
+  "name": "SI-0003",
+  "from_account": "BAXL1000000005",
+  "instruction_type": "Investment",
+  "amount": 10000.00,
+  "frequency": "Monthly",
+  "start_date": "2026-05-01",
+  "end_date": null,
+  "status": "Active",
+  "last_run_date": "2026-06-01"
+ },
+ {
+  "doctype": "Banking Standing Instruction",
+  "name": "SI-0004",
+  "from_account": "BAXL1000000006",
+  "instruction_type": "Utility Bill",
+  "amount": 8000.00,
+  "frequency": "Quarterly",
+  "start_date": "2026-01-01",
+  "end_date": null,
+  "status": "Active",
+  "last_run_date": "2026-04-01"
+ },
+ {
+  "doctype": "Banking Standing Instruction",
+  "name": "SI-0005",
+  "from_account": "BAXL1000000008",
+  "instruction_type": "Custom",
+  "amount": 2000.00,
+  "frequency": "Monthly",
+  "start_date": "2026-05-15",
+  "end_date": null,
+  "status": "Paused",
+  "last_run_date": "2026-05-15"
+ }
+]

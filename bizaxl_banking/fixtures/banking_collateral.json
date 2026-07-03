@@ -1,0 +1,46 @@
+[
+ {
+  "doctype": "Banking Collateral",
+  "name": "COLL-000001",
+  "loan_account": "LOAN-ACC-000001",
+  "collateral_type": "FD Lien",
+  "description": "Fixed Deposit of INR 6,00,000 at Bizaxl Bank Ltd HO, Mumbai. FD No: FD/BAXL/2026/0042",
+  "market_value": 600000.00,
+  "valuation_date": "2026-03-01",
+  "lien_amount": 500000.00,
+  "document_ref": "/files/collateral/fd_lien_rajesh.pdf"
+ },
+ {
+  "doctype": "Banking Collateral",
+  "name": "COLL-000002",
+  "loan_account": "LOAN-ACC-000002",
+  "collateral_type": "Immovable Property",
+  "description": "3 BHK flat, Plot No 42, Green Meadows Layout, Whitefield, Bangalore - 560066. Property registered under Amit Patel.",
+  "market_value": 7500000.00,
+  "valuation_date": "2026-04-20",
+  "lien_amount": 5000000.00,
+  "document_ref": "/files/collateral/property_deed_amit.pdf"
+ },
+ {
+  "doctype": "Banking Collateral",
+  "name": "COLL-000003",
+  "loan_account": "LOAN-ACC-000003",
+  "collateral_type": "Vehicle",
+  "description": "Hyundai Creta - 2026 Model. Vehicle No: KA-05-MN-1234. Eng No: G4FL-123456, Chassis: 987654321",
+  "market_value": 1400000.00,
+  "valuation_date": "2026-05-10",
+  "lien_amount": 1200000.00,
+  "document_ref": "/files/collateral/rc_book_neha.pdf"
+ },
+ {
+  "doctype": "Banking Collateral",
+  "name": "COLL-000004",
+  "loan_account": "LOAN-ACC-000005",
+  "collateral_type": "Immovable Property",
+  "description": "Commercial office space, 1200 sq ft, G-Block, Bandra Kurla Complex, Mumbai. Primary collateral for corporate loan.",
+  "market_value": 50000000.00,
+  "valuation_date": "2026-01-15",
+  "lien_amount": 5000000.00,
+  "document_ref": "/files/collateral/property_bkc_vikram.pdf"
+ }
+]
