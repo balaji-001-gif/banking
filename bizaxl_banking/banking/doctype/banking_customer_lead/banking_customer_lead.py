@@ -48,8 +48,12 @@ class BankingCustomerLead(Document):
 	@frappe.whitelist()
 	def convert_to_customer(self):
 		"""Convert lead to a Banking Customer record."""
-		if self.lead_status not in ("Qualified", "Converted"):
-			frappe.throw(f"Cannot convert lead with status '{self.lead_status}'. Status must be 'Qualified'.")
+		if self.lead_status in ("Lost", "Converted"):
+			frappe.throw(f"Cannot convert lead with status '{self.lead_status}'.")
+		
+		if self.lead_status != "Qualified":
+			self.lead_status = "Qualified"
+			self.db_set("lead_status", "Qualified")
 
 		customer = frappe.get_doc({
 			"doctype": "Banking Customer",

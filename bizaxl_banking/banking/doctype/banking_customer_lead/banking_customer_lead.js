@@ -4,7 +4,7 @@
 frappe.ui.form.on('Banking Customer Lead', {
 	refresh: function(frm) {
 		// Add custom button to convert lead to customer
-		if (!frm.doc.__islocal && frm.doc.lead_status === 'Qualified' && !frm.doc.converted_to_customer) {
+		if (!frm.doc.__islocal && frm.doc.lead_status !== 'Lost' && frm.doc.lead_status !== 'Converted' && !frm.doc.converted_to_customer) {
 			frm.add_custom_button(__('Create Customer'), function() {
 				frappe.confirm(
 					__('Are you sure you want to convert this Lead to a Banking Customer?'),

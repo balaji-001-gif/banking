@@ -217,13 +217,5 @@
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC",
- "links": [
-  {
-   "link_doctype": "Banking Customer",
-   "link_fieldname": "name",
-   "group": "Converted Customer",
-   "table_fieldname": "converted_to_customer"
-  }
- ]
+ "sort_order": "DESC"
 }
