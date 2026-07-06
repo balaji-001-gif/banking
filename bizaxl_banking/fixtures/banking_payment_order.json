@@ -11,7 +11,7 @@
   "narration": "Rent payment for June 2026",
   "status": "Settled",
   "maker": "Administrator",
-  "checker": "Administrator",
+  "checker": null,
   "utr_number": "NEFT20260601BAXL001",
   "settled_at": "2026-06-01 10:30:00"
  },
@@ -27,7 +27,7 @@
   "narration": "Vendor payment - Invoice #INV-2026-0421",
   "status": "Settled",
   "maker": "Administrator",
-  "checker": "Administrator",
+  "checker": null,
   "utr_number": "RTGS20260602BAXL002",
   "settled_at": "2026-06-02 14:45:00"
  },
@@ -43,7 +43,7 @@
   "narration": "Family remittance",
   "status": "Settled",
   "maker": "Administrator",
-  "checker": "Administrator",
+  "checker": null,
   "utr_number": "IMPS20260603BAXL003",
   "settled_at": "2026-06-03 09:15:00"
  },
@@ -75,7 +75,7 @@
   "narration": "Reimbursement - Travel expenses",
   "status": "Failed",
   "maker": "Administrator",
-  "checker": "Administrator",
+  "checker": null,
   "utr_number": null,
   "settled_at": null
  },
@@ -91,7 +91,7 @@
   "narration": "Electricity bill payment",
   "status": "Settled",
   "maker": "Administrator",
-  "checker": "Administrator",
+  "checker": null,
   "utr_number": "UPI20260605BAXL006",
   "settled_at": "2026-06-05 18:20:00"
  },
