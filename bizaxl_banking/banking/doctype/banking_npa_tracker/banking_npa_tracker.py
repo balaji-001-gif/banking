@@ -6,7 +6,7 @@ from frappe.model.document import Document
 from frappe.utils import today, getdate, date_diff
 
 
-class BankingNpaTracker(Document):
+class BankingNPATracker(Document):
 	"""Controller for Banking NPA Tracker with auto-classification."""
 
 	def validate(self):

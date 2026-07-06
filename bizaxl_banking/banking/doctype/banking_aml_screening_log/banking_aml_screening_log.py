@@ -5,7 +5,7 @@ import frappe
 from frappe.model.document import Document
 
 
-class BankingAmlScreeningLog(Document):
+class BankingAMLScreeningLog(Document):
 	"""Controller for Banking AML Screening Log."""
 	
 	def validate(self):

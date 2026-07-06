@@ -6,7 +6,7 @@ from frappe.model.document import Document
 from frappe.utils import today
 
 
-class BankingNachMandate(Document):
+class BankingNACHMandate(Document):
 	"""Controller for Banking NACH Mandate with NPCI integration."""
 
 	def validate(self):

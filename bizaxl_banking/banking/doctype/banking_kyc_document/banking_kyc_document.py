@@ -6,7 +6,7 @@ from frappe.model.document import Document
 from frappe.utils import date_diff, getdate, add_days, today
 
 
-class BankingKycDocument(Document):
+class BankingKYCDocument(Document):
 	"""Controller for Banking KYC Document with expiry tracking and re-verification."""
 
 	def validate(self):
