@@ -353,10 +353,10 @@
    "hidden": 0
   },
   {
-   "label": "CTR/STR Export",
+   "label": "CTR-STR Export",
    "type": "Link",
    "link_type": "Report",
-   "link_to": "CTR/STR Export",
+   "link_to": "CTR-STR Export",
    "is_standard": 1,
    "hidden": 0
   }
