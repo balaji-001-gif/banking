@@ -1,0 +1,119 @@
+[
+ {
+  "doctype": "Banking Loan Application",
+  "name": "LOAN-APP-0001",
+  "applicant": "CUST-0001",
+  "co_applicants": [],
+  "loan_product": "Personal",
+  "requested_amount": 500000.00,
+  "requested_tenure_months": 36,
+  "purpose": "Home renovation",
+  "bureau_score": 780,
+  "foir": 35,
+  "internal_risk_grade": "A1",
+  "decision": "Approved",
+  "rejection_reason": ""
+ },
+ {
+  "doctype": "Banking Loan Application",
+  "name": "LOAN-APP-0002",
+  "applicant": "CUST-0003",
+  "co_applicants": [
+   {
+    "customer": "CUST-0001",
+    "relation": "Brother",
+    "income_share_pct": 30
+   }
+  ],
+  "loan_product": "Home",
+  "requested_amount": 5000000.00,
+  "requested_tenure_months": 240,
+  "purpose": "Purchase of residential flat in Bangalore",
+  "bureau_score": 750,
+  "foir": 40,
+  "internal_risk_grade": "A2",
+  "decision": "Approved",
+  "rejection_reason": ""
+ },
+ {
+  "doctype": "Banking Loan Application",
+  "name": "LOAN-APP-0003",
+  "applicant": "CUST-0005",
+  "co_applicants": [],
+  "loan_product": "Vehicle",
+  "requested_amount": 1200000.00,
+  "requested_tenure_months": 60,
+  "purpose": "Purchase of new SUV for family use",
+  "bureau_score": 720,
+  "foir": 28,
+  "internal_risk_grade": "B1",
+  "decision": "Approved",
+  "rejection_reason": ""
+ },
+ {
+  "doctype": "Banking Loan Application",
+  "name": "LOAN-APP-0004",
+  "applicant": "CUST-0004",
+  "co_applicants": [],
+  "loan_product": "MSME",
+  "requested_amount": 2500000.00,
+  "requested_tenure_months": 60,
+  "purpose": "Working capital for construction business",
+  "bureau_score": 680,
+  "foir": 45,
+  "internal_risk_grade": "B2",
+  "decision": "Pending",
+  "rejection_reason": ""
+ },
+ {
+  "doctype": "Banking Loan Application",
+  "name": "LOAN-APP-0005",
+  "applicant": "CUST-0006",
+  "co_applicants": [],
+  "loan_product": "Personal",
+  "requested_amount": 3000000.00,
+  "requested_tenure_months": 48,
+  "purpose": "Business expansion and working capital",
+  "bureau_score": 620,
+  "foir": 55,
+  "internal_risk_grade": "D",
+  "decision": "Rejected",
+  "rejection_reason": "High FOIR and low bureau score. Existing obligations exceed permissible limits."
+ },
+ {
+  "doctype": "Banking Loan Application",
+  "name": "LOAN-APP-0006",
+  "applicant": "CUST-0007",
+  "co_applicants": [
+   {
+    "customer": "CUST-0005",
+    "relation": "Guarantor",
+    "income_share_pct": 0
+   }
+  ],
+  "loan_product": "MSME",
+  "requested_amount": 10000000.00,
+  "requested_tenure_months": 84,
+  "purpose": "New office setup and technology infrastructure upgrade",
+  "bureau_score": 800,
+  "foir": 25,
+  "internal_risk_grade": "A1",
+  "decision": "Approved",
+  "rejection_reason": ""
+ },
+ {
+  "doctype": "Banking Loan Application",
+  "name": "LOAN-APP-0007",
+  "applicant": "CUST-0003",
+  "co_applicants": [],
+  "loan_product": "Agri",
+  "requested_amount": 200000.00,
+  "requested_tenure_months": 12,
+  "purpose": "Kharif season crop loan - paddy cultivation",
+  "bureau_score": 0,
+  "foir": 0,
+  "internal_risk_grade": "",
+  "decision": "Referred",
+  "rejection_reason": ""
+ }
+]

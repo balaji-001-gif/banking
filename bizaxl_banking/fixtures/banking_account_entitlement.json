@@ -1,0 +1,46 @@
+[
+ {
+  "doctype": "Banking Account Entitlement",
+  "name": "BAXL1000000001-Administrator",
+  "account": "BAXL1000000001",
+  "user": "Administrator",
+  "access_level": "Owner",
+  "can_initiate_payments": 1,
+  "can_approve_payments": 1,
+  "can_view_statements": 1,
+  "is_active": 1
+ },
+ {
+  "doctype": "Banking Account Entitlement",
+  "name": "BAXL1000000004-Administrator",
+  "account": "BAXL1000000004",
+  "user": "Administrator",
+  "access_level": "Owner",
+  "can_initiate_payments": 1,
+  "can_approve_payments": 1,
+  "can_view_statements": 1,
+  "is_active": 1
+ },
+ {
+  "doctype": "Banking Account Entitlement",
+  "name": "BAXL1000000007-Administrator",
+  "account": "BAXL1000000007",
+  "user": "Administrator",
+  "access_level": "Owner",
+  "can_initiate_payments": 1,
+  "can_approve_payments": 1,
+  "can_view_statements": 1,
+  "is_active": 1
+ },
+ {
+  "doctype": "Banking Account Entitlement",
+  "name": "BAXL1000000006-Administrator",
+  "account": "BAXL1000000006",
+  "user": "Administrator",
+  "access_level": "Owner",
+  "can_initiate_payments": 1,
+  "can_approve_payments": 1,
+  "can_view_statements": 1,
+  "is_active": 1
+ }
+]

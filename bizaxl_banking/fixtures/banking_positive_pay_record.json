@@ -1,0 +1,74 @@
+[
+ {
+  "doctype": "Banking Positive Pay Record",
+  "name": "PP-00001",
+  "account": "BAXL1000000004",
+  "cheque_number": "000101",
+  "cheque_date": "2026-06-05",
+  "amount": 150000.00,
+  "payee_name": "Srinivas Construction Suppliers",
+  "status": "Matched",
+  "matched_on": "2026-06-05 10:30:00",
+  "remarks": "Cheque presented and matched successfully"
+ },
+ {
+  "doctype": "Banking Positive Pay Record",
+  "name": "PP-00002",
+  "account": "BAXL1000000004",
+  "cheque_number": "000102",
+  "cheque_date": "2026-06-10",
+  "amount": 500000.00,
+  "payee_name": "SteelTech Traders",
+  "status": "Pending",
+  "matched_on": null,
+  "remarks": "Awaiting cheque presentation"
+ },
+ {
+  "doctype": "Banking Positive Pay Record",
+  "name": "PP-00003",
+  "account": "BAXL1000000004",
+  "cheque_number": "000103",
+  "cheque_date": "2026-06-08",
+  "amount": 750000.00,
+  "payee_name": "XYZ Cement Ltd",
+  "status": "Mismatch",
+  "matched_on": "2026-06-09 14:00:00",
+  "remarks": "Amount mismatch - issued 750000, presented 800000"
+ },
+ {
+  "doctype": "Banking Positive Pay Record",
+  "name": "PP-00004",
+  "account": "BAXL1000000007",
+  "cheque_number": "200101",
+  "cheque_date": "2026-06-15",
+  "amount": 250000.00,
+  "payee_name": "TechNova IT Solutions",
+  "status": "Pending",
+  "matched_on": null,
+  "remarks": ""
+ },
+ {
+  "doctype": "Banking Positive Pay Record",
+  "name": "PP-00005",
+  "account": "BAXL1000000001",
+  "cheque_number": "300101",
+  "cheque_date": "2026-05-20",
+  "amount": 25000.00,
+  "payee_name": "Rental Properties Ltd",
+  "status": "Matched",
+  "matched_on": "2026-05-21 09:00:00",
+  "remarks": "Rent cheque matched successfully"
+ },
+ {
+  "doctype": "Banking Positive Pay Record",
+  "name": "PP-00006",
+  "account": "BAXL1000000001",
+  "cheque_number": "300102",
+  "cheque_date": "2026-06-01",
+  "amount": 25000.00,
+  "payee_name": "Rental Properties Ltd",
+  "status": "Cancelled",
+  "matched_on": null,
+  "remarks": "Cheque cancelled by customer"
+ }
+]

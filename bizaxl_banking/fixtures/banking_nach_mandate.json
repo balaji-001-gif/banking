@@ -1,0 +1,52 @@
+[
+ {
+  "doctype": "Banking NACH Mandate",
+  "name": "NACH-0001",
+  "account": "BAXL1000000001",
+  "mandate_ref": "NACH/BAXL/2026/000001",
+  "max_amount": 20000.00,
+  "frequency": "Monthly",
+  "status": "Active",
+  "registered_on": "2026-02-01"
+ },
+ {
+  "doctype": "Banking NACH Mandate",
+  "name": "NACH-0002",
+  "account": "BAXL1000000005",
+  "mandate_ref": "NACH/BAXL/2026/000002",
+  "max_amount": 50000.00,
+  "frequency": "Monthly",
+  "status": "Active",
+  "registered_on": "2026-05-01"
+ },
+ {
+  "doctype": "Banking NACH Mandate",
+  "name": "NACH-0003",
+  "account": "BAXL1000000006",
+  "mandate_ref": "NACH/BAXL/2026/000003",
+  "max_amount": 100000.00,
+  "frequency": "Quarterly",
+  "status": "Active",
+  "registered_on": "2026-01-10"
+ },
+ {
+  "doctype": "Banking NACH Mandate",
+  "name": "NACH-0004",
+  "account": "BAXL1000000003",
+  "mandate_ref": "NACH/BAXL/2026/000004",
+  "max_amount": 75000.00,
+  "frequency": "As and When Presented",
+  "status": "Pending Registration",
+  "registered_on": null
+ },
+ {
+  "doctype": "Banking NACH Mandate",
+  "name": "NACH-0005",
+  "account": "BAXL1000000008",
+  "mandate_ref": "NACH/BAXL/2026/000005",
+  "max_amount": 5000.00,
+  "frequency": "Monthly",
+  "status": "Cancelled",
+  "registered_on": "2026-04-01"
+ }
+]
