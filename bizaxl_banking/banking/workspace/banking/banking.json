@@ -305,10 +305,10 @@
    "hidden": 0
   },
   {
-   "label": "EMI Dues and Collections",
+   "label": "EMI Dues Collections",
    "type": "Link",
    "link_type": "Report",
-   "link_to": "EMI Dues and Collections",
+   "link_to": "EMI Dues Collections",
    "is_standard": 1,
    "hidden": 0
   },
