@@ -1,7 +1,7 @@
 {
  "doctype": "Report",
- "report_name": "EMI Dues & Collections",
- "name": "EMI Dues & Collections",
+ "report_name": "EMI Dues and Collections",
+ "name": "EMI Dues and Collections",
  "report_type": "Script Report",
  "ref_doctype": "Banking Loan Account",
  "is_standard": "Yes",
